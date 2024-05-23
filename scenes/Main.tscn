@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsr0v11ggewrq"]
+
+[ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
+[ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PlayerManager" type="Node" parent="."]
+script = ExtResource("1_xoi36")
+player_scene = ExtResource("1_rkvvu")
