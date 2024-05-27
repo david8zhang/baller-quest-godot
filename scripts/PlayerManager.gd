@@ -17,7 +17,7 @@ func _ready():
 	selected_player.modulate = Color(0, 1, 0, 1)
 	
 func _input(ev: InputEvent):
-	if Input.is_action_just_released("switch_character"):
+	if Input.is_action_just_pressed("switch_character"):
 		switch_selected_player()
 	
 func switch_selected_player():

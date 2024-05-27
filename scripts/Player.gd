@@ -1,5 +1,5 @@
 class_name Player
-extends CharacterBody2D
+extends RigidBody2D
 
 const SPEED = 300.0
 var screen_size
