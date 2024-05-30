@@ -4,6 +4,7 @@ extends RigidBody2D
 const SPEED = 300.0
 var screen_size
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
+@export var ball_scene: PackedScene
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -26,3 +27,9 @@ func _physics_process(delta):
 		position.y = clamp(position.y, -screen_size.y / 2, screen_size.y / 2)
 		if velocity.x != 0:
 			$Sprite2D.flip_h = velocity.x < 0
+			
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("shoot_ball"):
+		var ball = ball_scene.instantiate()
+		add_child(ball)
+	

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp4p74n22uoph"]
+
+[ext_resource type="Texture2D" uid="uid://b0qqy4n1r5qon" path="res://sprites/hoop.png" id="1_epx4k"]
+
+[node name="Hoop" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_epx4k")
