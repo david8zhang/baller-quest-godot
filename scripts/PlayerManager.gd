@@ -2,6 +2,7 @@ class_name PlayerManager
 extends Node
 
 @export var player_scene: PackedScene
+
 var selected_player_index: int = 0
 var selected_player: Player = null
 var players: Array = []
@@ -25,7 +26,3 @@ func switch_selected_player():
 	selected_player_index = (selected_player_index + 1) % players.size()
 	selected_player = players[selected_player_index]
 	selected_player.modulate = Color(0, 1, 0, 1)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-
-func _process(delta):
-	pass
