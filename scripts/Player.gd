@@ -6,9 +6,12 @@ var screen_size
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var hoop: Node2D = get_node("/root/Main/Hoop")
 @export var ball_scene: PackedScene
+@onready var shot_meter = $ShotMeter as ShotMeter
+@onready var highlight = $Highlight
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	highlight.visible = false
 
 func _physics_process(delta):	
 	if (player_manager.selected_player == self):
@@ -29,9 +32,14 @@ func _physics_process(delta):
 		if velocity.x != 0:
 			$Sprite2D.flip_h = velocity.x < 0
 			
+		if Input.is_action_pressed("shoot_ball"):
+			shot_meter.fill(2, 0.9)
+			shot_meter.visible = true
+			
 func _unhandled_input(event):
 	if (player_manager.selected_player == self):	
-		if Input.is_action_just_pressed("shoot_ball"):
+		if Input.is_action_just_released("shoot_ball"):
+			shot_meter.display_feedback()
 			shoot_ball()
 
 func shoot_ball():
@@ -46,3 +54,8 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	var velocity_y = (dest_position.y - ball.position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
 	
+func select():
+	highlight.visible = true
+
+func deselect():
+	highlight.visible = false

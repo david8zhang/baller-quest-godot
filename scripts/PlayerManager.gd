@@ -15,14 +15,15 @@ func _ready():
 		players.append(new_player)
 		add_child(new_player)
 	selected_player = players[selected_player_index]
-	selected_player.modulate = Color(0, 1, 0, 1)
+	selected_player.select()
 	
 func _input(ev: InputEvent):
 	if Input.is_action_just_pressed("switch_character"):
 		switch_selected_player()
 	
 func switch_selected_player():
-	selected_player.modulate = Color(1, 1, 1, 1)
+	# De-select the current selected player
+	selected_player.deselect()
 	selected_player_index = (selected_player_index + 1) % players.size()
 	selected_player = players[selected_player_index]
-	selected_player.modulate = Color(0, 1, 0, 1)
+	selected_player.select()
