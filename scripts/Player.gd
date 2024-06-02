@@ -4,7 +4,7 @@ extends RigidBody2D
 const SPEED = 300.0
 var screen_size
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
-@onready var hoop: Node2D = get_node("/root/Main/Hoop")
+@onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
 @export var ball_scene: PackedScene
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
@@ -31,31 +31,63 @@ func _physics_process(delta):
 		position.y = clamp(position.y, -screen_size.y / 2, screen_size.y / 2)
 		if velocity.x != 0:
 			$Sprite2D.flip_h = velocity.x < 0
-			
 		if Input.is_action_pressed("shoot_ball"):
 			shot_meter.fill(2, 0.9)
 			shot_meter.visible = true
 			
+
 func _unhandled_input(event):
 	if (player_manager.selected_player == self):	
 		if Input.is_action_just_released("shoot_ball"):
 			shot_meter.display_feedback()
-			shoot_ball()
+			var shot_result = shot_meter.get_shot_result()
+			shoot_ball(shot_result)
 
-func shoot_ball():
-	var ball = ball_scene.instantiate()
+
+func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
+	var ball = ball_scene.instantiate() as Ball
 	ball.position.x = self.position.x
 	ball.position.y = self.position.y
 	add_sibling(ball)
-	create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 10), 1.5)
-	
+	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
+		print("MAKE!")
+		ball.disable_rim_collision()
+		hoop.disable_rim_collider()
+		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 10), 1.5)
+	else:
+		print("MISS!")
+		ball.enable_rim_collision()
+		hoop.enable_rim_collider()
+		var x_target_miss_left = randi_range(hoop.position.x - 15, hoop.position.x - 10)
+		var x_target_miss_right = randi_range(hoop.position.x + 10, hoop.position.x + 15)
+		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
+		create_arc(ball, Vector2(x_target, hoop.position.y - 10), 1.5)
+		
+	# Create timer to reset shot meter
+	var timer := Timer.new()
+	timer.wait_time = 1.0
+	timer.autostart = true
+	timer.one_shot = true
+	var callable = Callable(self, "reset_shot_meter").bind(timer)
+	timer.connect("timeout", callable)
+	add_child(timer)
+
+
+func reset_shot_meter(timer: Timer):
+	shot_meter.visible = false
+	shot_meter.reset()
+	timer.queue_free()
+
+
 func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	var velocity_x = (dest_position.x - ball.position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
-	
+
+
 func select():
 	highlight.visible = true
+
 
 func deselect():
 	highlight.visible = false
