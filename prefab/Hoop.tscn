@@ -1,21 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://bp4p74n22uoph"]
+[gd_scene load_steps=6 format=3 uid="uid://bp4p74n22uoph"]
 
-[ext_resource type="Texture2D" uid="uid://b0qqy4n1r5qon" path="res://sprites/hoop.png" id="1_epx4k"]
 [ext_resource type="Script" path="res://scripts/Hoop.gd" id="1_xersv"]
+[ext_resource type="Texture2D" uid="uid://bmul1birkrc4i" path="res://sprites/backboard.png" id="2_l1r37"]
+[ext_resource type="Texture2D" uid="uid://cnvrwi7rl1t3t" path="res://sprites/net.png" id="3_2xbwd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w45wc"]
 size = Vector2(76, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uert"]
+size = Vector2(46, 20)
 
 [node name="Hoop" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_xersv")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Backboard" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_epx4k")
+texture = ExtResource("2_l1r37")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 6)
+[node name="Net" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(1, 0)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_2xbwd")
+
+[node name="RimCollider" type="CollisionShape2D" parent="."]
+position = Vector2(1, 8)
 shape = SubResource("RectangleShape2D_w45wc")
+
+[node name="NetCollider" type="StaticBody2D" parent="."]
+position = Vector2(1, 22)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetCollider"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_8uert")
