@@ -3,6 +3,7 @@ extends RigidBody2D
 
 const SPEED = 300.0
 var screen_size
+var pass_target: Player
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
 @export var ball_scene: PackedScene
@@ -26,15 +27,17 @@ func _physics_process(delta):
 			velocity.y -= 1
 		if velocity.length() > 0:
 			velocity = velocity.normalized() * SPEED
+			update_pass_target(velocity)
 		position += velocity * delta
 		position.x = clamp(position.x, -screen_size.x / 2, screen_size.x / 2)
 		position.y = clamp(position.y, -screen_size.y / 2, screen_size.y / 2)
 		if velocity.x != 0:
 			$Sprite2D.flip_h = velocity.x < 0
+			
 		if Input.is_action_pressed("shoot_ball"):
 			shot_meter.fill(2, 0.9)
 			shot_meter.visible = true
-			
+
 
 func _unhandled_input(event):
 	if (player_manager.selected_player == self):	
@@ -42,6 +45,31 @@ func _unhandled_input(event):
 			shot_meter.display_feedback()
 			var shot_result = shot_meter.get_shot_result()
 			shoot_ball(shot_result)
+		if Input.is_action_just_pressed("pass"):
+			if pass_target != null:
+				pass_target.modulate = Color(1, 1, 1)
+				player_manager.switch_to_player(pass_target)
+				pass_target = null
+
+
+func update_pass_target(velocity: Vector2):
+	if pass_target != null:
+		pass_target.modulate = Color(1, 1, 1)
+	var src_position = position + velocity
+	var closest_player
+	var min_dist = INF
+	for player in player_manager.players:
+		if player != self:
+			var dist = src_position.distance_to(player.position)
+			if dist < min_dist:
+				min_dist = dist
+				closest_player = player
+	closest_player.show_pass_cursor()
+	pass_target = closest_player
+	
+	
+func show_pass_cursor():
+	self.modulate = Color(1, 1, 0)
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
