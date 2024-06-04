@@ -14,6 +14,7 @@ func _ready():
 		add_child(new_player)
 	selected_player = players[0]
 	selected_player.select()
+	selected_player.has_ball = true
 
 	
 func switch_to_player(player: Player):

@@ -13,4 +13,4 @@ script = ExtResource("1_xoi36")
 player_scene = ExtResource("1_rkvvu")
 
 [node name="Hoop" parent="." instance=ExtResource("3_4jcto")]
-position = Vector2(0, -150)
+position = Vector2(2.08165e-12, -225)

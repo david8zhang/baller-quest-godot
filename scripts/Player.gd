@@ -4,6 +4,8 @@ extends RigidBody2D
 const SPEED = 300.0
 var screen_size
 var pass_target: Player
+var has_ball: bool = false
+
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
 @export var ball_scene: PackedScene
@@ -35,21 +37,23 @@ func _physics_process(delta):
 			$Sprite2D.flip_h = velocity.x < 0
 			
 		if Input.is_action_pressed("shoot_ball"):
-			shot_meter.fill(2, 0.9)
-			shot_meter.visible = true
+			if has_ball:
+				shot_meter.fill(2, 0.9)
+				shot_meter.visible = true
 
 
 func _unhandled_input(event):
-	if (player_manager.selected_player == self):	
+	if player_manager.selected_player == self and has_ball:
 		if Input.is_action_just_released("shoot_ball"):
 			shot_meter.display_feedback()
 			var shot_result = shot_meter.get_shot_result()
 			shoot_ball(shot_result)
 		if Input.is_action_just_pressed("pass"):
 			if pass_target != null:
-				pass_target.modulate = Color(1, 1, 1)
-				player_manager.switch_to_player(pass_target)
-				pass_target = null
+				pass_ball()
+#				pass_target.modulate = Color(1, 1, 1)
+#				player_manager.switch_to_player(pass_target)
+#				pass_target = null
 
 
 func update_pass_target(velocity: Vector2):
@@ -70,9 +74,27 @@ func update_pass_target(velocity: Vector2):
 	
 func show_pass_cursor():
 	self.modulate = Color(1, 1, 0)
+	
+
+func pass_ball():
+#	has_ball = false
+	var ball = ball_scene.instantiate() as Ball
+	ball.position.x = self.position.x
+	ball.position.y = self.position.y
+	add_sibling(ball)
+#	ball.player_collider.disabled = false
+#	var callable = Callable(self, "pass_complete").bind(ball, pass_target)
+#	ball.player_collider.connect("body_entered", callable)
+	var tween = create_tween()
+	tween.tween_property(ball, "position", pass_target.position, 0.5)
+	
+	
+func pass_complete(ball: Ball, target: Player):
+	print(ball)
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
+	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
 	ball.position.x = self.position.x
 	ball.position.y = self.position.y
