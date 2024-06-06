@@ -12,11 +12,12 @@ func _ready():
 		new_player.position = Vector2(i * 100 - 100, 150)
 		players.append(new_player)
 		add_child(new_player)
+		new_player.player_name = "Player " + str(i)
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true
 
-	
+
 func switch_to_player(player: Player):
 	# De-select the current selected player
 	selected_player.deselect()

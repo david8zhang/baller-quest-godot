@@ -11,6 +11,7 @@ radius = 30.0
 height = 112.0
 
 [node name="Player" type="RigidBody2D"]
+collision_layer = 4
 gravity_scale = 0.0
 script = ExtResource("1_qur1a")
 ball_scene = ExtResource("2_pi8my")
@@ -22,6 +23,7 @@ position = Vector2(49, -54)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)
 shape = SubResource("CapsuleShape2D_8n74s")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Highlight" type="Sprite2D" parent="."]
 position = Vector2(2, 62)

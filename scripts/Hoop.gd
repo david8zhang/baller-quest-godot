@@ -1,6 +1,5 @@
 class_name Hoop
 extends StaticBody2D
-@onready var collision_shape = $CollisionShape2D
 
 func disable_rim_collider():
 	set_collision_mask_value(3, true)
