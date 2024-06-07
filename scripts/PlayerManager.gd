@@ -5,14 +5,24 @@ extends Node
 var selected_player: Player = null
 var players: Array = []
 
+var player_positions = [
+	Vector2(-400, 0),
+	Vector2(-200, 100),
+	Vector2(0, 200),
+	Vector2(200, 100),
+	Vector2(400, 0)
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(5):
+	var i = 0
+	for pos in player_positions:
 		var new_player = player_scene.instantiate()
-		new_player.position = Vector2(i * 100 - 100, 150)
+		new_player.global_position = pos
 		players.append(new_player)
 		add_child(new_player)
 		new_player.player_name = "Player " + str(i)
+		i += 1
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true

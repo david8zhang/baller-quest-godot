@@ -102,18 +102,18 @@ func receive_pass(ball: Ball):
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
-	has_ball = false
+#	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
 	ball.global_position = self.global_position
 	add_sibling(ball)
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		print("MAKE!")
-		ball.disable_rim_collision()
+		ball.disable_collision()
 		hoop.disable_rim_collider()
 		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 10), 1.5)
 	else:
 		print("MISS!")
-		ball.enable_rim_collision()
+		ball.enable_collision()
 		hoop.enable_rim_collider()
 		var x_target_miss_left = randi_range(hoop.global_position.x - 15, hoop.global_position.x - 10)
 		var x_target_miss_right = randi_range(hoop.global_position.x + 10, hoop.global_position.x + 15)
@@ -140,6 +140,20 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	var velocity_x = (dest_position.x - ball.global_position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
+	
+	var timer := Timer.new()
+	timer.wait_time = 1.0
+	timer.autostart = true
+	timer.one_shot = true
+	var callable = Callable(self, "enable_collision").bind(ball, timer)
+	timer.connect("timeout", callable)
+	add_child(timer)
+	
+
+func enable_floor(ball: Ball, timer: Timer):
+	print("enable collision!")
+	ball.enable_collision()
+	timer.queue_free()
 
 
 func select():
