@@ -13,10 +13,9 @@ var player_name: String = ""
 @onready var highlight = $Highlight
 
 @export var ball_scene: PackedScene
-var can_receive_pass
+var can_gain_possession: bool = true
 
 func _ready():
-	can_receive_pass = false
 	screen_size = get_viewport_rect().size
 	highlight.visible = false
 
@@ -74,7 +73,7 @@ func update_pass_target(velocity: Vector2):
 	
 
 func enable_pass_receipt():
-	can_receive_pass = true
+	can_gain_possession = true
 	
 	
 func show_pass_cursor():
@@ -86,26 +85,33 @@ func pass_ball():
 	ball.position.x = self.global_position.x
 	ball.position.y = self.global_position.y
 	add_sibling(ball)
-	pass_target.can_receive_pass = true
-	ball.player_collider.disabled = false
+	ball.player_collider.set_deferred("disabled", false)
+	pass_target.can_gain_possession = true
+	can_gain_possession = false
 	var tween = create_tween()
 	tween.tween_property(ball, "position", pass_target.global_position, 0.5)
+	tween.finished.connect(on_completed_pass)
+	
+
+func on_completed_pass():
+	can_gain_possession = true
 	
 	
-func receive_pass(ball: Ball):
-	if self.can_receive_pass:
+func handle_ball_collision(ball: Ball):
+	if self.can_gain_possession:
 		self.modulate = Color(1, 1, 1)
-		can_receive_pass = false
+		can_gain_possession = false
 		player_manager.switch_to_player(self)
 		has_ball = true
 		ball.queue_free()
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
-#	has_ball = false
+	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
 	ball.global_position = self.global_position
 	add_sibling(ball)
+	can_gain_possession = true
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		print("MAKE!")
 		ball.disable_collision()

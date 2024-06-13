@@ -26,7 +26,7 @@ func disable_collision():
 
 func _on_player_detector_body_entered(body):
 	var player = body as Player
-	player.receive_pass(self)
+	player.handle_ball_collision(self)
 
 
 # logic for when ball colliders with hoop on makes
@@ -45,3 +45,8 @@ func _physics_process(delta):
 	var lower_bound = screen_size.y / 2
 	if global_position.x > right_bound || global_position.x < left_bound || global_position.y > lower_bound:
 		queue_free()
+
+
+func _on_body_entered(body):
+	if body.name == "Hoop":
+		player_collider.set_deferred("disabled", false)
