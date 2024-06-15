@@ -26,11 +26,13 @@ shape = SubResource("CapsuleShape2D_8n74s")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Highlight" type="Sprite2D" parent="."]
+z_as_relative = false
 position = Vector2(2, 62)
 scale = Vector2(0.0908333, 0.045)
 texture = ExtResource("4_mjso6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("2_qrr0q")
 
 [node name="StateMachine" type="Node2D" parent="."]

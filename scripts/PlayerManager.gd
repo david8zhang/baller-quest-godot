@@ -5,7 +5,7 @@ extends Node
 var selected_player: Player = null
 var players: Array = []
 
-var player_positions = [
+const PLAYER_POSITIONS = [
 	Vector2(-400, 0),
 	Vector2(-200, 100),
 	Vector2(0, 200),
@@ -16,7 +16,7 @@ var player_positions = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var i = 0
-	for pos in player_positions:
+	for pos in PLAYER_POSITIONS:
 		var new_player = player_scene.instantiate()
 		new_player.global_position = pos
 		players.append(new_player)

@@ -39,6 +39,7 @@ func _on_make_detector_body_entered(body: Node2D):
 
 
 func _physics_process(delta):
+	z_index = 1000
 	screen_size = get_viewport_rect().size
 	var right_bound = screen_size.x / 2
 	var left_bound = -screen_size.x / 2
