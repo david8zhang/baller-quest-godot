@@ -81,6 +81,7 @@ func show_pass_cursor():
 	
 
 func pass_ball():
+	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
 	ball.position.x = self.global_position.x
 	ball.position.y = self.global_position.y
