@@ -44,6 +44,8 @@ func _physics_process(delta):
 				shot_meter.fill(2, 0.9)
 				shot_meter.visible = true
 
+func is_selected():
+	return player_manager.selected_player == self
 
 func _unhandled_input(event):
 	if player_manager.selected_player == self and has_ball:

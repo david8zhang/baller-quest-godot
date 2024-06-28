@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=8 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
 [ext_resource type="Texture2D" uid="uid://dwne2fcrdtkcx" path="res://sprites/player.png" id="2_qrr0q"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="3_enltj"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/highlight.png" id="4_mjso6"]
+[ext_resource type="Script" path="res://scripts/fsm/MoveState.gd" id="6_rdlcp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 30.0
@@ -36,3 +37,10 @@ y_sort_enabled = true
 texture = ExtResource("2_qrr0q")
 
 [node name="StateMachine" type="Node2D" parent="."]
+
+[node name="Pass" type="Node" parent="StateMachine"]
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("6_rdlcp")
