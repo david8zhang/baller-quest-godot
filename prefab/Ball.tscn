@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkmpdmo4w8tpt"]
+[gd_scene load_steps=7 format=3 uid="uid://dkmpdmo4w8tpt"]
 
 [ext_resource type="Texture2D" uid="uid://brdrfqyg2ahwf" path="res://sprites/basketball.png" id="1_1fnjy"]
 [ext_resource type="Script" path="res://scripts/Ball.gd" id="1_feubt"]
@@ -7,14 +7,17 @@
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yclt3"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_sivpb"]
+radius = 20.025
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dfsa"]
 radius = 20.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_csasp"]
-radius = 21.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_hka22"]
+radius = 20.025
 
 [node name="Ball" type="RigidBody2D"]
-collision_layer = 10
+collision_layer = 4
 collision_mask = 10
 mass = 0.01
 physics_material_override = SubResource("PhysicsMaterial_kua0q")
@@ -27,26 +30,24 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("1_1fnjy")
 
-[node name="Collider" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_yclt3")
-disabled = true
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_sivpb")
+debug_color = Color(0.870588, 0.34902, 0, 0.419608)
 
-[node name="MakeDetector" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+[node name="NetDetector" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+priority = 100
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MakeDetector"]
-position = Vector2(-1, 0)
-shape = SubResource("CircleShape2D_yclt3")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetDetector"]
+shape = SubResource("CircleShape2D_3dfsa")
+debug_color = Color(0.968627, 0, 0.462745, 0.419608)
 
 [node name="PlayerDetector" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
-shape = SubResource("CircleShape2D_csasp")
+shape = SubResource("CircleShape2D_hka22")
+debug_color = Color(0, 0.65098, 0.152941, 0.419608)
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_entered" from="MakeDetector" to="." method="_on_make_detector_body_entered"]
+[connection signal="area_entered" from="NetDetector" to="." method="_on_net_detector_area_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

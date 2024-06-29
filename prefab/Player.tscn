@@ -1,18 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=12 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
 [ext_resource type="Texture2D" uid="uid://dwne2fcrdtkcx" path="res://sprites/player.png" id="2_qrr0q"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="3_enltj"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/highlight.png" id="4_mjso6"]
+[ext_resource type="Script" path="res://scripts/fsm/IdleState.gd" id="6_1wvpm"]
+[ext_resource type="Script" path="res://scripts/fsm/StateMachine.gd" id="6_32c0f"]
+[ext_resource type="Script" path="res://scripts/fsm/ShootState.gd" id="6_gja4w"]
 [ext_resource type="Script" path="res://scripts/fsm/MoveState.gd" id="6_rdlcp"]
+[ext_resource type="Script" path="res://scripts/fsm/PassState.gd" id="6_ugi36"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 30.0
 height = 112.0
 
 [node name="Player" type="RigidBody2D"]
-collision_layer = 4
+collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_qur1a")
 ball_scene = ExtResource("2_pi8my")
@@ -37,10 +41,17 @@ y_sort_enabled = true
 texture = ExtResource("2_qrr0q")
 
 [node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("6_32c0f")
+initial_state = NodePath("IdleState")
 
-[node name="Pass" type="Node" parent="StateMachine"]
+[node name="PassState" type="Node" parent="StateMachine"]
+script = ExtResource("6_ugi36")
 
-[node name="Shoot" type="Node" parent="StateMachine"]
+[node name="ShootState" type="Node" parent="StateMachine"]
+script = ExtResource("6_gja4w")
 
-[node name="Move" type="Node" parent="StateMachine"]
+[node name="MoveState" type="Node" parent="StateMachine"]
 script = ExtResource("6_rdlcp")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("6_1wvpm")

@@ -7,8 +7,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w45wc"]
 size = Vector2(76, 12)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uert"]
-size = Vector2(46, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8qat"]
+size = Vector2(44, 20)
 
 [node name="Hoop" type="StaticBody2D"]
 collision_layer = 2
@@ -27,16 +27,14 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_2xbwd")
 
 [node name="RimCollider" type="CollisionShape2D" parent="."]
-position = Vector2(1, 8)
+position = Vector2(1, 6)
 shape = SubResource("RectangleShape2D_w45wc")
 
-[node name="NetCollider" type="StaticBody2D" parent="."]
-position = Vector2(1, 22)
-rotation = 3.14159
-collision_layer = 2
-collision_mask = 2
+[node name="NetCollisionArea" type="Area2D" parent="."]
+position = Vector2(1, 8)
+collision_layer = 16
+collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NetCollider"]
-position = Vector2(-3.57628e-07, 4)
-shape = SubResource("RectangleShape2D_8uert")
-one_way_collision = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetCollisionArea"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_v8qat")
