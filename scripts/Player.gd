@@ -64,7 +64,6 @@ func pass_ball():
 	ball.position.x = self.global_position.x
 	ball.position.y = self.global_position.y
 	add_sibling(ball)
-	ball.player_collider.set_deferred("disabled", false)
 	pass_target.can_gain_possession = true
 	can_gain_possession = false
 	var tween = create_tween()
@@ -123,7 +122,7 @@ func reset_shot_meter(timer: Timer):
 
 
 func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
-	ball.z_index = 3000
+	ball.z_index = hoop.net.z_index + 1
 	var velocity_x = (dest_position.x - ball.global_position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
@@ -155,7 +154,7 @@ func on_ball_arc_complete(ball: Ball, timer: Timer):
 	
 
 func on_ball_reached_apex(ball: Ball):
-	ball.z_index = 1000
+	ball.z_index = hoop.net.z_index - 1
 
 
 func select():
