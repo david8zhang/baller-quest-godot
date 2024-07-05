@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmul1birkrc4i"
-path="res://.godot/imported/backboard.png-b48489198da3b4b4efcb8c60af8de2d6.ctex"
+uid="uid://b0qqy4n1r5qon"
+path="res://.godot/imported/hoop.png-4a58f80fbcb84ae0f8cf188c14999f39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/backboard.png"
-dest_files=["res://.godot/imported/backboard.png-b48489198da3b4b4efcb8c60af8de2d6.ctex"]
+source_file="res://sprites/placeholder/hoop.png"
+dest_files=["res://.godot/imported/hoop.png-4a58f80fbcb84ae0f8cf188c14999f39.ctex"]
 
 [params]
 

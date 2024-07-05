@@ -22,11 +22,19 @@ func physics_update(_delta: float) -> void:
 	player.global_position.x = clamp(player.global_position.x, -screen_size.x / 2, screen_size.x / 2)
 	player.global_position.y = clamp(player.global_position.y, -screen_size.y / 2, screen_size.y / 2)
 	if velocity.x != 0:
-		sprite.flip_h = velocity.x < 0
-		
-	if player.linear_velocity.x == 0 and player.linear_velocity.y == 0:
-		state_machine.transition_to("IdleState", {})
-			
+		anim_sprite.flip_h = velocity.x < 0
+	
+	if velocity.x == 0:
+		anim_sprite.play("run-front")
+	else:
+		anim_sprite.play("run-side")
+
+	if velocity.x == 0 and velocity.y == 0:
+		var dir = "HORIZONTAL" if anim_sprite.animation == "run-side" else "VERTICAL"
+		state_machine.transition_to("IdleState", {
+			"direction": dir
+		})
+
 			
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player

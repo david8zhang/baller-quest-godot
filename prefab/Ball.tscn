@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dkmpdmo4w8tpt"]
 
-[ext_resource type="Texture2D" uid="uid://brdrfqyg2ahwf" path="res://sprites/basketball.png" id="1_1fnjy"]
 [ext_resource type="Script" path="res://scripts/Ball.gd" id="1_feubt"]
+[ext_resource type="Texture2D" uid="uid://brdrfqyg2ahwf" path="res://sprites/placeholder/basketball.png" id="2_janlb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kua0q"]
 friction = 0.5
@@ -28,7 +28,7 @@ script = ExtResource("1_feubt")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
 scale = Vector2(0.08, 0.08)
-texture = ExtResource("1_1fnjy")
+texture = ExtResource("2_janlb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_sivpb")

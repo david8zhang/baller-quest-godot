@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bp4p74n22uoph"]
 
 [ext_resource type="Script" path="res://scripts/Hoop.gd" id="1_xersv"]
-[ext_resource type="Texture2D" uid="uid://bmul1birkrc4i" path="res://sprites/backboard.png" id="2_l1r37"]
-[ext_resource type="Texture2D" uid="uid://cnvrwi7rl1t3t" path="res://sprites/net.png" id="3_2xbwd"]
+[ext_resource type="Texture2D" uid="uid://bmul1birkrc4i" path="res://sprites/placeholder/backboard.png" id="2_vdwnc"]
+[ext_resource type="Texture2D" uid="uid://cnvrwi7rl1t3t" path="res://sprites/placeholder/net.png" id="3_ghdwm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w45wc"]
 size = Vector2(76, 12)
@@ -18,13 +18,13 @@ script = ExtResource("1_xersv")
 [node name="Backboard" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_l1r37")
+texture = ExtResource("2_vdwnc")
 
 [node name="Net" type="Sprite2D" parent="."]
 z_index = 10
 position = Vector2(1, 0)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_2xbwd")
+texture = ExtResource("3_ghdwm")
 
 [node name="RimCollider" type="CollisionShape2D" parent="."]
 position = Vector2(1, 6)

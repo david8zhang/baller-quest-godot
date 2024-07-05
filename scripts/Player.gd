@@ -11,6 +11,7 @@ var player_name: String = ""
 @onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
+@onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 @onready var _state_machine: StateMachine = $StateMachine
 
 @export var ball_scene: PackedScene
@@ -19,6 +20,15 @@ var can_gain_possession: bool = true
 func _ready():
 	screen_size = get_viewport_rect().size
 	highlight.visible = false
+	anim_sprite.scale = Vector2(3, 3)
+	highlight.scale = Vector2(
+		2 * highlight.scale.x,
+		2 * highlight.scale.y
+	)
+	highlight.global_position = Vector2(
+		anim_sprite.global_position.x,
+		anim_sprite.global_position.y + 40,
+	)
 
 
 func is_selected():

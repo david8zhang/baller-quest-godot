@@ -16,3 +16,13 @@ func update(_delta: float) -> void:
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player
 	player.handle_input(input)
+
+func enter(msg := {}):
+	if msg.has("direction"):
+		var dir = msg["direction"]
+		if dir == "HORIZONTAL":
+			anim_sprite.play("idle-side")
+		else:
+			anim_sprite.play("idle-front")
+	else:
+		anim_sprite.play("idle-front")

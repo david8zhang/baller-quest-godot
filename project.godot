@@ -61,3 +61,7 @@ pass={
 
 2d/default_linear_damp=2.08167e-17
 2d/default_angular_damp=2.08167e-17
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

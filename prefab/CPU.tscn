@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxfoqfrn833gb"]
 
-[ext_resource type="Texture2D" uid="uid://sdjlpgrbj610" path="res://sprites/cpu.png" id="1_ak3t6"]
+[ext_resource type="Texture2D" uid="uid://sdjlpgrbj610" path="res://sprites/placeholder/cpu.png" id="1_laaj6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_noc08"]
 radius = 22.0
@@ -14,7 +14,7 @@ gravity_scale = 2.66454e-15
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-texture = ExtResource("1_ak3t6")
+texture = ExtResource("1_laaj6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 19)
