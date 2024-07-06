@@ -49,7 +49,7 @@ func update_pass_target(velocity: Vector2):
 				closest_player = player
 	closest_player.show_pass_cursor()
 	pass_target = closest_player
-	
+
 
 func handle_input(input: InputEvent):
 	if is_selected() and has_ball:

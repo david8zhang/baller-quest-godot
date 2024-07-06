@@ -35,12 +35,12 @@ func physics_update(_delta: float) -> void:
 			"direction": dir
 		})
 
-			
+
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player
 	player.handle_input(input)
-			
-			
+
+
 func enter(msg:={}) -> void:
 	var player = entity as Player
 	screen_size = player.get_viewport_rect().size
