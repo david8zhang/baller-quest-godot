@@ -24,10 +24,12 @@ func physics_update(_delta: float) -> void:
 	if velocity.x != 0:
 		anim_sprite.flip_h = velocity.x < 0
 	
-	if velocity.x == 0:
-		anim_sprite.play("run-front")
+	var run_anim_name = ""
+	if player.has_ball:
+		run_anim_name = "run-front" if velocity.x == 0 else "dribble-side"
 	else:
-		anim_sprite.play("run-side")
+		run_anim_name = "run-front" if velocity.x == 0 else "run-side"
+	anim_sprite.play(run_anim_name)
 
 	if velocity.x == 0 and velocity.y == 0:
 		var dir = "HORIZONTAL" if anim_sprite.animation == "run-side" else "VERTICAL"
