@@ -26,7 +26,7 @@ func physics_update(_delta: float) -> void:
 	
 	var run_anim_name = ""
 	if player.has_ball:
-		run_anim_name = "run-front" if velocity.x == 0 else "dribble-side"
+		run_anim_name = "dribble-front" if velocity.x == 0 else "dribble-side"
 	else:
 		run_anim_name = "run-front" if velocity.x == 0 else "run-side"
 	anim_sprite.play(run_anim_name)

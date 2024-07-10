@@ -1,9 +1,10 @@
-[gd_scene load_steps=42 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=51 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="3_enltj"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="4_4ftjt"]
+[ext_resource type="Texture2D" uid="uid://blur1jilhi01a" path="res://sprites/player/dribble-front.png" id="5_8t08x"]
 [ext_resource type="Texture2D" uid="uid://c7m7g7unlvgqh" path="res://sprites/player/dribble-side.png" id="5_eq5ny"]
 [ext_resource type="Texture2D" uid="uid://c73a6xerfhjfq" path="res://sprites/player/player-sheet.png" id="5_htj7d"]
 [ext_resource type="Script" path="res://scripts/fsm/IdleState.gd" id="6_1wvpm"]
@@ -15,6 +16,38 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
 height = 36.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g28r0"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8ni0"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw6ru"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(64, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubdgt"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yjge8"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pytyx"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(64, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgxd7"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(0, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t81x6"]
+atlas = ExtResource("5_8t08x")
+region = Rect2(32, 80, 32, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ye3bm"]
 atlas = ExtResource("5_eq5ny")
@@ -130,6 +163,35 @@ region = Rect2(96, 120, 32, 40)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x8wx5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g28r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8ni0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw6ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubdgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yjge8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pytyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgxd7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t81x6")
+}],
+"loop": true,
+"name": &"dribble-front",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ye3bm")
@@ -263,7 +325,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"dribble-side"
+animation = &"dribble-front"
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")
