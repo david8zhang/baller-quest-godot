@@ -18,11 +18,12 @@ func handle_input(input: InputEvent) -> void:
 	player.handle_input(input)
 
 func enter(msg := {}):
+	var player = entity as Player
+	var anim_name = "dribble-idle" if player.has_ball else "idle-front"
 	if msg.has("direction"):
 		var dir = msg["direction"]
 		if dir == "HORIZONTAL":
-			anim_sprite.play("idle-side")
+			anim_name = "idle-side"
 		else:
-			anim_sprite.play("idle-front")
-	else:
-		anim_sprite.play("idle-front")
+			anim_name = "dribble-idle" if player.has_ball else "idle-front"
+	anim_sprite.play(anim_name)

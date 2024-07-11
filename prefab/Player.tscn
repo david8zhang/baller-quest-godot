@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=66 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -10,8 +10,11 @@
 [ext_resource type="Script" path="res://scripts/fsm/IdleState.gd" id="6_1wvpm"]
 [ext_resource type="Script" path="res://scripts/fsm/StateMachine.gd" id="6_32c0f"]
 [ext_resource type="Script" path="res://scripts/fsm/ShootState.gd" id="6_gja4w"]
+[ext_resource type="Texture2D" uid="uid://dynyqqprgrap8" path="res://sprites/player/dribble-idle.png" id="6_h8g1n"]
 [ext_resource type="Script" path="res://scripts/fsm/MoveState.gd" id="6_rdlcp"]
 [ext_resource type="Script" path="res://scripts/fsm/PassState.gd" id="6_ugi36"]
+[ext_resource type="Texture2D" uid="uid://dv0w7uww5ne8c" path="res://sprites/player/idle-front.png" id="8_vsoty"]
+[ext_resource type="Texture2D" uid="uid://cibli5ptbfws5" path="res://sprites/player/idle-side.png" id="9_cpqb8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -49,6 +52,30 @@ region = Rect2(0, 80, 32, 40)
 atlas = ExtResource("5_8t08x")
 region = Rect2(32, 80, 32, 40)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmwgp"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqtpt"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5847k"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(64, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fw6vu"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3h15"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4tx0"]
+atlas = ExtResource("6_h8g1n")
+region = Rect2(64, 40, 32, 40)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ye3bm"]
 atlas = ExtResource("5_eq5ny")
 region = Rect2(0, 0, 32, 40)
@@ -85,13 +112,37 @@ region = Rect2(32, 80, 32, 40)
 atlas = ExtResource("5_eq5ny")
 region = Rect2(64, 80, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0g2yl"]
-atlas = ExtResource("5_htj7d")
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr42f"]
+atlas = ExtResource("8_vsoty")
 region = Rect2(0, 0, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceobf"]
-atlas = ExtResource("5_htj7d")
-region = Rect2(128, 40, 32, 40)
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0l1c"]
+atlas = ExtResource("8_vsoty")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wui3l"]
+atlas = ExtResource("8_vsoty")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dk6kg"]
+atlas = ExtResource("8_vsoty")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4nds"]
+atlas = ExtResource("9_cpqb8")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y803a"]
+atlas = ExtResource("9_cpqb8")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbs18"]
+atlas = ExtResource("9_cpqb8")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqr2s"]
+atlas = ExtResource("9_cpqb8")
+region = Rect2(32, 40, 32, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pv6hu"]
 atlas = ExtResource("5_htj7d")
@@ -194,6 +245,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_fmwgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqtpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5847k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fw6vu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3h15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4tx0")
+}],
+"loop": true,
+"name": &"dribble-idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ye3bm")
 }, {
 "duration": 1.0,
@@ -226,19 +300,37 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0g2yl")
+"texture": SubResource("AtlasTexture_gr42f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0l1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wui3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dk6kg")
 }],
 "loop": true,
 "name": &"idle-front",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ceobf")
+"texture": SubResource("AtlasTexture_a4nds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y803a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbs18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqr2s")
 }],
 "loop": true,
 "name": &"idle-side",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -325,7 +417,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"dribble-front"
+animation = &"idle-side"
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")
