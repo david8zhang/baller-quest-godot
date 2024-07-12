@@ -5,9 +5,11 @@ var screen_size
 @onready var collider = $CollisionShape2D
 @onready var net_detector = $NetDetector/CollisionShape2D
 @onready var player_detector = $PlayerDetector/CollisionShape2D
+@onready var sprite = $Sprite2D
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	sprite.scale = Vector2(3, 3)
 
 
 func enable_collider():
