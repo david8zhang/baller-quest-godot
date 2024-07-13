@@ -1,14 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://bp4p74n22uoph"]
 
 [ext_resource type="Script" path="res://scripts/Hoop.gd" id="1_xersv"]
-[ext_resource type="Texture2D" uid="uid://bmul1birkrc4i" path="res://sprites/placeholder/backboard.png" id="2_vdwnc"]
-[ext_resource type="Texture2D" uid="uid://cnvrwi7rl1t3t" path="res://sprites/placeholder/net.png" id="3_ghdwm"]
+[ext_resource type="Texture2D" uid="uid://d1x8i84hgonq8" path="res://sprites/objects/backboard.png" id="2_sdxvq"]
+[ext_resource type="Texture2D" uid="uid://cvv33trh2olkr" path="res://sprites/objects/net.png" id="3_wf4pc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w45wc"]
-size = Vector2(76, 12)
+size = Vector2(48, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v8qat"]
-size = Vector2(44, 20)
+size = Vector2(31.5, 31)
 
 [node name="Hoop" type="StaticBody2D"]
 collision_layer = 2
@@ -17,24 +17,24 @@ script = ExtResource("1_xersv")
 
 [node name="Backboard" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_vdwnc")
+scale = Vector2(3, 3)
+texture = ExtResource("2_sdxvq")
 
 [node name="Net" type="Sprite2D" parent="."]
 z_index = 10
-position = Vector2(1, 0)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_ghdwm")
+position = Vector2(1, -61)
+scale = Vector2(3, 3)
+texture = ExtResource("3_wf4pc")
 
 [node name="RimCollider" type="CollisionShape2D" parent="."]
-position = Vector2(1, 6)
+position = Vector2(1, -49)
 shape = SubResource("RectangleShape2D_w45wc")
 
 [node name="NetCollisionArea" type="Area2D" parent="."]
-position = Vector2(1, 8)
+position = Vector2(1, -54)
 collision_layer = 16
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NetCollisionArea"]
-position = Vector2(0, 14)
+position = Vector2(0.25, 28)
 shape = SubResource("RectangleShape2D_v8qat")

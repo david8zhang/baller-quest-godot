@@ -9,7 +9,7 @@ var screen_size
 
 func _ready():
 	screen_size = get_viewport_rect().size
-	sprite.scale = Vector2(3, 3)
+	sprite.scale = Vector2(3.5, 3.5)
 
 
 func enable_collider():

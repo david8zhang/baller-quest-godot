@@ -105,7 +105,7 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		print("MAKE!")
 		ball.disable_collider()
-		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 10), 1.5)
+		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 50), 1.5)
 	else:
 		print("MISS!")
 		ball.enable_collider()
