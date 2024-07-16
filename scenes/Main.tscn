@@ -19,7 +19,7 @@ script = ExtResource("1_xoi36")
 player_scene = ExtResource("1_rkvvu")
 
 [node name="Hoop" parent="." instance=ExtResource("3_4jcto")]
-position = Vector2(2.08165e-12, -186)
+position = Vector2(2.08165e-12, -160)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 collision_layer = 8

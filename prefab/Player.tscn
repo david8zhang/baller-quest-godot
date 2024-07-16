@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=81 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -163,10 +163,6 @@ region = Rect2(64, 0, 32, 40)
 atlas = ExtResource("10_teiic")
 region = Rect2(0, 40, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m33t1"]
-atlas = ExtResource("10_teiic")
-region = Rect2(32, 40, 32, 40)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jf2c0"]
 atlas = ExtResource("10_aepsd")
 region = Rect2(0, 0, 32, 40)
@@ -183,10 +179,6 @@ region = Rect2(64, 0, 32, 40)
 atlas = ExtResource("10_aepsd")
 region = Rect2(0, 40, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pkxqp"]
-atlas = ExtResource("10_aepsd")
-region = Rect2(32, 40, 32, 40)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_vqrsr"]
 atlas = ExtResource("10_7yqno")
 region = Rect2(0, 0, 32, 40)
@@ -202,10 +194,6 @@ region = Rect2(64, 0, 32, 40)
 [sub_resource type="AtlasTexture" id="AtlasTexture_je1ks"]
 atlas = ExtResource("10_7yqno")
 region = Rect2(0, 40, 32, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xqghp"]
-atlas = ExtResource("10_7yqno")
-region = Rect2(32, 40, 32, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pv6hu"]
 atlas = ExtResource("5_htj7d")
@@ -407,9 +395,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wlng2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m33t1")
 }],
 "loop": false,
 "name": &"pass-back",
@@ -427,9 +412,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lfvcm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pkxqp")
 }],
 "loop": false,
 "name": &"pass-front",
@@ -447,9 +429,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_je1ks")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xqghp")
 }],
 "loop": false,
 "name": &"pass-side",

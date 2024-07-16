@@ -29,7 +29,7 @@ func enter(msg := {}) -> void:
 
 
 func _on_pass_anim_frame():
+	var player = entity as Player
 	if anim_sprite.frame == 3:
-		var player = entity as Player
 		player.pass_ball()
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)
