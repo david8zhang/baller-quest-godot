@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=88 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cxajwyfoscorw" path="res://sprites/player/pass-side.png" id="10_7yqno"]
 [ext_resource type="Texture2D" uid="uid://dphrp0bgg8u7p" path="res://sprites/player/pass-front.png" id="10_aepsd"]
 [ext_resource type="Texture2D" uid="uid://b3epc1prnku73" path="res://sprites/player/pass-back.png" id="10_teiic"]
+[ext_resource type="Texture2D" uid="uid://d10j2l818c2yj" path="res://sprites/player/shoot-front.png" id="14_rlmax"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -263,6 +264,30 @@ region = Rect2(64, 120, 32, 40)
 atlas = ExtResource("5_htj7d")
 region = Rect2(96, 120, 32, 40)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk3vg"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86f86"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6jhk"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(64, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hko6b"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3kv5"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuwkc"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(64, 45, 32, 45)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_x8wx5"]
 animations = [{
 "frames": [{
@@ -494,6 +519,29 @@ animations = [{
 "loop": true,
 "name": &"run-side",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk3vg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86f86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6jhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hko6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3kv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuwkc")
+}],
+"loop": false,
+"name": &"shoot-front",
+"speed": 10.0
 }]
 
 [node name="Player" type="RigidBody2D"]
@@ -519,7 +567,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"pass-side"
+animation = &"shoot-front"
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")

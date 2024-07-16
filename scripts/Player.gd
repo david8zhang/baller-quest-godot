@@ -99,7 +99,7 @@ func handle_ball_collision(ball: Ball):
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
-	ball.global_position = self.global_position
+	ball.global_position = Vector2(self.global_position.x, self.global_position.y - 100)
 	add_sibling(ball)
 	ball.disable_player_detector()
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
@@ -122,7 +122,6 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 	var callable = Callable(self, "reset_shot_meter").bind(timer)
 	timer.connect("timeout", callable)
 	add_child(timer)
-	_state_machine.transition_to("IdleState", {})
 
 
 func reset_shot_meter(timer: Timer):
