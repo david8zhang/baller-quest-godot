@@ -2,6 +2,7 @@ class_name Ball
 extends RigidBody2D
 
 var screen_size
+var shot_status
 @onready var collider = $CollisionShape2D
 @onready var net_detector = $NetDetector/CollisionShape2D
 @onready var player_detector = $PlayerDetector/CollisionShape2D
@@ -12,13 +13,19 @@ func _ready():
 	sprite.scale = Vector2(3.5, 3.5)
 
 
-func enable_collider():
+func enable_rim_collider():
 	set_collision_mask_value(2, true)
-	set_collision_mask_value(4, true)
 
 
-func disable_collider():
+func disable_rim_collider():
 	set_collision_mask_value(2, false)
+
+
+func enable_ground_collider():
+	set_collision_mask_value(4, true)
+	
+
+func disable_ground_collider():
 	set_collision_mask_value(4, false)
 	
 
@@ -37,6 +44,14 @@ func _physics_process(delta):
 	var lower_bound = screen_size.y / 2
 	if global_position.x > right_bound || global_position.x < left_bound || global_position.y > lower_bound:
 		queue_free()
+		
+	if self.linear_velocity.y < 0:
+		disable_ground_collider()
+		disable_rim_collider()
+	elif self.linear_velocity.y > 0:
+		enable_ground_collider()
+		if shot_status == ShotMeter.SHOT_RESULT.MISS:
+			enable_rim_collider()
 
 
 func _on_net_detector_area_entered(area):

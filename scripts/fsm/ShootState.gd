@@ -22,29 +22,39 @@ func handle_input(input: InputEvent) -> void:
 		is_released = true
 
 func enter(msg:={}):
-	anim_sprite.play("shoot-front")
-	anim_sprite.frame_changed.connect(_shoot_anim_frame_changed)
-	anim_sprite.animation_finished.connect(_shoot_anim_completed)
+	anim_sprite.play("shoot-windup")
+	anim_sprite.animation_finished.connect(_shoot_windup_complete)
 	
 func exit():
 	is_released = false
 	
-func _shoot_anim_frame_changed():
+func _shoot_windup_complete():
 	var player = entity as Player
-	if anim_sprite.frame == 4:
-		player.shoot_ball(ShotMeter.SHOT_RESULT.MAKE)
-		anim_sprite.frame_changed.disconnect(_shoot_anim_frame_changed)
-		
-func _shoot_anim_completed():
+	anim_sprite.animation_finished.disconnect(_shoot_windup_complete)
+	anim_sprite.play("shoot-jump")
+	
+	var on_jump_complete_callable = Callable(self, "on_jump_complete")
+	var on_jump_peak_callable = Callable(self, "on_jump_peak")
+	player.jump(on_jump_complete_callable, on_jump_peak_callable, 0.5)
+
+
+func on_jump_complete():
 	var player = entity as Player
+	anim_sprite.play("shoot-land")
 	var timer = Timer.new()
 	timer.autostart = true
 	timer.one_shot = true
-	timer.wait_time = 0.5
+	timer.wait_time = 0.1
 	timer.timeout.connect(_follow_through_complete)
 	add_sibling(timer)
-	
-	
+
+
+func on_jump_peak():
+	var player = entity as Player
+	anim_sprite.play("shoot-release")
+	player.shoot_ball(shot_result)
+
+
 func _follow_through_complete():
 	var player = entity as Player
 	player._state_machine.transition_to("IdleState", {})

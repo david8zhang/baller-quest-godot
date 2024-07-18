@@ -102,13 +102,12 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 	ball.global_position = Vector2(self.global_position.x, self.global_position.y - 100)
 	add_sibling(ball)
 	ball.disable_player_detector()
+	ball.shot_status = shot_result
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		print("MAKE!")
-		ball.disable_collider()
 		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 50), 1.5)
 	else:
 		print("MISS!")
-		ball.enable_collider()
 		var x_target_miss_left = randi_range(hoop.global_position.x - 15, hoop.global_position.x - 10)
 		var x_target_miss_right = randi_range(hoop.global_position.x + 10, hoop.global_position.x + 15)
 		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
@@ -155,10 +154,37 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	add_child(on_arc_complete_timer)
 	
 
+func jump(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, duration_sec: float):
+	self.set_gravity_scale(1)
+	var velocity_x = 0
+	var velocity_y = ((self.global_position.y - 50) - self.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
+	self.linear_velocity = Vector2(velocity_x, velocity_y)
+	var jump_peak_timer = Timer.new()
+
+	jump_peak_timer.wait_time = duration_sec / 2
+	jump_peak_timer.one_shot = true
+	jump_peak_timer.autostart = true
+	jump_peak_timer.connect("timeout", jump_apex_cb)
+	add_child(jump_peak_timer)
+	
+	var jump_complete_timer = Timer.new()
+	jump_complete_timer.wait_time = duration_sec + 0.25
+	jump_complete_timer.one_shot = true
+	jump_complete_timer.autostart = true
+	var jump_complete_cb = Callable(self, "on_jump_complete").bind(custom_jump_complete_cb)
+	jump_complete_timer.connect("timeout", jump_complete_cb)
+	add_child(jump_complete_timer)
+	
+	
+func on_jump_complete(custom_jump_complete_cb: Callable):
+	self.set_gravity_scale(0)
+	self.linear_velocity = Vector2(0, 0)
+	custom_jump_complete_cb.call()
+	
+
 func on_ball_arc_complete(ball: Ball, timer: Timer):
-	can_gain_possession = true
-	ball.enable_collider()
 	ball.enable_player_detector()
+	can_gain_possession = true
 	timer.queue_free()
 	
 

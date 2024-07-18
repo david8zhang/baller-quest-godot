@@ -264,29 +264,29 @@ region = Rect2(64, 120, 32, 40)
 atlas = ExtResource("5_htj7d")
 region = Rect2(96, 120, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hk3vg"]
-atlas = ExtResource("14_rlmax")
-region = Rect2(0, 0, 32, 45)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_86f86"]
-atlas = ExtResource("14_rlmax")
-region = Rect2(32, 0, 32, 45)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b6jhk"]
-atlas = ExtResource("14_rlmax")
-region = Rect2(64, 0, 32, 45)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hko6b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1b22c"]
 atlas = ExtResource("14_rlmax")
 region = Rect2(0, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r3kv5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_of6rq"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(64, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_us71u"]
 atlas = ExtResource("14_rlmax")
 region = Rect2(32, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tuwkc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pwtb"]
 atlas = ExtResource("14_rlmax")
-region = Rect2(64, 45, 32, 45)
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxgso"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq80u"]
+atlas = ExtResource("14_rlmax")
+region = Rect2(64, 0, 32, 45)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x8wx5"]
 animations = [{
@@ -522,25 +522,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hk3vg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_86f86")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b6jhk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hko6b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r3kv5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tuwkc")
+"texture": SubResource("AtlasTexture_1b22c")
 }],
 "loop": false,
-"name": &"shoot-front",
+"name": &"shoot-jump",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_of6rq")
+}],
+"loop": false,
+"name": &"shoot-land",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_us71u")
+}],
+"loop": false,
+"name": &"shoot-release",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pwtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxgso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cq80u")
+}],
+"loop": false,
+"name": &"shoot-windup",
 "speed": 10.0
 }]
 
@@ -567,7 +582,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"shoot-front"
+animation = &"shoot-land"
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")
