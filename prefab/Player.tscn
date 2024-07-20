@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=97 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -18,7 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://cxajwyfoscorw" path="res://sprites/player/pass-side.png" id="10_7yqno"]
 [ext_resource type="Texture2D" uid="uid://dphrp0bgg8u7p" path="res://sprites/player/pass-front.png" id="10_aepsd"]
 [ext_resource type="Texture2D" uid="uid://b3epc1prnku73" path="res://sprites/player/pass-back.png" id="10_teiic"]
+[ext_resource type="Texture2D" uid="uid://v6fcbvv7caor" path="res://sprites/player/receive-pass-front.png" id="13_3hk8g"]
 [ext_resource type="Texture2D" uid="uid://d10j2l818c2yj" path="res://sprites/player/shoot-front.png" id="14_rlmax"]
+[ext_resource type="Script" path="res://prefab/ReceivePassState.gd" id="20_hcken"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -116,37 +118,37 @@ region = Rect2(32, 80, 32, 40)
 atlas = ExtResource("5_eq5ny")
 region = Rect2(64, 80, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gr42f"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvghe"]
 atlas = ExtResource("8_vsoty")
-region = Rect2(0, 0, 32, 40)
+region = Rect2(0, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q0l1c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xqib"]
 atlas = ExtResource("8_vsoty")
-region = Rect2(32, 0, 32, 40)
+region = Rect2(32, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wui3l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmvhb"]
 atlas = ExtResource("8_vsoty")
-region = Rect2(0, 40, 32, 40)
+region = Rect2(0, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dk6kg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3f6q"]
 atlas = ExtResource("8_vsoty")
-region = Rect2(32, 40, 32, 40)
+region = Rect2(32, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a4nds"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3gu5"]
 atlas = ExtResource("9_cpqb8")
-region = Rect2(0, 0, 32, 40)
+region = Rect2(0, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y803a"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5cbr"]
 atlas = ExtResource("9_cpqb8")
-region = Rect2(32, 0, 32, 40)
+region = Rect2(32, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mbs18"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy3je"]
 atlas = ExtResource("9_cpqb8")
-region = Rect2(0, 40, 32, 40)
+region = Rect2(0, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kqr2s"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_volfa"]
 atlas = ExtResource("9_cpqb8")
-region = Rect2(32, 40, 32, 40)
+region = Rect2(32, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ad1bb"]
 atlas = ExtResource("10_teiic")
@@ -195,6 +197,34 @@ region = Rect2(64, 0, 32, 40)
 [sub_resource type="AtlasTexture" id="AtlasTexture_je1ks"]
 atlas = ExtResource("10_7yqno")
 region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3leme"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27pba"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v018e"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(64, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4hg2"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkrba"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osklc"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxw40"]
+atlas = ExtResource("13_3hk8g")
+region = Rect2(32, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pv6hu"]
 atlas = ExtResource("5_htj7d")
@@ -376,16 +406,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gr42f")
+"texture": SubResource("AtlasTexture_hvghe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q0l1c")
+"texture": SubResource("AtlasTexture_6xqib")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wui3l")
+"texture": SubResource("AtlasTexture_nmvhb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dk6kg")
+"texture": SubResource("AtlasTexture_m3f6q")
 }],
 "loop": true,
 "name": &"idle-front",
@@ -393,16 +423,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a4nds")
+"texture": SubResource("AtlasTexture_x3gu5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y803a")
+"texture": SubResource("AtlasTexture_j5cbr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mbs18")
+"texture": SubResource("AtlasTexture_gy3je")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kqr2s")
+"texture": SubResource("AtlasTexture_volfa")
 }],
 "loop": true,
 "name": &"idle-side",
@@ -457,6 +487,32 @@ animations = [{
 }],
 "loop": false,
 "name": &"pass-side",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3leme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27pba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v018e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4hg2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkrba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osklc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxw40")
+}],
+"loop": true,
+"name": &"receive-pass-front",
 "speed": 10.0
 }, {
 "frames": [{
@@ -582,7 +638,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"shoot-land"
+animation = &"receive-pass-front"
 
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")
@@ -599,3 +655,6 @@ script = ExtResource("6_rdlcp")
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("6_1wvpm")
+
+[node name="ReceivePassState" type="Node" parent="StateMachine"]
+script = ExtResource("20_hcken")

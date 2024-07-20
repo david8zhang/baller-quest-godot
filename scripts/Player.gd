@@ -36,8 +36,6 @@ func is_selected():
 
 
 func update_pass_target(velocity: Vector2):
-	if pass_target != null:
-		pass_target.modulate = Color(1, 1, 1)
 	var src_position = global_position + velocity
 	var closest_player
 	var min_dist = INF
@@ -47,7 +45,9 @@ func update_pass_target(velocity: Vector2):
 			if dist < min_dist:
 				min_dist = dist
 				closest_player = player
-	closest_player.show_pass_cursor()
+	if pass_target != null and pass_target != closest_player:
+		pass_target._state_machine.transition_to("IdleState")
+	closest_player._state_machine.transition_to("ReceivePassState", { "pass_source": self })
 	pass_target = closest_player
 
 
@@ -58,14 +58,6 @@ func handle_input(input: InputEvent):
 		if Input.is_action_just_pressed("pass"):
 			if pass_target != null:
 				_state_machine.transition_to("PassState", {})
-
-
-func enable_pass_receipt():
-	can_gain_possession = true
-
-
-func show_pass_cursor():
-	self.modulate = Color(1, 1, 0)
 
 
 func pass_ball():
