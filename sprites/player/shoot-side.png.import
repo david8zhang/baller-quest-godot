@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ogxwgr7wjaom"
-path="res://.godot/imported/receive-pass-side.png-e4e6d53823cc7e79dcd1cb7a19792fd5.ctex"
+uid="uid://bamie1uq2aa6e"
+path="res://.godot/imported/shoot-side.png-2164594461e309790dbe82e8e6528289.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/receive-pass-side.png"
-dest_files=["res://.godot/imported/receive-pass-side.png-e4e6d53823cc7e79dcd1cb7a19792fd5.ctex"]
+source_file="res://sprites/player/shoot-side.png"
+dest_files=["res://.godot/imported/shoot-side.png-2164594461e309790dbe82e8e6528289.ctex"]
 
 [params]
 
