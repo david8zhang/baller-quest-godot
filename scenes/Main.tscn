@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=6 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
+[ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_b25lt"]
 a = Vector2(-600, 2.08165e-12)
@@ -20,6 +21,8 @@ player_scene = ExtResource("1_rkvvu")
 
 [node name="Hoop" parent="." instance=ExtResource("3_4jcto")]
 position = Vector2(2.08165e-12, -160)
+
+[node name="Court" parent="." instance=ExtResource("4_mhnap")]
 
 [node name="Ground" type="StaticBody2D" parent="."]
 collision_layer = 8

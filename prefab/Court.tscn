@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmvfbq5jqf42l"]
+
+[ext_resource type="Texture2D" uid="uid://c1rasj2dwqls7" path="res://sprites/objects/court.png" id="1_xqhbf"]
+
+[node name="Court" type="Node2D"]
+
+[node name="Court1" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(0, 93)
+scale = Vector2(1, 0.98375)
+texture = ExtResource("1_xqhbf")
+
+[node name="Court2" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(0, 880)
+scale = Vector2(1, 0.98375)
+texture = ExtResource("1_xqhbf")
+flip_v = true
