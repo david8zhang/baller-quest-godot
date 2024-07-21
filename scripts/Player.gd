@@ -25,9 +25,9 @@ func _ready():
 		2 * highlight.scale.x,
 		2 * highlight.scale.y
 	)
-	highlight.global_position = Vector2(
-		anim_sprite.global_position.x,
-		anim_sprite.global_position.y + 40,
+	highlight.position = Vector2(
+		anim_sprite.position.x,
+		anim_sprite.position.y + 40,
 	)
 
 
@@ -63,13 +63,13 @@ func handle_input(input: InputEvent):
 func pass_ball():
 	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
-	ball.position.x = self.global_position.x
-	ball.position.y = self.global_position.y
+	ball.position.x = self.position.x
+	ball.position.y = self.position.y
 	add_sibling(ball)
 	pass_target.can_gain_possession = true
 	can_gain_possession = false
 	var tween = create_tween()
-	tween.tween_property(ball, "position", pass_target.global_position, 0.5)
+	tween.tween_property(ball, "position", pass_target.position, 0.5)
 	tween.finished.connect(on_completed_pass)
 
 
@@ -91,7 +91,7 @@ func handle_ball_collision(ball: Ball):
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
-	ball.global_position = Vector2(self.global_position.x, self.global_position.y - 100)
+	ball.position = Vector2(self.position.x, self.position.y - 100)
 	add_sibling(ball)
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
@@ -100,8 +100,8 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
 		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 50), 1.5)
 	else:
 		print("MISS!")
-		var x_target_miss_left = randi_range(hoop.global_position.x - 15, hoop.global_position.x - 10)
-		var x_target_miss_right = randi_range(hoop.global_position.x + 10, hoop.global_position.x + 15)
+		var x_target_miss_left = randi_range(hoop.position.x - 15, hoop.position.x - 10)
+		var x_target_miss_right = randi_range(hoop.position.x + 10, hoop.position.x + 15)
 		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
 		create_arc(ball, Vector2(x_target, hoop.global_position.y - 10), 1.5)
 		
@@ -149,7 +149,7 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 func jump(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, duration_sec: float):
 	self.set_gravity_scale(1)
 	var velocity_x = 0
-	var velocity_y = ((self.global_position.y - 50) - self.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
+	var velocity_y = ((self.position.y - 50) - self.position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	self.linear_velocity = Vector2(velocity_x, velocity_y)
 	var jump_peak_timer = Timer.new()
 

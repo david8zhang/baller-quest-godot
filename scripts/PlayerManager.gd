@@ -4,6 +4,7 @@ extends Node
 @export var player_scene: PackedScene
 var selected_player: Player = null
 var players: Array = []
+var is_ready = false
 
 const PLAYER_POSITIONS = [
 	Vector2(-400, 0),
@@ -18,7 +19,7 @@ func _ready():
 	var i = 0
 	for pos in PLAYER_POSITIONS:
 		var new_player = player_scene.instantiate()
-		new_player.global_position = pos
+		new_player.position = pos
 		players.append(new_player)
 		add_child(new_player)
 		new_player.player_name = "Player " + str(i)
@@ -27,6 +28,7 @@ func _ready():
 	selected_player.select()
 	selected_player.has_ball = true
 	selected_player._state_machine.transition_to("IdleState")
+	is_ready = true
 
 
 func switch_to_player(player: Player):
@@ -34,3 +36,8 @@ func switch_to_player(player: Player):
 	selected_player.deselect()
 	selected_player = player
 	selected_player.select()
+	
+
+func hide_players():
+	for p in players:
+		p.hide()

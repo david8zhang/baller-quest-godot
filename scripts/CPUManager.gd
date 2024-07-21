@@ -17,7 +17,7 @@ func _ready():
 	var i = 0
 	for pos in CPU_POSITIONS:
 		var new_cpu = cpu_scene.instantiate()
-		new_cpu.global_position = pos
+		new_cpu.position = pos
 		cpus.append(new_cpu)
 		add_child(new_cpu)
 		i += 1

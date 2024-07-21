@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bp4p74n22uoph"]
+[gd_scene load_steps=7 format=3 uid="uid://bp4p74n22uoph"]
 
 [ext_resource type="Script" path="res://scripts/Hoop.gd" id="1_xersv"]
 [ext_resource type="Texture2D" uid="uid://d1x8i84hgonq8" path="res://sprites/objects/backboard.png" id="2_sdxvq"]
 [ext_resource type="Texture2D" uid="uid://cvv33trh2olkr" path="res://sprites/objects/net.png" id="3_wf4pc"]
+[ext_resource type="Texture2D" uid="uid://dg551b6jobqk6" path="res://sprites/objects/hoop-stand-back.png" id="4_m006t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w45wc"]
 size = Vector2(48, 9)
@@ -38,3 +39,8 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NetCollisionArea"]
 position = Vector2(0.25, 28)
 shape = SubResource("RectangleShape2D_v8qat")
+
+[node name="BackSprite" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(3, 3)
+texture = ExtResource("4_m006t")

@@ -25,7 +25,7 @@ func enter(msg:={}):
 	var anim_name = "shoot-%s-windup" % _get_shoot_anim_angle()
 	if anim_name == "shoot-side-windup":
 		var player = entity as Player
-		var x_diff = player.global_position.x - player.hoop.global_position.x
+		var x_diff = player.global_position.x - player.hoop.position.x
 		anim_sprite.flip_h = x_diff > 0
 	else:
 		anim_sprite.flip_h = false
