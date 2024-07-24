@@ -30,7 +30,6 @@ func _ready():
 		anim_sprite.position.y + 40,
 	)
 
-
 func is_selected():
 	return player_manager.selected_player == self
 

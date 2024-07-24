@@ -7,6 +7,7 @@ extends StaticBody2D
 
 func _ready():
 	net.z_index = 2000
+	back_sprite.modulate = Color(1, 1, 1, 0.5)
 
 func display_back():
 	net.hide()
