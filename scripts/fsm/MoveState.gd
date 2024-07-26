@@ -19,8 +19,6 @@ func physics_update(_delta: float) -> void:
 		velocity = velocity.normalized() * SPEED
 		player.update_pass_target(velocity)
 	player.global_position += velocity * _delta
-	player.global_position.x = clamp(player.global_position.x, -screen_size.x / 2, screen_size.x / 2)
-	player.global_position.y = clamp(player.global_position.y, -screen_size.y / 2, screen_size.y / 2)
 	if velocity.x != 0:
 		anim_sprite.flip_h = velocity.x < 0
 	
@@ -45,4 +43,6 @@ func handle_input(input: InputEvent) -> void:
 
 func enter(msg:={}) -> void:
 	var player = entity as Player
-	screen_size = player.get_viewport_rect().size
+	var court_size = player.court.get_size()
+	print(court_size)
+	print(player.court.global_position)

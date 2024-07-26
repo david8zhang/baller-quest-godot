@@ -9,6 +9,7 @@ var player_name: String = ""
 
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
+@onready var court: Court = get_node("/root/Main/Court") as Court
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
@@ -184,6 +185,7 @@ func on_ball_reached_apex(ball: Ball):
 
 
 func select():
+	player_manager.camera.reparent(self)
 	highlight.visible = true
 
 

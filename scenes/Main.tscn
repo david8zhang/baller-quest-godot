@@ -15,6 +15,10 @@ y_sort_enabled = true
 script = ExtResource("1_bwo0o")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -500
+limit_top = -300
+limit_right = 500
+limit_smoothed = true
 
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -33,3 +37,4 @@ shape = SubResource("SegmentShape2D_b25lt")
 one_way_collision = true
 
 [node name="Court" parent="." instance=ExtResource("4_mhnap")]
+position = Vector2(2.08165e-12, 500)

@@ -4,6 +4,7 @@ extends Node2D
 @onready var court = $Court
 @onready var player_manager = $PlayerManager as PlayerManager
 @onready var hoop = $Hoop as Hoop
+@onready var camera_2d = $Camera2D
 var is_flipped = false
 var is_rotating = false
 var cached_positions = {}
@@ -15,7 +16,6 @@ func rotate_camera():
 	cached_positions["hoop"] = hoop.global_position
 	
 	if not is_rotating:
-		print("Rotating court!")
 		is_rotating = true
 		hoop.hide()
 		player_manager.reparent(court)
