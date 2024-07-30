@@ -18,6 +18,7 @@ script = ExtResource("1_bwo0o")
 limit_left = -500
 limit_top = -300
 limit_right = 500
+limit_bottom = 1110
 limit_smoothed = true
 
 [node name="PlayerManager" type="Node2D" parent="."]

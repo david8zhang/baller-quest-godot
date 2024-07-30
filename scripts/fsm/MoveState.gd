@@ -19,6 +19,13 @@ func physics_update(_delta: float) -> void:
 		velocity = velocity.normalized() * SPEED
 		player.update_pass_target(velocity)
 	player.global_position += velocity * _delta
+	
+	# Ensure player does not exceed court bounds
+	var court_size = player.court.get_size()
+	var court_position = player.court.global_position
+	player.global_position.y = clamp(player.global_position.y, court_position.y - court_size.y / 2, court_position.y + court_size.y / 2)
+	player.global_position.x = clamp(player.global_position.x, court_position.x - court_size.x / 2, court_position.x + court_size.x / 2)
+	
 	if velocity.x != 0:
 		anim_sprite.flip_h = velocity.x < 0
 	
@@ -44,5 +51,3 @@ func handle_input(input: InputEvent) -> void:
 func enter(msg:={}) -> void:
 	var player = entity as Player
 	var court_size = player.court.get_size()
-	print(court_size)
-	print(player.court.global_position)
