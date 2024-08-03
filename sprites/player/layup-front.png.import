@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bepbmn4shfvj5"
-path="res://.godot/imported/layup-front-4.png-94c36dc743e62a7b0873f6cd3cbd76ed.ctex"
+uid="uid://btt64rbboglxt"
+path="res://.godot/imported/layup-front.png-f6b981fb9450042ae1f2329ecfde55ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/layups/layup-front/layup-front-4.png"
-dest_files=["res://.godot/imported/layup-front-4.png-94c36dc743e62a7b0873f6cd3cbd76ed.ctex"]
+source_file="res://sprites/player/layup-front.png"
+dest_files=["res://.godot/imported/layup-front.png-f6b981fb9450042ae1f2329ecfde55ed.ctex"]
 
 [params]
 

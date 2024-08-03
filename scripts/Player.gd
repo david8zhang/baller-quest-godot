@@ -49,12 +49,20 @@ func update_pass_target(velocity: Vector2):
 		pass_target._state_machine.transition_to("IdleState")
 	closest_player._state_machine.transition_to("ReceivePassState", { "pass_source": self })
 	pass_target = closest_player
+	
+
+func is_within_layup_range():
+	var dist_to_hoop = global_position.distance_to(hoop.global_position)
+	return dist_to_hoop <= 50
 
 
 func handle_input(input: InputEvent):
 	if is_selected() and has_ball:
 		if Input.is_action_pressed("shoot_ball"):
-			_state_machine.transition_to("ShootState", {})
+			if is_within_layup_range():
+				_state_machine.transition_to("ShootState", {})
+			else:
+				_state_machine.transition_to("LayupState", {})
 		if Input.is_action_just_pressed("pass"):
 			if pass_target != null:
 				_state_machine.transition_to("PassState", {})
