@@ -4,7 +4,7 @@ extends Node2D
 @onready var court = $Court
 @onready var player_manager = $PlayerManager as PlayerManager
 @onready var hoop = $Hoop as Hoop
-@onready var camera_2d = $Camera2D
+@onready var camera = $Camera2D
 var is_flipped = false
 var is_rotating = false
 var cached_positions = {}
@@ -22,12 +22,13 @@ func rotate_camera():
 		hoop.reparent(court)
 		var tween = create_tween()
 		var final_rotation_rad = deg_to_rad(court.rotation_degrees) + deg_to_rad(180)
-		tween.tween_property(court, "rotation", final_rotation_rad, 0.25)
+		tween.tween_property(court, "rotation", final_rotation_rad, 1.0)
 		tween.finished.connect(on_court_rotation_complete)
 		
 		
 func _unhandled_input(event):
 	if Input.is_action_just_released("rotate_camera"):
+		camera.reparent(self)
 		rotate_camera()
 
 
@@ -62,3 +63,4 @@ func on_court_rotation_complete():
 	player_manager.reparent(self)
 	hoop.reparent(self)
 	hoop.show()
+	player_manager.reset_camera()

@@ -10,3 +10,4 @@ script = ExtResource("1_sieqa")
 z_index = -10
 position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("1_xqhbf")
+offset = Vector2(2.08165e-12, 500)

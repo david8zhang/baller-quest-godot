@@ -53,16 +53,16 @@ func update_pass_target(velocity: Vector2):
 
 func is_within_layup_range():
 	var dist_to_hoop = global_position.distance_to(hoop.global_position)
-	return dist_to_hoop <= 50
+	return dist_to_hoop <= 250
 
 
 func handle_input(input: InputEvent):
 	if is_selected() and has_ball:
 		if Input.is_action_pressed("shoot_ball"):
 			if is_within_layup_range():
-				_state_machine.transition_to("ShootState", {})
-			else:
 				_state_machine.transition_to("LayupState", {})
+			else:
+				_state_machine.transition_to("ShootState", {})
 		if Input.is_action_just_pressed("pass"):
 			if pass_target != null:
 				_state_machine.transition_to("PassState", {})
@@ -84,6 +84,7 @@ func pass_ball():
 func on_completed_pass():
 	can_gain_possession = true
 	_state_machine.transition_to("IdleState", {})
+	player_manager.reset_camera()
 
 
 func handle_ball_collision(ball: Ball):
@@ -96,22 +97,22 @@ func handle_ball_collision(ball: Ball):
 		_state_machine.transition_to("IdleState", {})
 
 
-func shoot_ball(shot_result: ShotMeter.SHOT_RESULT):
+func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):
 	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
-	ball.position = Vector2(self.position.x, self.position.y - 100)
+	ball.position = start_position
 	add_sibling(ball)
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
-		print("MAKE!")
-		create_arc(ball, Vector2(hoop.position.x, hoop.position.y - 50), 1.5)
+		var y_diff = hoop.net.global_position.y - ball.global_position.y
+		create_arc(ball, Vector2(hoop.position.x, hoop.net.global_position.y), arc_duration)
 	else:
 		print("MISS!")
 		var x_target_miss_left = randi_range(hoop.position.x - 15, hoop.position.x - 10)
 		var x_target_miss_right = randi_range(hoop.position.x + 10, hoop.position.x + 15)
 		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
-		create_arc(ball, Vector2(x_target, hoop.global_position.y - 10), 1.5)
+		create_arc(ball, Vector2(x_target, hoop.global_position.y - 10), arc_duration)
 		
 	# Create timer to reset shot meter
 	var timer := Timer.new()
@@ -133,6 +134,8 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	ball.z_index = hoop.net.z_index + 1
 	var velocity_x = (dest_position.x - ball.global_position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
+	print(velocity_x)
+	print(velocity_y)
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
 	
 	# Do stuff when ball has reached peak of its arc
@@ -175,6 +178,28 @@ func jump(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, duration_se
 	jump_complete_timer.connect("timeout", jump_complete_cb)
 	add_child(jump_complete_timer)
 	
+
+func jump_toward(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, duration_sec: float, dest_position: Vector2):
+	self.set_gravity_scale(1)
+	var velocity_x = (dest_position.x - self.global_position.x) / duration_sec
+	var velocity_y = (dest_position.y - self.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
+	self.linear_velocity = Vector2(velocity_x, velocity_y)
+	var jump_peak_timer = Timer.new()
+
+	jump_peak_timer.wait_time = duration_sec / 2
+	jump_peak_timer.one_shot = true
+	jump_peak_timer.autostart = true
+	jump_peak_timer.connect("timeout", jump_apex_cb)
+	add_child(jump_peak_timer)
+	
+	var jump_complete_timer = Timer.new()
+	jump_complete_timer.wait_time = duration_sec
+	jump_complete_timer.one_shot = true
+	jump_complete_timer.autostart = true
+	var jump_complete_cb = Callable(self, "on_jump_complete").bind(custom_jump_complete_cb)
+	jump_complete_timer.connect("timeout", jump_complete_cb)
+	add_child(jump_complete_timer)
+	
 	
 func on_jump_complete(custom_jump_complete_cb: Callable):
 	self.set_gravity_scale(0)
@@ -194,6 +219,7 @@ func on_ball_reached_apex(ball: Ball):
 
 func select():
 	player_manager.camera.reparent(self)
+	player_manager.camera.position = Vector2(0, 0)
 	highlight.visible = true
 
 

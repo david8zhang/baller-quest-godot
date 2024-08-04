@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=8 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scenes/Game.gd" id="1_bwo0o"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
+[ext_resource type="Script" path="res://scenes/Camera2D.gd" id="2_2agi2"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 
@@ -15,11 +16,9 @@ y_sort_enabled = true
 script = ExtResource("1_bwo0o")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-limit_left = -500
-limit_top = -300
-limit_right = 500
-limit_bottom = 1110
 limit_smoothed = true
+editor_draw_limits = true
+script = ExtResource("2_2agi2")
 
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -38,4 +37,4 @@ shape = SubResource("SegmentShape2D_b25lt")
 one_way_collision = true
 
 [node name="Court" parent="." instance=ExtResource("4_mhnap")]
-position = Vector2(2.08165e-12, 500)
+position = Vector2(2.08165e-12, 2.08165e-12)

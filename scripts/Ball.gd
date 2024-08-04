@@ -39,13 +39,6 @@ func enable_player_detector():
 
 
 func _physics_process(delta):
-	screen_size = get_viewport_rect().size
-	var right_bound = screen_size.x / 2
-	var left_bound = -screen_size.x / 2
-	var lower_bound = screen_size.y / 2
-	if position.x > right_bound || position.x < left_bound || position.y > lower_bound:
-		queue_free()
-		
 	if self.linear_velocity.y < 0:
 		disable_ground_collider()
 		disable_rim_collider()

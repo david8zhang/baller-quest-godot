@@ -55,3 +55,9 @@ func switch_to_player(player: Player):
 func hide_players():
 	for p in players:
 		p.hide()
+		
+		
+func reset_camera():
+	camera.reparent(selected_player)
+	camera.position = Vector2(0, 0)
+	camera.align()
