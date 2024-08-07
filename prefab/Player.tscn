@@ -22,8 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://v6fcbvv7caor" path="res://sprites/player/receive-pass-front.png" id="13_3hk8g"]
 [ext_resource type="Texture2D" uid="uid://d10j2l818c2yj" path="res://sprites/player/shoot-front.png" id="14_rlmax"]
 [ext_resource type="Texture2D" uid="uid://bamie1uq2aa6e" path="res://sprites/player/shoot-side.png" id="16_iu3be"]
-[ext_resource type="Script" path="res://prefab/ReceivePassState.gd" id="20_hcken"]
-[ext_resource type="Script" path="res://prefab/LayupState.gd" id="23_ndr80"]
+[ext_resource type="Script" path="res://scripts/fsm/ReceivePassState.gd" id="23_p87nn"]
+[ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -758,7 +758,7 @@ script = ExtResource("6_rdlcp")
 script = ExtResource("6_1wvpm")
 
 [node name="ReceivePassState" type="Node" parent="StateMachine"]
-script = ExtResource("20_hcken")
+script = ExtResource("23_p87nn")
 
 [node name="LayupState" type="Node" parent="StateMachine"]
-script = ExtResource("23_ndr80")
+script = ExtResource("24_2y7dy")

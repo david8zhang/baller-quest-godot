@@ -84,7 +84,6 @@ func pass_ball():
 func on_completed_pass():
 	can_gain_possession = true
 	_state_machine.transition_to("IdleState", {})
-	player_manager.reset_camera()
 
 
 func handle_ball_collision(ball: Ball):

@@ -9,6 +9,12 @@ var is_flipped = false
 var is_rotating = false
 var cached_positions = {}
 
+func _ready():
+	camera.limit_left = -500
+	camera.limit_right = 500
+	camera.limit_top = -300
+	camera.limit_bottom = 1110
+
 
 func rotate_camera():
 	for p in player_manager.players:
@@ -37,6 +43,12 @@ func _physics_process(delta):
 		for p in player_manager.players:
 			var player = p as Player
 			player.global_rotation_degrees = 0
+			
+			
+func set_camera_limit():
+	camera.limit_top = -1300 if is_flipped else -300
+	camera.limit_bottom = 300 if is_flipped else 1110
+	print(camera.limit_top)
 
 
 func on_court_rotation_complete():
@@ -64,3 +76,4 @@ func on_court_rotation_complete():
 	hoop.reparent(self)
 	hoop.show()
 	player_manager.reset_camera()
+	set_camera_limit()

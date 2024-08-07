@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=7 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scenes/Game.gd" id="1_bwo0o"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
-[ext_resource type="Script" path="res://scenes/Camera2D.gd" id="2_2agi2"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 
@@ -18,7 +17,6 @@ script = ExtResource("1_bwo0o")
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
 editor_draw_limits = true
-script = ExtResource("2_2agi2")
 
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
