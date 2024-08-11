@@ -8,7 +8,7 @@ var has_ball: bool = false
 var player_name: String = ""
 
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
-@onready var hoop: Hoop = get_node("/root/Main/Hoop") as Hoop
+@onready var hoop: Hoop = get_node("/root/Main/Hoop1") as Hoop
 @onready var court: Court = get_node("/root/Main/Court") as Court
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
@@ -103,11 +103,13 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, s
 	add_sibling(ball)
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
+	var camera = player_manager.camera as GameCamera
+	camera.focus_on(ball)
+	
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		var y_diff = hoop.net.global_position.y - ball.global_position.y
 		create_arc(ball, Vector2(hoop.position.x, hoop.net.global_position.y), arc_duration)
 	else:
-		print("MISS!")
 		var x_target_miss_left = randi_range(hoop.position.x - 15, hoop.position.x - 10)
 		var x_target_miss_right = randi_range(hoop.position.x + 10, hoop.position.x + 15)
 		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
@@ -133,8 +135,6 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	ball.z_index = hoop.net.z_index + 1
 	var velocity_x = (dest_position.x - ball.global_position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
-	print(velocity_x)
-	print(velocity_y)
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
 	
 	# Do stuff when ball has reached peak of its arc

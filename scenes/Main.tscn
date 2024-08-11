@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=8 format=3 uid="uid://dsr0v11ggewrq"]
 
-[ext_resource type="Script" path="res://scenes/Game.gd" id="1_bwo0o"]
+[ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ckvlo"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 
@@ -12,19 +13,23 @@ b = Vector2(600, 2.08165e-12)
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_bwo0o")
+script = ExtResource("1_ja5kq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
 editor_draw_limits = true
+script = ExtResource("2_ckvlo")
 
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_xoi36")
 player_scene = ExtResource("1_rkvvu")
 
-[node name="Hoop" parent="." instance=ExtResource("3_4jcto")]
+[node name="Hoop1" parent="." instance=ExtResource("3_4jcto")]
 position = Vector2(2.08165e-12, -160)
+
+[node name="Hoop2" parent="." instance=ExtResource("3_4jcto")]
+position = Vector2(0, 997)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 collision_layer = 8
