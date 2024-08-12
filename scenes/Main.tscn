@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=9 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ckvlo"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
+[ext_resource type="Script" path="res://scripts/CPUManager.gd" id="7_ijyjr"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_b25lt"]
 a = Vector2(-600, 2.08165e-12)
@@ -23,6 +24,11 @@ script = ExtResource("2_ckvlo")
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_xoi36")
+player_scene = ExtResource("1_rkvvu")
+
+[node name="CPUManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("7_ijyjr")
 player_scene = ExtResource("1_rkvvu")
 
 [node name="Hoop1" parent="." instance=ExtResource("3_4jcto")]

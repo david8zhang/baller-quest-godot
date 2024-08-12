@@ -1,11 +1,9 @@
 class_name PlayerManager
-extends Node
+extends Manager
 
-@export var player_scene: PackedScene
 var camera: Camera2D
 
 var selected_player: Player = null
-var players: Array = []
 var is_ready = false
 
 const PLAYER_POSITIONS = [
@@ -18,15 +16,8 @@ const PLAYER_POSITIONS = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var i = 0
 	camera = get_node("../Camera2D") as Camera2D
-	for pos in PLAYER_POSITIONS:
-		var new_player = player_scene.instantiate()
-		new_player.position = pos
-		players.append(new_player)
-		add_child(new_player)
-		new_player.player_name = "Player " + str(i)
-		i += 1
+	init_players(PLAYER_POSITIONS)
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true

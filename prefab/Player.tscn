@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=116 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -19,11 +19,13 @@
 [ext_resource type="Texture2D" uid="uid://dphrp0bgg8u7p" path="res://sprites/player/pass-front.png" id="10_aepsd"]
 [ext_resource type="Texture2D" uid="uid://btt64rbboglxt" path="res://sprites/player/layup-front.png" id="10_mnwjc"]
 [ext_resource type="Texture2D" uid="uid://b3epc1prnku73" path="res://sprites/player/pass-back.png" id="10_teiic"]
+[ext_resource type="Texture2D" uid="uid://bioh6ag8pg712" path="res://sprites/player/onball-defend-front.png" id="11_wd22y"]
 [ext_resource type="Texture2D" uid="uid://v6fcbvv7caor" path="res://sprites/player/receive-pass-front.png" id="13_3hk8g"]
 [ext_resource type="Texture2D" uid="uid://d10j2l818c2yj" path="res://sprites/player/shoot-front.png" id="14_rlmax"]
 [ext_resource type="Texture2D" uid="uid://bamie1uq2aa6e" path="res://sprites/player/shoot-side.png" id="16_iu3be"]
 [ext_resource type="Script" path="res://scripts/fsm/ReceivePassState.gd" id="23_p87nn"]
 [ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
+[ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -121,19 +123,19 @@ region = Rect2(32, 80, 32, 40)
 atlas = ExtResource("5_eq5ny")
 region = Rect2(64, 80, 32, 40)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hvghe"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_86qfu"]
 atlas = ExtResource("8_vsoty")
 region = Rect2(0, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6xqib"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ov4d"]
 atlas = ExtResource("8_vsoty")
 region = Rect2(32, 0, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nmvhb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_os03e"]
 atlas = ExtResource("8_vsoty")
 region = Rect2(0, 45, 32, 45)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m3f6q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfddg"]
 atlas = ExtResource("8_vsoty")
 region = Rect2(32, 45, 32, 45)
 
@@ -171,6 +173,22 @@ region = Rect2(0, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_th64u"]
 atlas = ExtResource("10_mnwjc")
+region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fehey"]
+atlas = ExtResource("11_wd22y")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_siqnw"]
+atlas = ExtResource("11_wd22y")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fny15"]
+atlas = ExtResource("11_wd22y")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkdth"]
+atlas = ExtResource("11_wd22y")
 region = Rect2(32, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ad1bb"]
@@ -449,16 +467,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hvghe")
+"texture": SubResource("AtlasTexture_86qfu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6xqib")
+"texture": SubResource("AtlasTexture_8ov4d")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nmvhb")
+"texture": SubResource("AtlasTexture_os03e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m3f6q")
+"texture": SubResource("AtlasTexture_hfddg")
 }],
 "loop": true,
 "name": &"idle-front",
@@ -499,6 +517,23 @@ animations = [{
 }],
 "loop": false,
 "name": &"layup-front",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fehey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_siqnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fny15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkdth")
+}],
+"loop": true,
+"name": &"onball-defend-front",
 "speed": 10.0
 }, {
 "frames": [{
@@ -738,7 +773,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"layup-front"
+animation = &"onball-defend-front"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="StateMachine" type="Node2D" parent="."]
@@ -762,3 +797,6 @@ script = ExtResource("23_p87nn")
 
 [node name="LayupState" type="Node" parent="StateMachine"]
 script = ExtResource("24_2y7dy")
+
+[node name="DefendState" type="Node" parent="StateMachine"]
+script = ExtResource("26_7vp1i")
