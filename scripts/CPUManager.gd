@@ -11,4 +11,4 @@ const CPU_POSITIONS = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	init_players(CPU_POSITIONS, "CPU")
+	init_players(CPU_POSITIONS, Game.SIDE.CPU, "CPU")

@@ -17,7 +17,7 @@ const PLAYER_POSITIONS = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	camera = get_node("../Camera2D") as Camera2D
-	init_players(PLAYER_POSITIONS)
+	init_players(PLAYER_POSITIONS, Game.SIDE.PLAYER)
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true

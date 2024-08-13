@@ -6,6 +6,7 @@ var screen_size
 var pass_target: Player
 var has_ball: bool = false
 var player_name: String = ""
+var side
 
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop1") as Hoop

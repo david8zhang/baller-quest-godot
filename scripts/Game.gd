@@ -1,7 +1,7 @@
 class_name Game
 extends Node2D
 
-enum Side { PLAYER, CPU }
+enum SIDE { PLAYER, CPU }
 
 @onready var court = $Court
 @onready var hoop_1 = $Hoop1 as Hoop
@@ -11,7 +11,7 @@ enum Side { PLAYER, CPU }
 @onready var player_manager = $PlayerManager as PlayerManager
 @onready var cpu_manager = $CPUManager as CPUManager
 
-var possession_side = Side.PLAYER
+var possession_side = SIDE.PLAYER
 
 func _ready():
 	camera.limit_left = -500

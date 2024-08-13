@@ -26,4 +26,6 @@ func enter(msg := {}):
 			anim_name = "idle-side"
 		else:
 			anim_name = "dribble-idle" if player.has_ball else "idle-front"
+	if player.side == Game.SIDE.CPU:
+		anim_name = "cpu-" + anim_name
 	anim_sprite.play(anim_name)
