@@ -14,6 +14,8 @@ const PLAYER_POSITIONS = [
 	Vector2(400, 0)
 ]
 
+var defensive_assignments = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	camera = get_node("../Camera2D") as Camera2D
@@ -30,7 +32,6 @@ func _ready():
 	timer.wait_time = 0.5
 	timer.timeout.connect(_timer_complete)
 	add_child(timer)
-	
 
 func _timer_complete():
 	camera.reparent(selected_player)

@@ -9,6 +9,7 @@ var player_name: String = ""
 var side
 
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
+@onready var cpu_manager: CPUManager = get_node("/root/Main/CPUManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop1") as Hoop
 @onready var court: Court = get_node("/root/Main/Court") as Court
 @onready var shot_meter = $ShotMeter as ShotMeter
@@ -31,6 +32,7 @@ func _ready():
 		anim_sprite.position.x,
 		anim_sprite.position.y + 40,
 	)
+
 
 func is_selected():
 	return player_manager.selected_player == self
@@ -224,3 +226,17 @@ func select():
 
 func deselect():
 	highlight.visible = false
+	
+	
+func get_player_to_defend():
+	if side == Game.SIDE.PLAYER:
+		if player_manager.defensive_assignments.has(player_name):
+			var player_to_defend_name = player_manager.defensive_assignments[player_name]
+			return cpu_manager.get_player_by_name(player_to_defend_name)
+		return null
+	elif side == Game.SIDE.CPU:
+		if cpu_manager.defensive_assignments.has(player_name):
+			var player_to_defend_name = cpu_manager.defensive_assignments[player_name]
+			return player_manager.get_player_by_name(player_to_defend_name)
+		return null
+		
