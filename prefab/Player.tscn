@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=143 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -26,10 +26,12 @@
 [ext_resource type="Texture2D" uid="uid://bioh6ag8pg712" path="res://sprites/player/onball-defend-front.png" id="11_wd22y"]
 [ext_resource type="Texture2D" uid="uid://v6fcbvv7caor" path="res://sprites/player/receive-pass-front.png" id="13_3hk8g"]
 [ext_resource type="Texture2D" uid="uid://d10j2l818c2yj" path="res://sprites/player/shoot-front.png" id="14_rlmax"]
+[ext_resource type="Texture2D" uid="uid://bblpyc340xv5d" path="res://sprites/cpu/onball-defensive-slide.png" id="16_eeyk1"]
 [ext_resource type="Texture2D" uid="uid://bamie1uq2aa6e" path="res://sprites/player/shoot-side.png" id="16_iu3be"]
 [ext_resource type="Script" path="res://scripts/fsm/ReceivePassState.gd" id="23_p87nn"]
 [ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
 [ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
+[ext_resource type="Script" path="res://scripts/fsm/InputControlState.gd" id="27_lpdy6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
 radius = 14.0
@@ -257,6 +259,26 @@ region = Rect2(0, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lkdth"]
 atlas = ExtResource("11_wd22y")
+region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nknjw"]
+atlas = ExtResource("16_eeyk1")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxgne"]
+atlas = ExtResource("16_eeyk1")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmiwk"]
+atlas = ExtResource("16_eeyk1")
+region = Rect2(64, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0tpx"]
+atlas = ExtResource("16_eeyk1")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cblr4"]
+atlas = ExtResource("16_eeyk1")
 region = Rect2(32, 45, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ad1bb"]
@@ -674,6 +696,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_nknjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxgne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmiwk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0tpx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cblr4")
+}],
+"loop": true,
+"name": &"onball-defensive-slide",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ad1bb")
 }, {
 "duration": 1.0,
@@ -909,7 +951,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"cpu-idle-side"
+animation = &"onball-defensive-slide"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="StateMachine" type="Node2D" parent="."]
@@ -922,9 +964,6 @@ script = ExtResource("6_ugi36")
 [node name="ShootState" type="Node" parent="StateMachine"]
 script = ExtResource("6_gja4w")
 
-[node name="MoveState" type="Node" parent="StateMachine"]
-script = ExtResource("6_rdlcp")
-
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("6_1wvpm")
 
@@ -936,3 +975,9 @@ script = ExtResource("24_2y7dy")
 
 [node name="DefendState" type="Node" parent="StateMachine"]
 script = ExtResource("26_7vp1i")
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource("6_rdlcp")
+
+[node name="InputControlState" type="Node" parent="StateMachine"]
+script = ExtResource("27_lpdy6")

@@ -8,6 +8,7 @@ var has_ball: bool = false
 var player_name: String = ""
 var side
 
+@onready var game: Game = get_node("/root/Main") as Game
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var cpu_manager: CPUManager = get_node("/root/Main/CPUManager")
 @onready var hoop: Hoop = get_node("/root/Main/Hoop1") as Hoop
