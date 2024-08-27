@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=142 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://ebyvv3xtdrb" path="res://sprites/cpu/cpu-idle-side.png" id="6_ebpql"]
 [ext_resource type="Script" path="res://scripts/fsm/ShootState.gd" id="6_gja4w"]
 [ext_resource type="Texture2D" uid="uid://dynyqqprgrap8" path="res://sprites/player/dribble-idle.png" id="6_h8g1n"]
-[ext_resource type="Script" path="res://scripts/fsm/MoveState.gd" id="6_rdlcp"]
 [ext_resource type="Script" path="res://scripts/fsm/PassState.gd" id="6_ugi36"]
 [ext_resource type="Texture2D" uid="uid://dv0w7uww5ne8c" path="res://sprites/player/idle-front.png" id="8_vsoty"]
 [ext_resource type="Texture2D" uid="uid://cibli5ptbfws5" path="res://sprites/player/idle-side.png" id="9_cpqb8"]
@@ -975,9 +974,6 @@ script = ExtResource("24_2y7dy")
 
 [node name="DefendState" type="Node" parent="StateMachine"]
 script = ExtResource("26_7vp1i")
-
-[node name="MoveState" type="Node" parent="StateMachine"]
-script = ExtResource("6_rdlcp")
 
 [node name="InputControlState" type="Node" parent="StateMachine"]
 script = ExtResource("27_lpdy6")
