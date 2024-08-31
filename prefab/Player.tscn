@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=143 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -33,8 +33,7 @@
 [ext_resource type="Script" path="res://scripts/fsm/InputControlState.gd" id="27_lpdy6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
-radius = 14.0
-height = 36.0
+height = 34.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3p23s"]
 atlas = ExtResource("5_nmyfu")
@@ -925,6 +924,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3x2pa"]
+size = Vector2(8, 4)
+
 [node name="Player" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
@@ -938,6 +940,7 @@ visible = false
 position = Vector2(49, -54)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_8n74s")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
@@ -950,7 +953,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_x8wx5")
-animation = &"onball-defensive-slide"
+animation = &"shoot-front-windup"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="StateMachine" type="Node2D" parent="."]
@@ -977,3 +980,12 @@ script = ExtResource("26_7vp1i")
 
 [node name="InputControlState" type="Node" parent="StateMachine"]
 script = ExtResource("27_lpdy6")
+
+[node name="FeetArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea"]
+position = Vector2(-1, 16)
+shape = SubResource("RectangleShape2D_3x2pa")
+debug_color = Color(0.980392, 0, 0.384314, 0.419608)
