@@ -32,8 +32,8 @@
 [ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
 [ext_resource type="Script" path="res://scripts/fsm/InputControlState.gd" id="27_lpdy6"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n74s"]
-height = 34.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppf1a"]
+size = Vector2(8, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3p23s"]
 atlas = ExtResource("5_nmyfu")
@@ -928,10 +928,11 @@ animations = [{
 size = Vector2(8, 4)
 
 [node name="Player" type="RigidBody2D"]
-collision_mask = 0
-gravity_scale = 0.0
+gravity_scale = 2.66454e-15
 max_contacts_reported = 1
 contact_monitor = true
+lock_rotation = true
+linear_damp = 100.0
 script = ExtResource("1_qur1a")
 ball_scene = ExtResource("2_pi8my")
 
@@ -941,7 +942,7 @@ position = Vector2(49, -54)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_8n74s")
+shape = SubResource("RectangleShape2D_ppf1a")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Highlight" type="Sprite2D" parent="."]

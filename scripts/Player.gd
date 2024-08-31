@@ -20,6 +20,7 @@ var shot_type
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 @onready var _state_machine: StateMachine = $StateMachine
 @onready var feet_area = $FeetArea as Area2D
+@onready var collision_shape_2d = $CollisionShape2D
 
 @export var ball_scene: PackedScene
 
@@ -36,7 +37,8 @@ func _ready():
 		anim_sprite.position.x,
 		anim_sprite.position.y + 40,
 	)
-
+	feet_area.scale = Vector2(3, 3)
+	collision_shape_2d.scale = Vector2(3, 3)
 
 func is_selected():
 	return player_manager.selected_player == self

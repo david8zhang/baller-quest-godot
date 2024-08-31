@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://scripts/Scoreboard.gd" id="8_phybn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iu75f"]
-radius = 367.0
-height = 738.0
+radius = 386.0
+height = 774.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_b25lt"]
 a = Vector2(-600, 2.08165e-12)
