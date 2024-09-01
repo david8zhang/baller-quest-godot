@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=144 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
 [ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
 [ext_resource type="Script" path="res://scripts/fsm/InputControlState.gd" id="27_lpdy6"]
+[ext_resource type="Script" path="res://scripts/ChaseReboundState.gd" id="32_st05g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppf1a"]
 size = Vector2(8, 14)
@@ -981,6 +982,9 @@ script = ExtResource("26_7vp1i")
 
 [node name="InputControlState" type="Node" parent="StateMachine"]
 script = ExtResource("27_lpdy6")
+
+[node name="ChaseReboundState" type="Node" parent="StateMachine"]
+script = ExtResource("32_st05g")
 
 [node name="FeetArea" type="Area2D" parent="."]
 collision_layer = 128

@@ -19,7 +19,11 @@ func update(_delta: float) -> void:
 		var player_to_defend = player.get_player_to_defend() as Player
 		if player_to_defend.has_ball:
 			player._state_machine.transition_to("DefendState")
-		
+
+	# Chase after loose balls
+	var ball = game.ball as Ball
+	if ball != null and ball.curr_poss_status == Ball.POSS_STATUS.LOOSE:
+		player._state_machine.transition_to("ChaseReboundState")
 
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player

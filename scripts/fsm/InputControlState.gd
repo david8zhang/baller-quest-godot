@@ -1,7 +1,5 @@
 class_name InputControlState
 extends State
-
-const SPEED = 300.0
 var screen_size
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +17,7 @@ func physics_update(_delta: float) -> void:
 		if Input.is_action_pressed("move_up"):
 			velocity.y -= 1
 		if velocity.length() > 0:
-			velocity = velocity.normalized() * SPEED
+			velocity = velocity.normalized() * Player.SPEED
 			player.update_pass_target(velocity)
 		player.linear_velocity = velocity
 

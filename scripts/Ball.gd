@@ -1,8 +1,18 @@
 class_name Ball
 extends RigidBody2D
 
+enum POSS_STATUS {
+	PLAYER,
+	CPU,
+	SHOOT_UP,
+	SHOOT_DOWN,
+	LOOSE
+}
+
 var screen_size
 var shot_status
+var curr_poss_status
+
 @onready var game = get_node("/root/Main") as Game
 @onready var collider = $CollisionShape2D
 @onready var net_detector = $NetDetector/CollisionShape2D
@@ -56,3 +66,9 @@ func _on_net_detector_area_entered(area):
 func _on_player_detector_body_entered(body):
 	var player = body as Player
 	player.handle_ball_collision(self)
+
+
+func _on_body_entered(body):
+	if body == game.hoop_1 or body == game.hoop_2:
+		print("Hit rim!")
+		curr_poss_status = POSS_STATUS.LOOSE

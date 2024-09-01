@@ -48,5 +48,6 @@ debug_color = Color(0.968627, 0, 0.462745, 0.419608)
 shape = SubResource("CircleShape2D_hka22")
 debug_color = Color(0, 0.65098, 0.152941, 0.419608)
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="NetDetector" to="." method="_on_net_detector_area_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

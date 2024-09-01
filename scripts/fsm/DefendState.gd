@@ -1,7 +1,6 @@
 class_name DefendState
 extends State
 
-const SPEED = 300.0
 const MAX_DISTANCE = 45
 var last_moved_time = 0
 
@@ -40,7 +39,7 @@ func physics_update(delta):
 		# move toward defense point
 		var dir = (quarter_to_hoop - curr_player.global_position).normalized()
 		if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
-			curr_player.linear_velocity = dir * SPEED
+			curr_player.linear_velocity = dir * Player.SPEED
 			anim_sprite.play("onball-defensive-slide")
 			anim_sprite.flip_h = dir.x > 0
 			last_moved_time = Time.get_unix_time_from_system() * 1000

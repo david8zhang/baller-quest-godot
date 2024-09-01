@@ -1,7 +1,8 @@
 class_name Player
 extends RigidBody2D
 
-const SPEED = 300.0
+static var SPEED = 300.0
+
 var screen_size
 var pass_target: Player
 var has_ball: bool = false
@@ -80,6 +81,7 @@ func handle_input(input: InputEvent):
 func pass_ball():
 	has_ball = false
 	var ball = ball_scene.instantiate() as Ball
+	game.ball = ball
 	ball.position.x = self.position.x
 	ball.position.y = self.position.y
 	add_sibling(ball)
@@ -106,6 +108,7 @@ func handle_ball_collision(ball: Ball):
 		can_gain_possession = false
 		player_manager.switch_to_player(self)
 		has_ball = true
+		game.ball = null
 		ball.queue_free()
 		_state_machine.transition_to("IdleState", {})
 
@@ -115,8 +118,10 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, s
 	var ball = ball_scene.instantiate() as Ball
 	ball.position = start_position
 	add_sibling(ball)
+	game.ball = ball
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
+	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_UP
 	var camera = player_manager.camera as GameCamera
 	camera.focus_on(ball)
 	
@@ -238,6 +243,7 @@ func on_ball_arc_complete(ball: Ball, timer: Timer):
 
 func on_ball_reached_apex(ball: Ball):
 	ball.z_index = hoop.net.z_index - 1
+	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_DOWN
 
 
 func select():

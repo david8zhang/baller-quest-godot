@@ -14,6 +14,7 @@ enum SHOT_TYPE { TWO_POINTER, THREE_POINTER }
 @onready var cpu_manager = $CPUManager as CPUManager
 
 var possession_side = SIDE.PLAYER
+var ball
 
 func _ready():
 	camera.limit_left = -500

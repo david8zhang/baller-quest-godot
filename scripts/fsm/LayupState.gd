@@ -29,8 +29,13 @@ var layup_frame_timings = [
 	}
 ]
 
+func exit():
+	var player = entity as Player
+	player.set_collision_mask_value(1, true)
+
 func enter(msg := {}):
 	var player = entity as Player
+	player.set_collision_mask_value(1, false)
 	anim_sprite.stop()
 	anim_sprite.animation = "layup-front"
 	anim_sprite.frame = 0
