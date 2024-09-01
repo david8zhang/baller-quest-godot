@@ -21,13 +21,6 @@ func physics_update(_delta: float) -> void:
 			player.update_pass_target(velocity)
 		player.linear_velocity = velocity
 
-	# Ensure player does not exceed court bounds
-	var court = player.court as Court
-	var court_y_bounds = court.get_y_bounds()
-	var court_x_bounds = court.get_x_bounds()
-	player.global_position.y = clamp(player.global_position.y, court_y_bounds["upper"], court_y_bounds["lower"])
-	player.global_position.x = clamp(player.global_position.x, court_x_bounds["left"], court_x_bounds["right"])
-
 	if velocity.x != 0:
 		anim_sprite.flip_h = velocity.x < 0
 

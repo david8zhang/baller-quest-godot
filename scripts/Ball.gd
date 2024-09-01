@@ -70,5 +70,4 @@ func _on_player_detector_body_entered(body):
 
 func _on_body_entered(body):
 	if body == game.hoop_1 or body == game.hoop_2:
-		print("Hit rim!")
 		curr_poss_status = POSS_STATUS.LOOSE

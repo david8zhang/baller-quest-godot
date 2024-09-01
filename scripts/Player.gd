@@ -41,8 +41,17 @@ func _ready():
 	feet_area.scale = Vector2(3, 3)
 	collision_shape_2d.scale = Vector2(3, 3)
 
+
 func is_selected():
 	return player_manager.selected_player == self
+
+
+func _physics_process(delta):
+	# Ensure player does not exceed court bounds
+	var court_y_bounds = court.get_y_bounds()
+	var court_x_bounds = court.get_x_bounds()
+	global_position.y = clamp(global_position.y, court_y_bounds["upper"], court_y_bounds["lower"])
+	global_position.x = clamp(global_position.x, court_x_bounds["left"], court_x_bounds["right"])
 
 
 func update_pass_target(velocity: Vector2):

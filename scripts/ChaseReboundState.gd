@@ -1,6 +1,8 @@
 class_name ChaseReboundState
 extends State
 
+const REBOUND_RANGE = 300
+
 func exit():
 	var curr_player = entity as Player
 	curr_player.linear_damp = 100
@@ -9,7 +11,7 @@ func physics_update(_delta: float):
 	var curr_player = entity as Player	
 	var ball = curr_player.game.ball as Ball
 	curr_player.linear_damp = 0
-	if ball != null:
+	if ball != null and is_within_rebound_range():
 		var ball_position = ball.global_position
 		var dir = (ball_position - curr_player.global_position).normalized() as Vector2
 		curr_player.linear_velocity = dir * Player.SPEED
@@ -18,6 +20,13 @@ func physics_update(_delta: float):
 		if curr_player.side == Game.SIDE.CPU:
 			anim_name = "cpu-" + anim_name
 		anim_sprite.play(anim_name)
-		anim_sprite.flip_h = dir.x > 0
+		anim_sprite.flip_h = dir.x < 0
 	else:
 		curr_player._state_machine.transition_to("IdleState")
+
+
+func is_within_rebound_range():
+	var curr_player = entity as Player
+	var game = curr_player.game as Game
+	var ball = game.ball as Ball
+	return curr_player.global_position.distance_to(ball.global_position) <= REBOUND_RANGE

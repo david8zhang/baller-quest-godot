@@ -4,7 +4,7 @@ extends Node
 @export var player_scene: PackedScene
 
 var defensive_assigments = {}
-var players = []
+var players: Array[Player] = []
 
 func setup_defense():
 	pass

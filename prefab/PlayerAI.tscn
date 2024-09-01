@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://pbhdbwtfile2"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_202us"]
+
+[node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("1_dm2qq")
+blackboard = NodePath("@Node@74795")
+actor = NodePath("..")
+
+[node name="SelectorComposite" type="Node" parent="."]
+script = ExtResource("2_826j1")
+
+[node name="SequenceComposite" type="Node" parent="SelectorComposite"]
+script = ExtResource("3_202us")

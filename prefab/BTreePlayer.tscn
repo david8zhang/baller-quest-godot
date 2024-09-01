@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://doti54eua6bxu"]
+
+[ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="1_aw8yl"]
+[ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="2_alhvr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4m5l8"]
+size = Vector2(8, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8x2pf"]
+size = Vector2(8, 4)
+
+[node name="BTreePlayer" type="RigidBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_aw8yl")
+animation = &"cpu-idle-front"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_4m5l8")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="FeetArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea"]
+position = Vector2(-1, 16)
+shape = SubResource("RectangleShape2D_8x2pf")
+debug_color = Color(0.980392, 0, 0.384314, 0.419608)
+
+[node name="Highlight" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(0.125006, 14)
+scale = Vector2(0.033125, 0.0133333)
+texture = ExtResource("2_alhvr")
