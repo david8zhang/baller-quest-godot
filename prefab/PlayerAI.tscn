@@ -1,16 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=8 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_202us"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsPlayer.gd" id="4_eq8a0"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsPlayerControlled.gd" id="5_cpb62"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/PlayerControl.gd" id="6_uxnl6"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="7_y3g8y"]
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@74795")
-actor = NodePath("..")
+blackboard = NodePath("@Node@20296")
+actor = NodePath("")
 
-[node name="SelectorComposite" type="Node" parent="."]
+[node name="IsPlayerOrCPU" type="Node" parent="."]
 script = ExtResource("2_826j1")
 
-[node name="SequenceComposite" type="Node" parent="SelectorComposite"]
+[node name="SequenceComposite" type="Node" parent="IsPlayerOrCPU"]
 script = ExtResource("3_202us")
+
+[node name="IsPlayer" type="Node" parent="IsPlayerOrCPU/SequenceComposite"]
+script = ExtResource("4_eq8a0")
+
+[node name="SelectorComposite" type="Node" parent="IsPlayerOrCPU/SequenceComposite"]
+script = ExtResource("2_826j1")
+
+[node name="SequenceComposite" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite"]
+script = ExtResource("3_202us")
+
+[node name="IsPlayerControlled" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite/SequenceComposite"]
+script = ExtResource("5_cpb62")
+
+[node name="PlayerControl" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite/SequenceComposite"]
+script = ExtResource("6_uxnl6")
+
+[node name="ActionLeaf" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite"]
+script = ExtResource("7_y3g8y")
+
+[node name="Node" type="Node" parent="IsPlayerOrCPU"]
+script = ExtResource("7_y3g8y")

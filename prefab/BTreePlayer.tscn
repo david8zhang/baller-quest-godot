@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://doti54eua6bxu"]
+[gd_scene load_steps=7 format=3 uid="uid://doti54eua6bxu"]
 
 [ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="1_aw8yl"]
+[ext_resource type="Script" path="res://scripts/BTreePlayer.gd" id="1_f3meb"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="2_alhvr"]
+[ext_resource type="PackedScene" uid="uid://pbhdbwtfile2" path="res://prefab/PlayerAI.tscn" id="2_davix"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4m5l8"]
 size = Vector2(8, 14)
@@ -10,10 +12,19 @@ size = Vector2(8, 14)
 size = Vector2(8, 4)
 
 [node name="BTreePlayer" type="RigidBody2D"]
+gravity_scale = 2.66454e-15
+max_contacts_reported = 1
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_f3meb")
+
+[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("2_davix")]
+blackboard = NodePath("@Node@51713")
+actor = NodePath("..")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_aw8yl")
-animation = &"cpu-idle-front"
+animation = &"dribble-idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)

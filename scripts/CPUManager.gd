@@ -19,8 +19,8 @@ func _ready():
 	assign_defenders()
 	
 func assign_defenders():
-	var player_players = player_manager.players
-	for i in range(0, players.size()):
-		var cpu_player = players[i] as Player
-		var player_player = player_players[i] as Player
+	var player_players = player_manager.b_tree_players
+	for i in range(0, b_tree_players.size()):
+		var cpu_player = b_tree_players[i] as BTreePlayer
+		var player_player = player_players[i] as BTreePlayer
 		defensive_assignments[cpu_player.player_name] = player_player.player_name

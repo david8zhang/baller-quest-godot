@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
-[ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="1_rkvvu"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ckvlo"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
+[ext_resource type="PackedScene" uid="uid://doti54eua6bxu" path="res://prefab/BTreePlayer.tscn" id="4_vioc2"]
 [ext_resource type="Script" path="res://scripts/CPUManager.gd" id="7_ijyjr"]
 [ext_resource type="Script" path="res://scripts/Scoreboard.gd" id="8_phybn"]
 
@@ -29,12 +29,12 @@ script = ExtResource("2_ckvlo")
 [node name="PlayerManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_xoi36")
-player_scene = ExtResource("1_rkvvu")
+b_tree_player_scene = ExtResource("4_vioc2")
 
 [node name="CPUManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("7_ijyjr")
-player_scene = ExtResource("1_rkvvu")
+b_tree_player_scene = ExtResource("4_vioc2")
 
 [node name="Hoop1" parent="." instance=ExtResource("3_4jcto")]
 position = Vector2(2.08165e-12, -160)

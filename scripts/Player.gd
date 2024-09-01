@@ -115,7 +115,7 @@ func handle_ball_collision(ball: Ball):
 	if self.can_gain_possession:
 		self.modulate = Color(1, 1, 1)
 		can_gain_possession = false
-		player_manager.switch_to_player(self)
+#		player_manager.switch_to_player(self)
 		has_ball = true
 		game.ball = null
 		ball.queue_free()
