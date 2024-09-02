@@ -15,13 +15,13 @@ func update(_delta: float) -> void:
 	shot_result = player.shot_meter.get_shot_result()
 	
 	
-func handle_input(input: InputEvent) -> void:
+func handle_input(_input: InputEvent) -> void:
 	var player = entity as Player
 	if Input.is_action_just_released("shoot_ball"):
 		player.shot_meter.display_feedback()
 		is_released = true
 
-func enter(msg:={}):
+func enter(_msg:={}):
 	var anim_name = "shoot-%s-windup" % _get_shoot_anim_angle()
 	if anim_name == "shoot-side-windup":
 		var player = entity as Player
@@ -47,7 +47,6 @@ func _shoot_windup_complete():
 
 
 func on_jump_complete():
-	var player = entity as Player
 	var anim_name = "shoot-%s-land" % _get_shoot_anim_angle()
 	anim_sprite.play(anim_name)
 	var timer = Timer.new()

@@ -7,6 +7,8 @@ Generic state machine. Initializes states and delegates engine callbacks
 in the scene tree.
 """
 
+var enabled = false
+
 # Emitted when transitioning to a new state.
 signal transitioned(state_name)
 
@@ -28,10 +30,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	state.handle_input(event)
 
 func _process(delta: float) -> void:
-	state.update(delta)
+	if enabled:
+		state.update(delta)
 
 func _physics_process(delta: float) -> void:
-	state.physics_update(delta)
+	if enabled:
+		state.physics_update(delta)
 
 # This function calls the current state's exit() function, then changes the active state,
 # and calls its enter function.

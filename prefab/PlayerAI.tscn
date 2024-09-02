@@ -10,7 +10,7 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@20296")
+blackboard = NodePath("@Node@19789")
 actor = NodePath("")
 
 [node name="IsPlayerOrCPU" type="Node" parent="."]

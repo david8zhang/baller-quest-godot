@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=18 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/fsm/StateMachine.gd" id="6_32c0f"]
 [ext_resource type="Script" path="res://scripts/fsm/ShootState.gd" id="6_gja4w"]
 [ext_resource type="Script" path="res://scripts/fsm/PassState.gd" id="6_ugi36"]
+[ext_resource type="PackedScene" uid="uid://pbhdbwtfile2" path="res://prefab/PlayerAI.tscn" id="15_cfbit"]
 [ext_resource type="Script" path="res://scripts/fsm/ReceivePassState.gd" id="23_p87nn"]
 [ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
 [ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
@@ -87,3 +88,7 @@ collision_mask = 128
 position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
+
+[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("15_cfbit")]
+blackboard = NodePath("@Node@33482")
+actor = NodePath("..")

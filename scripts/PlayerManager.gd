@@ -3,7 +3,7 @@ extends Manager
 
 var camera: Camera2D
 
-var selected_player: BTreePlayer = null
+var selected_player: Player = null
 var is_ready = false
 
 const PLAYER_POSITIONS = [
@@ -20,9 +20,9 @@ var defensive_assignments = {}
 func _ready():
 	camera = get_node("../Camera2D") as Camera2D
 	init_players(PLAYER_POSITIONS, Game.SIDE.PLAYER)
-	selected_player = b_tree_players[0]
+	selected_player = players[0]
 	selected_player.select()
-#	selected_player.has_ball = true
+	selected_player.has_ball = true
 #	selected_player._state_machine.transition_to("IdleState")
 
 	is_ready = true
@@ -38,7 +38,7 @@ func _timer_complete():
 	camera.reparent(selected_player)
 
 
-func switch_to_player(player: BTreePlayer):
+func switch_to_player(player: Player):
 	# De-select the current selected player
 	selected_player.deselect()
 	selected_player = player
@@ -46,7 +46,7 @@ func switch_to_player(player: BTreePlayer):
 	
 
 func hide_players():
-	for p in b_tree_players:
+	for p in players:
 		p.hide()
 		
 		

@@ -42,8 +42,3 @@ func physics_update(_delta: float) -> void:
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player
 	player.handle_input(input)
-
-
-func enter(msg:={}) -> void:
-	var player = entity as Player
-	var court_size = player.court.get_size()
