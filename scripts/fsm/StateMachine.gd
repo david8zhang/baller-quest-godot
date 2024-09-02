@@ -37,6 +37,12 @@ func _physics_process(delta: float) -> void:
 	if enabled:
 		state.physics_update(delta)
 
+
+func enable_for_first_time():
+	if !enabled:
+		enabled = true
+		state.enter()
+
 # This function calls the current state's exit() function, then changes the active state,
 # and calls its enter function.
 # It optionally takes a `msg` dictionary to pass to the next state's enter() function.

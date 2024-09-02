@@ -19,7 +19,7 @@ var shot_type
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
-@onready var _state_machine: StateMachine = $StateMachine
+@onready var player_control_fsm: StateMachine = $PlayerControlFSM
 @onready var feet_area = $FeetArea as Area2D
 @onready var collision_shape_2d = $CollisionShape2D
 
@@ -65,8 +65,8 @@ func update_pass_target(velocity: Vector2):
 				min_dist = dist
 				closest_player = player
 	if pass_target != null and pass_target != closest_player:
-		pass_target._state_machine.transition_to("IdleState")
-	closest_player._state_machine.transition_to("ReceivePassState", { "pass_source": self })
+		pass_target.player_control_fsm.transition_to("IdleState")
+	closest_player.player_control_fsm.transition_to("ReceivePassState", { "pass_source": self })
 	pass_target = closest_player
 	
 
@@ -79,12 +79,12 @@ func handle_input(input: InputEvent):
 	if is_selected() and has_ball:
 		if Input.is_action_pressed("shoot_ball"):
 			if is_within_layup_range():
-				_state_machine.transition_to("LayupState", {})
+				player_control_fsm.transition_to("LayupState", {})
 			else:
-				_state_machine.transition_to("ShootState", {})
+				player_control_fsm.transition_to("ShootState", {})
 		if Input.is_action_just_pressed("pass"):
 			if pass_target != null:
-				_state_machine.transition_to("PassState", {})
+				player_control_fsm.transition_to("PassState", {})
 
 
 func pass_ball():
@@ -108,7 +108,7 @@ func pass_ball():
 
 func on_completed_pass():
 	can_gain_possession = true
-	_state_machine.transition_to("IdleState", {})
+	player_control_fsm.transition_to("IdleState", {})
 
 
 func handle_ball_collision(ball: Ball):
@@ -119,7 +119,7 @@ func handle_ball_collision(ball: Ball):
 		has_ball = true
 		game.ball = null
 		ball.queue_free()
-		_state_machine.transition_to("IdleState", {})
+		player_control_fsm.transition_to("IdleState", {})
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):

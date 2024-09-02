@@ -22,7 +22,7 @@ func physics_update(_delta: float):
 		anim_sprite.play(anim_name)
 		anim_sprite.flip_h = dir.x < 0
 	else:
-		curr_player._state_machine.transition_to("IdleState")
+		curr_player.player_control_fsm.transition_to("IdleState")
 
 
 func is_within_rebound_range():

@@ -19,7 +19,7 @@ func update(_delta: float):
 	if !player_to_defend.has_ball:
 		player.linear_damp = 100
 		player.linear_velocity = Vector2.ZERO
-		player._state_machine.transition_to("IdleState")
+		player.player_control_fsm.transition_to("IdleState")
 
 
 func physics_update(delta):

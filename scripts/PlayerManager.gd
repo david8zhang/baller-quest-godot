@@ -23,7 +23,6 @@ func _ready():
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true
-#	selected_player._state_machine.transition_to("IdleState")
 
 	is_ready = true
 	

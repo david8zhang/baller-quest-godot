@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=16 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
@@ -12,9 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://pbhdbwtfile2" path="res://prefab/PlayerAI.tscn" id="15_cfbit"]
 [ext_resource type="Script" path="res://scripts/fsm/ReceivePassState.gd" id="23_p87nn"]
 [ext_resource type="Script" path="res://scripts/fsm/LayupState.gd" id="24_2y7dy"]
-[ext_resource type="Script" path="res://scripts/fsm/DefendState.gd" id="26_7vp1i"]
 [ext_resource type="Script" path="res://scripts/fsm/InputControlState.gd" id="27_lpdy6"]
-[ext_resource type="Script" path="res://scripts/ChaseReboundState.gd" id="32_st05g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppf1a"]
 size = Vector2(8, 14)
@@ -52,33 +50,27 @@ sprite_frames = ExtResource("5_ps6oe")
 animation = &"cpu-dribble-idle"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
-[node name="StateMachine" type="Node2D" parent="."]
+[node name="PlayerControlFSM" type="Node2D" parent="."]
 script = ExtResource("6_32c0f")
 initial_state = NodePath("IdleState")
 
-[node name="PassState" type="Node" parent="StateMachine"]
+[node name="PassState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("6_ugi36")
 
-[node name="ShootState" type="Node" parent="StateMachine"]
+[node name="ShootState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("6_gja4w")
 
-[node name="IdleState" type="Node" parent="StateMachine"]
+[node name="IdleState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("6_1wvpm")
 
-[node name="ReceivePassState" type="Node" parent="StateMachine"]
+[node name="ReceivePassState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("23_p87nn")
 
-[node name="LayupState" type="Node" parent="StateMachine"]
+[node name="LayupState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("24_2y7dy")
 
-[node name="DefendState" type="Node" parent="StateMachine"]
-script = ExtResource("26_7vp1i")
-
-[node name="InputControlState" type="Node" parent="StateMachine"]
+[node name="InputControlState" type="Node" parent="PlayerControlFSM"]
 script = ExtResource("27_lpdy6")
-
-[node name="ChaseReboundState" type="Node" parent="StateMachine"]
-script = ExtResource("32_st05g")
 
 [node name="FeetArea" type="Area2D" parent="."]
 collision_layer = 128
@@ -90,5 +82,5 @@ shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
 [node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@33482")
+blackboard = NodePath("@Node@34702")
 actor = NodePath("..")

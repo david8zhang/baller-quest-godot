@@ -3,7 +3,6 @@ extends State
 
 func update(_delta: float) -> void:
 	var player = entity as Player
-	var player_manager = player.player_manager
 	if player.is_selected() and player.side == Game.SIDE.PLAYER:
 		var right_pressed = Input.is_action_pressed("move_right")
 		var left_pressed = Input.is_action_pressed("move_left")
@@ -11,19 +10,6 @@ func update(_delta: float) -> void:
 		var up_pressed = Input.is_action_pressed("move_up")
 		if right_pressed or left_pressed or down_pressed or up_pressed:
 			state_machine.transition_to("InputControlState", {})
-	
-	var game = player.game as Game
-	var is_on_defense = game.possession_side != player.side
-	# If other team has possession, the player is on defense
-	if is_on_defense:
-		var player_to_defend = player.get_player_to_defend() as Player
-		if player_to_defend.has_ball:
-			player._state_machine.transition_to("DefendState")
-
-	# Chase after loose balls
-	var ball = game.ball as Ball
-	if ball != null and ball.curr_poss_status == Ball.POSS_STATUS.LOOSE:
-		player._state_machine.transition_to("ChaseReboundState")
 
 func handle_input(input: InputEvent) -> void:
 	var player = entity as Player

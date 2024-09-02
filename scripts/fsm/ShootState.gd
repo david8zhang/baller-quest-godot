@@ -66,7 +66,7 @@ func on_jump_peak():
 
 func _follow_through_complete():
 	var player = entity as Player
-	player._state_machine.transition_to("IdleState", {})
+	player.player_control_fsm.transition_to("IdleState", {})
 	
 func _get_shoot_anim_angle():
 	var player = entity as Player

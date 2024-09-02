@@ -75,5 +75,5 @@ func on_jump_apex():
 	
 func on_jump_complete():
 	var player = entity as Player
-	player._state_machine.transition_to("IdleState", {})
+	player.player_control_fsm.transition_to("IdleState", {})
 	
