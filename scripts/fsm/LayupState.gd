@@ -33,7 +33,7 @@ func exit():
 	var player = entity as Player
 	player.set_collision_mask_value(1, true)
 
-func enter(msg := {}):
+func enter(_msg := {}):
 	var player = entity as Player
 	player.set_collision_mask_value(1, false)
 	anim_sprite.stop()

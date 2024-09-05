@@ -4,7 +4,7 @@ extends State
 const MAX_DISTANCE = 45
 var last_moved_time = 0
 
-func enter(msg:={}):
+func enter(_msg:={}):
 	var anim_name = "onball-defend-front"
 	var player = entity as Player
 	if player.side == Game.SIDE.CPU:
@@ -14,7 +14,6 @@ func enter(msg:={}):
 
 func update(_delta: float):
 	var player = entity as Player
-	var game = player.game as Game
 	var player_to_defend = player.get_player_to_defend() as Player
 	if !player_to_defend.has_ball:
 		player.linear_damp = 100
@@ -22,7 +21,7 @@ func update(_delta: float):
 		player.player_control_fsm.transition_to("IdleState")
 
 
-func physics_update(delta):
+func physics_update(_delta):
 	var curr_player = entity as Player
 	var player_to_defend = curr_player.get_player_to_defend() as Player
 	

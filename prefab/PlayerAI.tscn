@@ -1,41 +1,72 @@
-[gd_scene load_steps=8 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=12 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="3_202us"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsPlayer.gd" id="4_eq8a0"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsBallLoose.gd" id="4_ohcov"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsPlayerControlled.gd" id="5_cpb62"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsWithinReboundRange.gd" id="5_wc6a0"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/ChaseRebound.gd" id="6_k8uj5"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/PlayerControl.gd" id="6_uxnl6"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="7_y3g8y"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/HasBall.gd" id="11_lvr25"]
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
 blackboard = NodePath("@Node@19789")
-actor = NodePath("")
+actor = NodePath("..")
 
-[node name="IsPlayerOrCPU" type="Node" parent="."]
+[node name="BallLooseOrNotSelector" type="Node" parent="."]
 script = ExtResource("2_826j1")
 
-[node name="SequenceComposite" type="Node" parent="IsPlayerOrCPU"]
+[node name="ReboundSequence" type="Node" parent="BallLooseOrNotSelector"]
 script = ExtResource("3_202us")
 
-[node name="IsPlayer" type="Node" parent="IsPlayerOrCPU/SequenceComposite"]
+[node name="IsBallLoose" type="Node" parent="BallLooseOrNotSelector/ReboundSequence"]
+script = ExtResource("4_ohcov")
+
+[node name="IsWithinReboundRange" type="Node" parent="BallLooseOrNotSelector/ReboundSequence"]
+script = ExtResource("5_wc6a0")
+
+[node name="ChaseRebound" type="Node" parent="BallLooseOrNotSelector/ReboundSequence"]
+script = ExtResource("6_k8uj5")
+
+[node name="PlayerOrCPUBehaviorSelector" type="Node" parent="BallLooseOrNotSelector"]
+script = ExtResource("2_826j1")
+
+[node name="PlayerBehaviorSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector"]
+script = ExtResource("3_202us")
+
+[node name="IsPlayer" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence"]
 script = ExtResource("4_eq8a0")
 
-[node name="SelectorComposite" type="Node" parent="IsPlayerOrCPU/SequenceComposite"]
+[node name="PlayerControlledOrNotSelector" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence"]
 script = ExtResource("2_826j1")
 
-[node name="SequenceComposite" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite"]
+[node name="PlayerControlledBehaviorSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence/PlayerControlledOrNotSelector"]
 script = ExtResource("3_202us")
 
-[node name="IsPlayerControlled" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite/SequenceComposite"]
+[node name="IsPlayerControlled" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence/PlayerControlledOrNotSelector/PlayerControlledBehaviorSequence"]
 script = ExtResource("5_cpb62")
 
-[node name="PlayerControl" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite/SequenceComposite"]
+[node name="PlayerControl" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence/PlayerControlledOrNotSelector/PlayerControlledBehaviorSequence"]
 script = ExtResource("6_uxnl6")
 
-[node name="ActionLeaf" type="Node" parent="IsPlayerOrCPU/SequenceComposite/SelectorComposite"]
+[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/PlayerBehaviorSequence/PlayerControlledOrNotSelector"]
 script = ExtResource("7_y3g8y")
 
-[node name="Node" type="Node" parent="IsPlayerOrCPU"]
+[node name="CPUBehaviorSelector" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector"]
+script = ExtResource("2_826j1")
+
+[node name="HasBallBehaviorSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector"]
+script = ExtResource("3_202us")
+
+[node name="HasBall" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence"]
+script = ExtResource("11_lvr25")
+
+[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence"]
+script = ExtResource("7_y3g8y")
+
+[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector"]
 script = ExtResource("7_y3g8y")
