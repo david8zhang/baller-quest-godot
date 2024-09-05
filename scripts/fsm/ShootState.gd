@@ -22,9 +22,10 @@ func handle_input(_input: InputEvent) -> void:
 		is_released = true
 
 func enter(_msg:={}):
+	var player = entity as Player
+	player.linear_velocity = Vector2.ZERO
 	var anim_name = "shoot-%s-windup" % _get_shoot_anim_angle()
 	if anim_name == "shoot-side-windup":
-		var player = entity as Player
 		var x_diff = player.global_position.x - player.hoop.position.x
 		anim_sprite.flip_h = x_diff > 0
 	else:

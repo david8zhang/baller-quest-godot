@@ -3,6 +3,7 @@ extends Node2D
 
 enum SIDE { PLAYER, CPU }
 enum SHOT_TYPE { TWO_POINTER, THREE_POINTER }
+enum PLAYER_TYPE { PG, SG, SF, PF, C }
 
 @onready var court = $Court
 @onready var hoop_1 = $Hoop1 as Hoop

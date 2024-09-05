@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=17 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
@@ -11,6 +11,11 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/PlayerControl.gd" id="6_uxnl6"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="7_y3g8y"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/HasBall.gd" id="11_lvr25"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/TeamHasPossession.gd" id="12_fk8yq"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/Defend.gd" id="13_esiew"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInOffensivePosition.gd" id="13_udjm0"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/RunDownCourt.gd" id="14_v0ij5"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsDefendingBallHandler.gd" id="15_a8bva"]
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
@@ -68,5 +73,41 @@ script = ExtResource("11_lvr25")
 [node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence"]
 script = ExtResource("7_y3g8y")
 
-[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector"]
+[node name="OffballOffenseOrDefenseSelector" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector"]
+script = ExtResource("2_826j1")
+
+[node name="OffballOffenseSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector"]
+script = ExtResource("3_202us")
+
+[node name="TeamHasPossession" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence"]
+script = ExtResource("12_fk8yq")
+
+[node name="IsInPositionSelector" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence"]
+script = ExtResource("2_826j1")
+
+[node name="RunDownCourtSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector"]
+script = ExtResource("3_202us")
+
+[node name="IsInOffensivePosition" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector/RunDownCourtSequence"]
+script = ExtResource("13_udjm0")
+
+[node name="RunDownCourt" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector/RunDownCourtSequence"]
+script = ExtResource("14_v0ij5")
+
+[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector"]
+script = ExtResource("7_y3g8y")
+
+[node name="DefendOnBallOrOffBallSelector" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector"]
+script = ExtResource("2_826j1")
+
+[node name="OnballDefenseSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/DefendOnBallOrOffBallSelector"]
+script = ExtResource("3_202us")
+
+[node name="IsDefendingBallHandler" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/DefendOnBallOrOffBallSelector/OnballDefenseSequence"]
+script = ExtResource("15_a8bva")
+
+[node name="DefendBallHandler" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/DefendOnBallOrOffBallSelector/OnballDefenseSequence"]
+script = ExtResource("13_esiew")
+
+[node name="Idle" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/DefendOnBallOrOffBallSelector"]
 script = ExtResource("7_y3g8y")

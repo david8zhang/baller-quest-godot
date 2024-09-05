@@ -1,13 +1,13 @@
 class_name PassState
 extends State
 
-func enter(msg := {}) -> void:
+func enter(_msg := {}) -> void:
 	var player = entity as Player
+	player.linear_velocity = Vector2.ZERO
 	var pass_target = player.pass_target
 	var pass_target_pos = pass_target.global_position
 	var player_pos = player.global_position
 	var x_diff = abs(pass_target_pos.x - player_pos.x)
-	var y_diff = abs(pass_target_pos.y - player_pos.y)
 	
 	# Determine whether to play side-pass animation or vertical-pass animation
 	var pass_axis = "vertical"
