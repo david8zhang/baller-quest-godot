@@ -37,3 +37,4 @@ func tick(actor: Node, _blackboard: Blackboard):
 	else:
 		curr_player.linear_damp = 100
 		curr_player.linear_velocity = Vector2.ZERO
+	return SUCCESS

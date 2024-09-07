@@ -17,4 +17,5 @@ func tick(actor: Node, _blackboard: Blackboard):
 			anim_name = "cpu-" + anim_name
 		anim_sprite.play(anim_name)
 		anim_sprite.flip_h = dir.x < 0
+	return SUCCESS
 	

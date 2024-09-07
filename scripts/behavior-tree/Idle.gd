@@ -8,3 +8,4 @@ func tick(actor: Node, _blackboard: Blackboard):
 	if player.side == Game.SIDE.CPU:
 		anim_name = "cpu-" + anim_name
 	player.anim_sprite.play(anim_name)
+	return SUCCESS

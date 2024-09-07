@@ -6,7 +6,9 @@ enum POSS_STATUS {
 	CPU,
 	SHOOT_UP,
 	SHOOT_DOWN,
-	LOOSE
+	LOOSE,
+	PLAYER_JUST_SCORED,
+	CPU_JUST_SCORED
 }
 
 var screen_size

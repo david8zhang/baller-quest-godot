@@ -244,6 +244,7 @@ func on_ball_arc_complete(ball: Ball, timer: Timer):
 	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
 		var points_scored = 2 if last_shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
 		game.scoreboard.add_score(side, points_scored)
+		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED if side == Game.SIDE.PLAYER else Ball.POSS_STATUS.CPU_JUST_SCORED
 	ball.enable_player_detector()
 	can_gain_possession = true
 	timer.queue_free()
