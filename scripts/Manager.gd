@@ -9,16 +9,15 @@ var players: Array[Player] = []
 func setup_defense():
 	pass
 	
-func init_players(positions, side: Game.SIDE, name_prefix="Player"):
-	var i = 0
-	for pos in positions:
+func init_players(player_configs: Array, side: Game.SIDE):
+	for player_config in player_configs:
 		var new_player = player_scene.instantiate() as Player
 		new_player.side = side
-		new_player.position = pos
-		new_player.player_name = name_prefix + " " + str(i)
+		new_player.player_name = player_config.name
+		new_player.player_type = player_config.player_type
+		new_player.global_position = player_config.default_position
 		players.append(new_player)
 		add_child(new_player)
-		i += 1
 
 func get_player_by_name(player_name):
 	for player in players:

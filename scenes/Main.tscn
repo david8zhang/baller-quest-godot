@@ -22,6 +22,7 @@ y_sort_enabled = true
 script = ExtResource("1_ja5kq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.9, 0.9)
 limit_smoothed = true
 editor_draw_limits = true
 script = ExtResource("2_ckvlo")

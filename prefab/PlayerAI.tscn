@@ -19,8 +19,8 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@19789")
-actor = NodePath("..")
+blackboard = NodePath("@Node@19273")
+actor = NodePath("")
 
 [node name="BallLooseOrNotSelector" type="Node" parent="."]
 script = ExtResource("2_826j1")
@@ -88,7 +88,7 @@ script = ExtResource("2_826j1")
 [node name="RunDownCourtSequence" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector"]
 script = ExtResource("3_202us")
 
-[node name="IsInOffensivePosition" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector/RunDownCourtSequence"]
+[node name="IsOutOfPosition" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector/RunDownCourtSequence"]
 script = ExtResource("13_udjm0")
 
 [node name="RunDownCourt" type="Node" parent="BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/OffballOffenseOrDefenseSelector/OffballOffenseSequence/IsInPositionSelector/RunDownCourtSequence"]

@@ -8,7 +8,6 @@ func enter(msg:={}):
 	dest_point = msg["dest_point"]
 
 func _physics_process(delta):
-	print("Move state!")
 	pass
 #	var player = entity as Player
 #	if dest_point != null:

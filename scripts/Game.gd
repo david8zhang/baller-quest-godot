@@ -2,8 +2,16 @@ class_name Game
 extends Node2D
 
 enum SIDE { PLAYER, CPU }
+
 enum SHOT_TYPE { TWO_POINTER, THREE_POINTER }
-enum PLAYER_TYPE { PG, SG, SF, PF, C }
+
+enum PLAYER_TYPE {
+	POINT_GUARD,
+	SHOOTING_GUARD,
+	SMALL_FORWARD,
+	POWER_FORWARD,
+	CENTER
+}
 
 @onready var court = $Court
 @onready var hoop_1 = $Hoop1 as Hoop
@@ -18,10 +26,18 @@ var possession_side = SIDE.PLAYER
 var ball
 
 func _ready():
-	camera.limit_left = -500
-	camera.limit_right = 500
-	camera.limit_top = -300
-	camera.limit_bottom = 1110
-	
 	hoop_1.display_front()
 	hoop_2.display_back()
+
+	if player_manager.selected_player != null:
+		camera.reparent(player_manager.selected_player)
+
+
+func get_ball_handler():
+	for player in player_manager.players:
+		if player.has_ball:
+			return player
+	for player in cpu_manager.players:
+		if player.has_ball:
+			return player
+	return null

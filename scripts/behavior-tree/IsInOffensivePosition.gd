@@ -1,5 +1,5 @@
-class_name IsInOffensivePosition
+class_name IsOutOfPosition
 extends ConditionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):
-	pass
+	var curr_player = actor as Player

@@ -11,11 +11,47 @@ const CPU_POSITIONS = [
 	Vector2(400, -100)
 ]
 
+const PLAYER_CONFIGS = [
+	{
+		"name": 'CPU Player 1',
+		"player_type": Game.PLAYER_TYPE.POINT_GUARD,
+		"default_position": Vector2(0, 100)
+	},
+	{
+		"name": 'CPU Player 2',
+		"player_type": Game.PLAYER_TYPE.SHOOTING_GUARD,
+		"default_position": Vector2(-200, 0)
+	},
+	{
+		"name": 'CPU Player 3',
+		"player_type": Game.PLAYER_TYPE.SMALL_FORWARD,
+		"default_position": Vector2(200, 0)
+	},
+	{
+		"name": 'CPU Player 4',
+		"player_type": Game.PLAYER_TYPE.POWER_FORWARD,
+		"default_position": Vector2(400, -100)
+	},
+	{
+		"name": 'CPU Player 5',
+		"player_type": Game.PLAYER_TYPE.CENTER,
+		"default_position": Vector2(-400, -100)
+	}
+]
+
 var defensive_assignments = {}
+
+const DEFAULT_DEFENSIVE_POSITIONS = {
+	Game.PLAYER_TYPE.POINT_GUARD: Vector2(0, 100),
+	Game.PLAYER_TYPE.SHOOTING_GUARD: Vector2(-200, 0),
+	Game.PLAYER_TYPE.SMALL_FORWARD: Vector2(200, 0),
+	Game.PLAYER_TYPE.POWER_FORWARD: Vector2(400, -100),
+	Game.PLAYER_TYPE.CENTER: Vector2(-400, -100)
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	init_players(CPU_POSITIONS, Game.SIDE.CPU, "CPU")
+	init_players(PLAYER_CONFIGS, Game.SIDE.CPU)
 	assign_defenders()
 	
 func assign_defenders():

@@ -9,7 +9,9 @@ var has_ball: bool = false
 var player_name: String = ""
 var side
 var can_gain_possession: bool = true
-var shot_type
+var player_type: Game.PLAYER_TYPE
+
+var last_shot_type
 
 @onready var game: Game = get_node("/root/Main") as Game
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
@@ -95,10 +97,6 @@ func pass_ball():
 	ball.position.y = self.position.y
 	add_sibling(ball)
 	
-	# Focus on the ball
-	var camera = player_manager.camera as GameCamera
-	camera.focus_on(ball)
-	
 	pass_target.can_gain_possession = true
 	can_gain_possession = false
 	var tween = create_tween()
@@ -131,15 +129,16 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, s
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
 	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_UP
-	var camera = player_manager.camera as GameCamera
-	camera.focus_on(ball)
+
+	# var camera = player_manager.camera as GameCamera
+	# camera.focus_on(ball)
 	
 	# Detect if this is a 2 point or 3 point shot
 	var hoop_to_shoot_at = game.hoop_2 if side == Game.SIDE.CPU else game.hoop_1 as Hoop
 	var point_detector = hoop_to_shoot_at.point_detector as Area2D
 	var areas = point_detector.get_overlapping_areas()
 	var is_within_three_point_line = areas.any(func(a): return a == feet_area)
-	shot_type = Game.SHOT_TYPE.TWO_POINTER if is_within_three_point_line else Game.SHOT_TYPE.THREE_POINTER
+	last_shot_type = Game.SHOT_TYPE.TWO_POINTER if is_within_three_point_line else Game.SHOT_TYPE.THREE_POINTER
 	
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		var y_diff = hoop.net.global_position.y - ball.global_position.y
@@ -243,7 +242,7 @@ func on_jump_complete(custom_jump_complete_cb: Callable):
 
 func on_ball_arc_complete(ball: Ball, timer: Timer):
 	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
-		var points_scored = 2 if shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
+		var points_scored = 2 if last_shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
 		game.scoreboard.add_score(side, points_scored)
 	ball.enable_player_detector()
 	can_gain_possession = true

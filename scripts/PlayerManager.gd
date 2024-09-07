@@ -1,40 +1,61 @@
 class_name PlayerManager
 extends Manager
 
-var camera: Camera2D
+@onready var camera: GameCamera = $"../Camera2D"
 
 var selected_player: Player = null
-var is_ready = false
 
-const PLAYER_POSITIONS = [
-	Vector2(-400, 0),
-	Vector2(-200, 150),
-	Vector2(0, 250),
-	Vector2(200, 150),
-	Vector2(400, 0)
+const PLAYER_CONFIGS = [
+	{
+		"name": 'Player 1',
+		"player_type": Game.PLAYER_TYPE.POINT_GUARD,
+		"default_position": Vector2(0, 250)
+	},
+	{
+		"name": 'Player 2',
+		"player_type": Game.PLAYER_TYPE.SHOOTING_GUARD,
+		"default_position": Vector2(-200, 150)
+	},
+	{
+		"name": 'Player 3',
+		"player_type": Game.PLAYER_TYPE.SMALL_FORWARD,
+		"default_position": Vector2(200, 15)
+	},
+	{
+		"name": 'Player 4',
+		"player_type": Game.PLAYER_TYPE.POWER_FORWARD,
+		"default_position": Vector2(400, 0)
+	},
+	{
+		"name": 'Player 5',
+		"player_type": Game.PLAYER_TYPE.CENTER,
+		"default_position": Vector2(-400, 0)
+	}
 ]
+
+const DEFAULT_OFFENSIVE_POSITIONS = {
+	Game.PLAYER_TYPE.POINT_GUARD: Vector2(0, 250),
+	Game.PLAYER_TYPE.SHOOTING_GUARD: Vector2(-200, 150),
+	Game.PLAYER_TYPE.SMALL_FORWARD: Vector2(200, 150),
+	Game.PLAYER_TYPE.POWER_FORWARD: Vector2(400, 0),
+	Game.PLAYER_TYPE.CENTER: Vector2(-400, 0)
+}
 
 var defensive_assignments = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	camera = get_node("../Camera2D") as Camera2D
-	init_players(PLAYER_POSITIONS, Game.SIDE.PLAYER)
+	init_players(PLAYER_CONFIGS, Game.SIDE.PLAYER)
+
+	# Configure player positions
+	for player in players:
+		var default_position = DEFAULT_OFFENSIVE_POSITIONS[player.player_type]
+		player.global_position = default_position
+		add_child(player)
+	
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true
-
-	is_ready = true
-	
-	var timer = Timer.new()
-	timer.autostart = true
-	timer.one_shot = true
-	timer.wait_time = 0.5
-	timer.timeout.connect(_timer_complete)
-	add_child(timer)
-
-func _timer_complete():
-	camera.reparent(selected_player)
 
 
 func switch_to_player(player: Player):
@@ -42,14 +63,7 @@ func switch_to_player(player: Player):
 	selected_player.deselect()
 	selected_player = player
 	selected_player.select()
-	
 
 func hide_players():
 	for p in players:
 		p.hide()
-		
-		
-func reset_camera():
-	camera.reparent(selected_player)
-	camera.position = Vector2(0, 0)
-	camera.align()

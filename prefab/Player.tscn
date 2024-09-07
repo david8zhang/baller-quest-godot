@@ -81,6 +81,5 @@ position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
-[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@34702")
-actor = NodePath("..")
+[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("15_cfbit")]
+blackboard = NodePath("@Node@19355")
