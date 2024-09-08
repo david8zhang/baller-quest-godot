@@ -25,8 +25,6 @@ var last_shot_type
 @onready var feet_area = $FeetArea as Area2D
 @onready var collision_shape_2d = $CollisionShape2D
 
-@export var ball_scene: PackedScene
-
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -48,12 +46,14 @@ func is_selected():
 	return player_manager.selected_player == self
 
 
-func _physics_process(delta):
-	# Ensure player does not exceed court bounds
-	var court_y_bounds = court.get_y_bounds()
-	var court_x_bounds = court.get_x_bounds()
-	global_position.y = clamp(global_position.y, court_y_bounds["upper"], court_y_bounds["lower"])
-	global_position.x = clamp(global_position.x, court_x_bounds["left"], court_x_bounds["right"])
+func _physics_process(_delta):
+	# Ensure player does not exceed court bounds, unless player is inbounder
+	var curr_manager = (cpu_manager as Manager) if side == Game.SIDE.CPU else (player_manager as Manager)
+	if curr_manager.inbounder != self:
+		var court_y_bounds = court.get_y_bounds()
+		var court_x_bounds = court.get_x_bounds()
+		global_position.y = clamp(global_position.y, court_y_bounds["upper"], court_y_bounds["lower"])
+		global_position.x = clamp(global_position.x, court_x_bounds["left"], court_x_bounds["right"])
 
 
 func update_pass_target(velocity: Vector2):
@@ -78,7 +78,7 @@ func is_within_layup_range():
 
 
 func handle_input(input: InputEvent):
-	if is_selected() and has_ball:
+	if is_selected() and has_ball and game.ball != null:
 		if Input.is_action_pressed("shoot_ball"):
 			if is_within_layup_range():
 				player_control_fsm.transition_to("LayupState", {})
@@ -91,16 +91,15 @@ func handle_input(input: InputEvent):
 
 func pass_ball():
 	has_ball = false
-	var ball = ball_scene.instantiate() as Ball
-	game.ball = ball
-	ball.position.x = self.position.x
-	ball.position.y = self.position.y
-	add_sibling(ball)
-	
+	var ball = game.ball
+	ball.show()
+	ball.global_position = self.global_position
+	ball.set_gravity_scale(0)
+	ball.enable_player_detector()
 	pass_target.can_gain_possession = true
 	can_gain_possession = false
 	var tween = create_tween()
-	tween.tween_property(ball, "position", pass_target.position, 0.5)
+	tween.tween_property(ball, "global_position", pass_target.global_position, 0.5)
 	tween.finished.connect(on_completed_pass)
 
 
@@ -115,23 +114,20 @@ func handle_ball_collision(ball: Ball):
 		can_gain_possession = false
 		player_manager.switch_to_player(self)
 		has_ball = true
-		game.ball = null
-		ball.queue_free()
+		game.ball.hide()
+		ball.disable_player_detector()
 		player_control_fsm.transition_to("IdleState", {})
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):
 	has_ball = false
-	var ball = ball_scene.instantiate() as Ball
-	ball.position = start_position
-	add_sibling(ball)
-	game.ball = ball
+	var ball = game.ball
+	ball.show()
+	ball.global_position = start_position
+	ball.set_gravity_scale(1)
 	ball.disable_player_detector()
 	ball.shot_status = shot_result
 	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_UP
-
-	# var camera = player_manager.camera as GameCamera
-	# camera.focus_on(ball)
 	
 	# Detect if this is a 2 point or 3 point shot
 	var hoop_to_shoot_at = game.hoop_2 if side == Game.SIDE.CPU else game.hoop_1 as Hoop
@@ -185,8 +181,8 @@ func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
 	on_arc_complete_timer.wait_time = duration_sec + 0.25
 	on_arc_complete_timer.one_shot = true
 	on_arc_complete_timer.autostart = true
-	var ball_arc_complete_cb = Callable(self, "on_ball_arc_complete").bind(ball, on_arc_complete_timer)
-	on_arc_complete_timer.connect("timeout", ball_arc_complete_cb)
+	var shot_complete_cb = Callable(self, "on_shot_complete").bind(ball, on_arc_complete_timer)
+	on_arc_complete_timer.connect("timeout", shot_complete_cb)
 	add_child(on_arc_complete_timer)
 	
 
@@ -240,11 +236,18 @@ func on_jump_complete(custom_jump_complete_cb: Callable):
 	custom_jump_complete_cb.call()
 	
 
-func on_ball_arc_complete(ball: Ball, timer: Timer):
+func on_shot_complete(ball: Ball, timer: Timer):
 	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
 		var points_scored = 2 if last_shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
 		game.scoreboard.add_score(side, points_scored)
-		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED if side == Game.SIDE.PLAYER else Ball.POSS_STATUS.CPU_JUST_SCORED
+		var new_poss_status
+		if side == Game.SIDE.PLAYER:
+			new_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED
+			cpu_manager.assign_inbounder()
+		else:
+			new_poss_status = Ball.POSS_STATUS.CPU_JUST_SCORED
+			player_manager.assign_inbounder()
+		ball.curr_poss_status = new_poss_status
 	ball.enable_player_detector()
 	can_gain_possession = true
 	timer.queue_free()
@@ -276,3 +279,18 @@ func get_player_to_defend():
 			return player_manager.get_player_by_name(player_to_defend_name)
 		return null
 		
+
+func move_to_position(dest_position: Vector2):
+	var dir = (dest_position - global_position).normalized()
+	linear_velocity = dir * Player.SPEED
+	linear_damp = 0
+	
+	# Player running animation
+	var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
+	if side == Game.SIDE.CPU:
+		anim_name = "cpu-" + anim_name
+	anim_sprite.play(anim_name)
+	anim_sprite.flip_h = dir.x < 0
+
+func get_manager() -> Manager:
+	return (cpu_manager as Manager) if side == Game.SIDE.CPU else (player_manager as Manager)

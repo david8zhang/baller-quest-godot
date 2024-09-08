@@ -18,9 +18,10 @@ enum PLAYER_TYPE {
 @onready var hoop_2 = $Hoop2 as Hoop
 @onready var camera = $Camera2D
 @onready var scoreboard = $CanvasLayer/Scoreboard as Scoreboard
-
 @onready var player_manager = $PlayerManager as PlayerManager
 @onready var cpu_manager = $CPUManager as CPUManager
+
+@export var ball_scene: PackedScene
 
 var possession_side = SIDE.PLAYER
 var ball
@@ -32,6 +33,10 @@ func _ready():
 	if player_manager.selected_player != null:
 		camera.reparent(player_manager.selected_player)
 
+	ball = ball_scene.instantiate() as Ball
+	ball.set_gravity_scale(0)
+	ball.hide()
+	add_child(ball)
 
 func get_ball_handler():
 	for player in player_manager.players:

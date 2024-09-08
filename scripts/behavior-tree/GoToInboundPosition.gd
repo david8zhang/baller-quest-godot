@@ -1,5 +1,9 @@
 class_name GoToInboundPosition
 extends ActionLeaf
 
-func tick(actor: Node, blackboard: Blackboard):
-	pass
+func tick(actor: Node, _blackboard: Blackboard):
+	var player = actor as Player
+	var manager = player.get_manager()
+	var inbound_position = manager.get_inbounder_position()
+	player.move_to_position(inbound_position)
+	return SUCCESS

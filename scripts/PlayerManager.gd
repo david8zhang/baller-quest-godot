@@ -5,6 +5,9 @@ extends Manager
 
 var selected_player: Player = null
 
+const INBOUNDER_POSITION = Vector2(-125, 1150)
+const INBOUND_RECEIVER_POSITION = Vector2(-125, 1025)
+
 const PLAYER_CONFIGS = [
 	{
 		"name": 'Player 1',
@@ -67,3 +70,9 @@ func switch_to_player(player: Player):
 func hide_players():
 	for p in players:
 		p.hide()
+
+func get_inbounder_position():
+	return INBOUNDER_POSITION
+
+func get_inbound_receiver_position():
+	return INBOUND_RECEIVER_POSITION

@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=12 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ckvlo"]
+[ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_qbsg0"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="4_yn740"]
@@ -20,6 +21,7 @@ b = Vector2(600, 2.08165e-12)
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_ja5kq")
+ball_scene = ExtResource("2_qbsg0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.9, 0.9)

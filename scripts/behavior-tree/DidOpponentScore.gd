@@ -8,7 +8,6 @@ func tick(actor: Node, _blackboard: Blackboard):
 	if ball == null:
 		return FAILURE
 	else:
-		print(ball.curr_poss_status)
 		if player.side == Game.SIDE.CPU:
 			return SUCCESS if ball.curr_poss_status == Ball.POSS_STATUS.PLAYER_JUST_SCORED else FAILURE
 		else:

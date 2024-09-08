@@ -3,6 +3,9 @@ extends Manager
 
 @onready var player_manager = $"../PlayerManager"
 
+const INBOUNDER_POSITION = Vector2(125, -165)
+const INBOUND_RECEIVER_POSITION = Vector2(125, -25)
+
 const CPU_POSITIONS = [
 	Vector2(-400, -100),
 	Vector2(-200, 0),
@@ -60,3 +63,9 @@ func assign_defenders():
 		var cpu_player = players[i] as Player
 		var player_player = player_players[i] as Player
 		defensive_assignments[cpu_player.player_name] = player_player.player_name
+
+func get_inbounder_position():
+	return INBOUNDER_POSITION
+
+func get_inbound_receiver_position():
+	return INBOUND_RECEIVER_POSITION

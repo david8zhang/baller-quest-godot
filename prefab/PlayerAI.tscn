@@ -16,10 +16,10 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInbounder.gd" id="13_1ncyu"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInOffensivePosition.gd" id="13_udjm0"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/GoToInboundPosition.gd" id="14_gdwrg"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsNotInInboundPosition.gd" id="14_nfffy"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/RunDownCourt.gd" id="14_v0ij5"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/DidOpponentScore.gd" id="15_3bchx"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsDefendingBallHandler.gd" id="15_a8bva"]
-[ext_resource type="Script" path="res://scripts/behavior-tree/InPositionToInbound.gd" id="15_smm3s"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundRecieverInPosition.gd" id="16_p0ss3"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/InboundBall.gd" id="17_hx1kc"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInbounderOrInboundReceiver.gd" id="22_gv018"]
@@ -97,25 +97,34 @@ script = ExtResource("3_202us")
 [node name="IsInbounder" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence"]
 script = ExtResource("13_1ncyu")
 
-[node name="GoToInboundPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence"]
-script = ExtResource("14_gdwrg")
-
-[node name="IsReadyToInbound" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence"]
+[node name="IsInPositionToInbound" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence"]
 script = ExtResource("2_826j1")
 
-[node name="MakeInboundPassSequence" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsReadyToInbound"]
+[node name="GoToPositionSequence" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound"]
 script = ExtResource("3_202us")
 
-[node name="InPositionToInbound" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsReadyToInbound/MakeInboundPassSequence"]
-script = ExtResource("15_smm3s")
+[node name="IsNotInInboundPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/GoToPositionSequence"]
+script = ExtResource("14_nfffy")
 
-[node name="IsInboundRecieverInPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsReadyToInbound/MakeInboundPassSequence"]
+[node name="GoToInboundPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/GoToPositionSequence"]
+script = ExtResource("14_gdwrg")
+
+[node name="IsReceiverReadySelector" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound"]
+script = ExtResource("2_826j1")
+
+[node name="MakeInboundPassSequence" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector"]
+script = ExtResource("3_202us")
+
+[node name="IsInboundRecieverInPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
 script = ExtResource("16_p0ss3")
 
-[node name="InboundBall" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsReadyToInbound/MakeInboundPassSequence"]
+[node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
+script = ExtResource("7_y3g8y")
+
+[node name="InboundBall" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
 script = ExtResource("17_hx1kc")
 
-[node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsReadyToInbound"]
+[node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector"]
 script = ExtResource("7_y3g8y")
 
 [node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector"]

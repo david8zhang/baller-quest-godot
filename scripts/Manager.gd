@@ -2,9 +2,11 @@ class_name Manager
 extends Node
 
 @export var player_scene: PackedScene
+@onready var game = get_node("/root/Main") as Game
 
 var defensive_assigments = {}
 var players: Array[Player] = []
+var inbounder
 
 func setup_defense():
 	pass
@@ -24,3 +26,32 @@ func get_player_by_name(player_name):
 		if player.player_name == player_name:
 			return player
 	return null
+
+func get_inbounder_position():
+	return Vector2(0, 0)
+
+func get_inbound_receiver_position():
+	return Vector2(0, 0)
+
+func assign_inbounder():
+	var min_dist = INF
+	var player_closest_to_ball = null
+	var ball = game.ball
+
+	if ball == null:
+		return
+
+	for p in players:
+		var dist_to_ball = p.global_position.distance_to(ball.global_position)
+		if dist_to_ball < min_dist and p.player_type != Game.PLAYER_TYPE.POINT_GUARD:
+			dist_to_ball = min_dist
+			player_closest_to_ball = p
+	
+	# Inbound passer is player closest to the ball (who's not the PG since they're the inbound receiver)
+	inbounder = player_closest_to_ball
+
+func get_player_by_position(player_type: Game.PLAYER_TYPE):
+	for player in players:
+		if player.player_type == player_type:
+			return player
+	return name

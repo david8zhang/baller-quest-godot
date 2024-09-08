@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=15 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qur1a"]
-[ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_pi8my"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="3_enltj"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="4_4ftjt"]
 [ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="5_ps6oe"]
@@ -27,7 +26,6 @@ contact_monitor = true
 lock_rotation = true
 linear_damp = 100.0
 script = ExtResource("1_qur1a")
-ball_scene = ExtResource("2_pi8my")
 
 [node name="ShotMeter" parent="." instance=ExtResource("3_enltj")]
 visible = false
