@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=30 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsWithinReboundRange.gd" id="5_wc6a0"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/ChaseRebound.gd" id="6_k8uj5"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/PlayerControl.gd" id="6_uxnl6"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="7_jnoec"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="7_y3g8y"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/HasBall.gd" id="11_lvr25"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/TeamHasPossession.gd" id="12_fk8yq"]
@@ -31,7 +32,7 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@19273")
+blackboard = NodePath("@Node@19280")
 actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="."]
@@ -51,6 +52,12 @@ script = ExtResource("4_ohcov")
 
 [node name="IsWithinReboundRange" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/ReboundSequence"]
 script = ExtResource("5_wc6a0")
+
+[node name="InverterDecorator" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/ReboundSequence"]
+script = ExtResource("7_jnoec")
+
+[node name="IsPlayerControlled" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/ReboundSequence/InverterDecorator"]
+script = ExtResource("5_cpb62")
 
 [node name="ChaseRebound" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/ReboundSequence"]
 script = ExtResource("6_k8uj5")
@@ -117,9 +124,6 @@ script = ExtResource("3_202us")
 
 [node name="IsInboundRecieverInPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
 script = ExtResource("16_p0ss3")
-
-[node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
-script = ExtResource("7_y3g8y")
 
 [node name="InboundBall" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/InboundBallSequence/IsInPositionToInbound/IsReceiverReadySelector/MakeInboundPassSequence"]
 script = ExtResource("17_hx1kc")

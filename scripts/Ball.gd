@@ -8,7 +8,8 @@ enum POSS_STATUS {
 	SHOOT_DOWN,
 	LOOSE,
 	PLAYER_JUST_SCORED,
-	CPU_JUST_SCORED
+	CPU_JUST_SCORED,
+	INBOUND_PASS
 }
 
 var screen_size
@@ -72,4 +73,5 @@ func _on_player_detector_body_entered(body):
 
 func _on_body_entered(body):
 	if body == game.hoop_1 or body == game.hoop_2:
+		enable_player_detector()
 		curr_poss_status = POSS_STATUS.LOOSE

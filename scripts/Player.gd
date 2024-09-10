@@ -89,7 +89,7 @@ func handle_input(input: InputEvent):
 				player_control_fsm.transition_to("PassState", {})
 
 
-func pass_ball():
+func pass_ball(custom_cb):
 	has_ball = false
 	var ball = game.ball
 	ball.show()
@@ -100,23 +100,31 @@ func pass_ball():
 	can_gain_possession = false
 	var tween = create_tween()
 	tween.tween_property(ball, "global_position", pass_target.global_position, 0.5)
-	tween.finished.connect(on_completed_pass)
+	var cb = Callable(self, "on_completed_pass").bind(custom_cb)
+	tween.finished.connect(cb)
 
 
-func on_completed_pass():
+func on_completed_pass(custom_cb):
 	can_gain_possession = true
-	player_control_fsm.transition_to("IdleState", {})
+	if side == Game.SIDE.PLAYER:
+		player_control_fsm.transition_to("IdleState", {})
+	if custom_cb != null:
+		custom_cb.call()
 
 
 func handle_ball_collision(ball: Ball):
 	if self.can_gain_possession:
+		print(self.name + " gained possession!")
 		self.modulate = Color(1, 1, 1)
 		can_gain_possession = false
-		player_manager.switch_to_player(self)
 		has_ball = true
 		game.ball.hide()
+		ball.curr_poss_status = Ball.POSS_STATUS.CPU if side == Game.SIDE.CPU else Ball.POSS_STATUS.PLAYER
 		ball.disable_player_detector()
-		player_control_fsm.transition_to("IdleState", {})
+
+		if side == Game.SIDE.PLAYER:
+			player_manager.switch_to_player(self)
+			player_control_fsm.transition_to("IdleState", {})
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):

@@ -31,5 +31,5 @@ func enter(_msg := {}) -> void:
 func _on_pass_anim_frame():
 	var player = entity as Player
 	if anim_sprite.frame == 3:
-		player.pass_ball()
+		player.pass_ball(null)
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)
