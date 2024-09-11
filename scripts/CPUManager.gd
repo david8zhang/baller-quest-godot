@@ -52,6 +52,14 @@ const DEFAULT_DEFENSIVE_POSITIONS = {
 	Game.PLAYER_TYPE.CENTER: Vector2(-400, -100)
 }
 
+const DEFAULT_OFFENSIVE_POSITIONS = {
+	Game.PLAYER_TYPE.POINT_GUARD: Vector2(0, 650),
+	Game.PLAYER_TYPE.SHOOTING_GUARD: Vector2(-300, 800),
+	Game.PLAYER_TYPE.SMALL_FORWARD: Vector2(300, 800),
+	Game.PLAYER_TYPE.POWER_FORWARD: Vector2(-400, 1050),
+	Game.PLAYER_TYPE.CENTER: Vector2(400, 1050)
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	init_players(PLAYER_CONFIGS, Game.SIDE.CPU)
@@ -69,3 +77,9 @@ func get_inbounder_position():
 
 func get_inbound_receiver_position():
 	return INBOUND_RECEIVER_POSITION
+
+func get_defensive_positions():
+	return DEFAULT_DEFENSIVE_POSITIONS
+
+func get_offensive_positions():
+	return DEFAULT_OFFENSIVE_POSITIONS

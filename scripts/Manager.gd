@@ -7,6 +7,7 @@ extends Node
 var defensive_assigments = {}
 var players: Array[Player] = []
 var inbounder
+var inbound_receiver
 
 func setup_defense():
 	pass
@@ -33,7 +34,7 @@ func get_inbounder_position():
 func get_inbound_receiver_position():
 	return Vector2(0, 0)
 
-func assign_inbounder():
+func assign_inbounder_and_receiver():
 	var min_dist = INF
 	var player_closest_to_ball = null
 	var ball = game.ball
@@ -49,9 +50,21 @@ func assign_inbounder():
 	
 	# Inbound passer is player closest to the ball (who's not the PG since they're the inbound receiver)
 	inbounder = player_closest_to_ball
+	inbound_receiver = get_player_by_position(Game.PLAYER_TYPE.POINT_GUARD)
 
 func get_player_by_position(player_type: Game.PLAYER_TYPE):
 	for player in players:
 		if player.player_type == player_type:
 			return player
 	return name
+
+func get_defensive_positions():
+	return {}
+
+func get_offensive_positions():
+	return {}
+
+# Remove inbounder
+func on_inbound_complete():
+	inbounder = null
+	inbound_receiver = null

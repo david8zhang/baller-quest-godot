@@ -4,7 +4,7 @@ extends ConditionLeaf
 func tick(actor: Node, _blackboard: Blackboard):
 	var player = actor as Player
 	var manager = player.get_manager()
-	var inbound_receiver = manager.get_player_by_position(Game.PLAYER_TYPE.POINT_GUARD)
+	var inbound_receiver = manager.inbound_receiver
 	return SUCCESS if within_bounds(inbound_receiver.global_position, manager.get_inbound_receiver_position(), 5) else FAILURE
 
 

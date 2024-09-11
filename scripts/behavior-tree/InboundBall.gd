@@ -10,7 +10,7 @@ func tick(actor: Node, _blackboard: Blackboard):
 		var player = actor as Player
 		player.linear_velocity = Vector2.ZERO
 		var manager = player.get_manager()
-		var inbound_receiver = manager.get_player_by_position(Game.PLAYER_TYPE.POINT_GUARD)
+		var inbound_receiver = manager.inbound_receiver
 		if inbound_receiver == null:
 			return FAILURE
 		play_pass_animation(player, inbound_receiver)
@@ -49,9 +49,11 @@ func _on_pass_anim_frame(player: Player, inbound_receiver: Player):
 	if anim_sprite.frame == 3:
 		player.pass_target = inbound_receiver
 		ball.curr_poss_status = Ball.POSS_STATUS.INBOUND_PASS
-		var on_pass_complete_cb = Callable(self, "on_pass_complete")
+		var on_pass_complete_cb = Callable(self, "on_pass_complete").bind(player)
 		player.pass_ball(on_pass_complete_cb)
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)
 
-func on_pass_complete():
+func on_pass_complete(player: Player):
+	var manager = player.get_manager()
+	manager.on_inbound_complete()
 	is_complete = true

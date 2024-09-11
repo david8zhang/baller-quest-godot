@@ -66,9 +66,6 @@ func update_pass_target(velocity: Vector2):
 			if dist < min_dist:
 				min_dist = dist
 				closest_player = player
-	if pass_target != null and pass_target != closest_player:
-		pass_target.player_control_fsm.transition_to("IdleState")
-	closest_player.player_control_fsm.transition_to("ReceivePassState", { "pass_source": self })
 	pass_target = closest_player
 	
 
@@ -251,10 +248,10 @@ func on_shot_complete(ball: Ball, timer: Timer):
 		var new_poss_status
 		if side == Game.SIDE.PLAYER:
 			new_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED
-			cpu_manager.assign_inbounder()
+			cpu_manager.assign_inbounder_and_receiver()
 		else:
 			new_poss_status = Ball.POSS_STATUS.CPU_JUST_SCORED
-			player_manager.assign_inbounder()
+			player_manager.assign_inbounder_and_receiver()
 		ball.curr_poss_status = new_poss_status
 	ball.enable_player_detector()
 	can_gain_possession = true
@@ -294,10 +291,14 @@ func move_to_position(dest_position: Vector2):
 	linear_damp = 0
 	
 	# Player running animation
-	var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
+	var run_anim_name = ""
+	if has_ball:
+		run_anim_name = "dribble-front" if abs(dir.x) < 0.5 else "dribble-side"
+	else:
+		run_anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
 	if side == Game.SIDE.CPU:
-		anim_name = "cpu-" + anim_name
-	anim_sprite.play(anim_name)
+		run_anim_name = "cpu-" + run_anim_name
+	anim_sprite.play(run_anim_name)
 	anim_sprite.flip_h = dir.x < 0
 
 func get_manager() -> Manager:

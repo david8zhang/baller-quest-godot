@@ -20,6 +20,7 @@ size = Vector2(8, 14)
 size = Vector2(8, 4)
 
 [node name="Player" type="RigidBody2D"]
+collision_mask = 0
 gravity_scale = 2.66454e-15
 max_contacts_reported = 1
 contact_monitor = true
@@ -79,6 +80,5 @@ position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
-[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@24114")
-actor = NodePath("..")
+[node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("15_cfbit")]
+blackboard = NodePath("@Node@54197")
