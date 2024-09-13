@@ -2,6 +2,7 @@ class_name PlayerManager
 extends Manager
 
 @onready var camera: GameCamera = $"../Camera2D"
+@onready var cpu_manager = $"../CPUManager"
 
 var selected_player: Player = null
 
@@ -59,6 +60,13 @@ func _ready():
 	selected_player = players[0]
 	selected_player.select()
 	selected_player.has_ball = true
+
+func assign_defenders():
+	var cpu_players = cpu_manager.players
+	for i in range(0, players.size()):
+		var cpu_player = cpu_players[i] as Player
+		var player_player = players[i] as Player
+		defensive_assignments[player_player.player_name] = cpu_player.player_name
 
 
 func switch_to_player(player: Player):

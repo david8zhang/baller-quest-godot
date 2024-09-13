@@ -36,6 +36,7 @@ func _ready():
 	ball = ball_scene.instantiate() as Ball
 	ball.set_gravity_scale(0)
 	ball.hide()
+	ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 	add_child(ball)
 
 func get_ball_handler():

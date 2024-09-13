@@ -23,8 +23,11 @@ func tick(actor: Node, _blackboard: Blackboard):
 		var dir = (quarter_to_hoop - curr_player.global_position).normalized()
 		if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
 			curr_player.linear_velocity = dir * Player.SPEED
-			anim_sprite.play("onball-defensive-slide")
-			anim_sprite.flip_h = dir.x > 0
+			var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
+			if curr_player.side == Game.SIDE.CPU:
+				anim_name = "cpu-" + anim_name
+			anim_sprite.play(anim_name)
+			anim_sprite.flip_h = dir.x < 0
 			last_moved_time = Time.get_unix_time_from_system() * 1000
 		else:
 			var curr_time = Time.get_unix_time_from_system() * 1000

@@ -1,4 +1,4 @@
-class_name RunDownCourt
+class_name RunToPosition
 extends ActionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):

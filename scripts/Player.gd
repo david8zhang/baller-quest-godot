@@ -122,6 +122,9 @@ func handle_ball_collision(ball: Ball):
 		if side == Game.SIDE.PLAYER:
 			player_manager.switch_to_player(self)
 			player_control_fsm.transition_to("IdleState", {})
+		else:
+			if player_manager.defensive_assignments.size() == 0:
+				player_manager.assign_defenders()
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):
