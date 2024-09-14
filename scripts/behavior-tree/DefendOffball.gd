@@ -5,10 +5,10 @@ const MAX_DISTANCE = 65
 var last_moved_time = 0
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var curr_player = actor as Player
+	var curr_player = actor as CourtPlayer
 	var anim_sprite = curr_player.anim_sprite as AnimatedSprite2D
 
-	var player_to_defend = curr_player.get_player_to_defend() as Player
+	var player_to_defend = curr_player.get_player_to_defend() as CourtPlayer
 	curr_player.linear_damp = 0
 
 	if player_to_defend != null:
@@ -24,7 +24,7 @@ func tick(actor: Node, _blackboard: Blackboard):
 		var dir = (quarter_to_hoop - curr_player.global_position).normalized()
 		var dist_to_defend_pos = curr_player.global_position.distance_to(quarter_to_hoop)
 		if dist_to_defend_pos > MAX_DISTANCE:
-			curr_player.linear_velocity = dir * (Player.SPEED * (dist_to_defend_pos / MAX_DISTANCE))
+			curr_player.linear_velocity = dir * (CourtPlayer.SPEED * (dist_to_defend_pos / MAX_DISTANCE))
 			var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
 			if curr_player.side == Game.SIDE.CPU:
 				anim_name = "cpu-" + anim_name

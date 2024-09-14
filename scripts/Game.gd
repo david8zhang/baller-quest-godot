@@ -26,6 +26,8 @@ enum PLAYER_TYPE {
 var possession_side = SIDE.PLAYER
 var ball
 
+signal on_game_ready
+
 func _ready():
 	hoop_1.display_front()
 	hoop_2.display_back()
@@ -38,6 +40,7 @@ func _ready():
 	ball.hide()
 	ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 	add_child(ball)
+	on_game_ready.emit()
 
 func get_ball_handler():
 	for player in player_manager.players:

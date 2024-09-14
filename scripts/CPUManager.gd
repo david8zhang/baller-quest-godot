@@ -68,8 +68,8 @@ func _ready():
 func assign_defenders():
 	var player_players = player_manager.players
 	for i in range(0, players.size()):
-		var cpu_player = players[i] as Player
-		var player_player = player_players[i] as Player
+		var cpu_player = players[i] as CourtPlayer
+		var player_player = player_players[i] as CourtPlayer
 		defensive_assignments[cpu_player.player_name] = player_player.player_name
 
 func get_inbounder_position():

@@ -2,7 +2,7 @@ class_name PassState
 extends State
 
 func enter(_msg := {}) -> void:
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.linear_velocity = Vector2.ZERO
 	var pass_target = player.pass_target
 	var pass_target_pos = pass_target.global_position
@@ -29,7 +29,7 @@ func enter(_msg := {}) -> void:
 
 
 func _on_pass_anim_frame():
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	if anim_sprite.frame == 3:
 		player.pass_ball(null)
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)

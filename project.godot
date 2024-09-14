@@ -76,6 +76,7 @@ rotate_camera={
 
 [physics]
 
+2d/physics_engine="GodotPhysics2D"
 2d/default_linear_damp=2.08167e-17
 2d/default_angular_damp=2.08167e-17
 

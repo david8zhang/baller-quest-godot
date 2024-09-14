@@ -2,7 +2,7 @@ class_name RunToOffensivePosition
 extends ActionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var player = actor as Player
+	var player = actor as CourtPlayer
 	var manager = player.get_manager()
 	var offensive_positions = manager.get_offensive_positions()
 	var off_pos_for_player = offensive_positions[player.player_type]

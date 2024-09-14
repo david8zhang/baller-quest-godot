@@ -2,8 +2,8 @@ class_name IsNotInDefensivePosition
 extends ConditionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var curr_player = actor as Player
-	var player_to_defend = curr_player.get_player_to_defend() as Player
+	var curr_player = actor as CourtPlayer
+	var player_to_defend = curr_player.get_player_to_defend() as CourtPlayer
 	var player_to_defend_pos = player_to_defend.global_position
 	var game = curr_player.game as Game
 	var hoop = game.hoop_1 if curr_player.side == Game.SIDE.CPU else game.hoop_2 as Hoop

@@ -4,7 +4,7 @@ extends Manager
 @onready var camera: GameCamera = $"../Camera2D"
 @onready var cpu_manager = $"../CPUManager"
 
-var selected_player: Player = null
+var selected_player: PlayerCourtPlayer = null
 
 const INBOUNDER_POSITION = Vector2(-125, 1150)
 const INBOUND_RECEIVER_POSITION = Vector2(-125, 1025)
@@ -38,7 +38,7 @@ const PLAYER_CONFIGS = [
 ]
 
 const DEFAULT_OFFENSIVE_POSITIONS = {
-	Game.PLAYER_TYPE.POINT_GUARD: Vector2(0, 250),
+	Game.PLAYER_TYPE.POINT_GUARD: Vector2(50, 250),
 	Game.PLAYER_TYPE.SHOOTING_GUARD: Vector2(-200, 150),
 	Game.PLAYER_TYPE.SMALL_FORWARD: Vector2(200, 150),
 	Game.PLAYER_TYPE.POWER_FORWARD: Vector2(400, 0),
@@ -72,12 +72,12 @@ func _ready():
 func assign_defenders():
 	var cpu_players = cpu_manager.players
 	for i in range(0, players.size()):
-		var cpu_player = cpu_players[i] as Player
-		var player_player = players[i] as Player
+		var cpu_player = cpu_players[i] as CourtPlayer
+		var player_player = players[i] as CourtPlayer
 		defensive_assignments[player_player.player_name] = cpu_player.player_name
 
 
-func switch_to_player(player: Player):
+func switch_to_player(player: PlayerCourtPlayer):
 	# De-select the current selected player
 	selected_player.deselect()
 	selected_player = player
@@ -98,3 +98,7 @@ func get_offensive_positions():
 
 func get_defensive_positions():
 	return DEFAULT_DEFENSIVE_POSITIONS
+
+func _on_main_on_game_ready():
+	for player in players:
+		player._on_main_on_game_ready()

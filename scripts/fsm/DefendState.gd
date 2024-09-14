@@ -6,15 +6,15 @@ var last_moved_time = 0
 
 func enter(_msg:={}):
 	var anim_name = "onball-defend-front"
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	if player.side == Game.SIDE.CPU:
 		anim_name = "cpu-" + anim_name
 	anim_sprite.play(anim_name)
 
 
 func update(_delta: float):
-	var player = entity as Player
-	var player_to_defend = player.get_player_to_defend() as Player
+	var player = entity as CourtPlayer
+	var player_to_defend = player.get_player_to_defend() as CourtPlayer
 	if !player_to_defend.has_ball:
 		player.linear_damp = 100
 		player.linear_velocity = Vector2.ZERO
@@ -22,8 +22,8 @@ func update(_delta: float):
 
 
 func physics_update(_delta):
-	var curr_player = entity as Player
-	var player_to_defend = curr_player.get_player_to_defend() as Player
+	var curr_player = entity as CourtPlayer
+	var player_to_defend = curr_player.get_player_to_defend() as CourtPlayer
 	
 	if player_to_defend != null and player_to_defend.has_ball:
 		curr_player.linear_damp = 0
@@ -38,7 +38,7 @@ func physics_update(_delta):
 		# move toward defense point
 		var dir = (quarter_to_hoop - curr_player.global_position).normalized()
 		if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
-			curr_player.linear_velocity = dir * Player.SPEED
+			curr_player.linear_velocity = dir * CourtPlayer.SPEED
 			anim_sprite.play("onball-defensive-slide")
 			anim_sprite.flip_h = dir.x > 0
 			last_moved_time = Time.get_unix_time_from_system() * 1000

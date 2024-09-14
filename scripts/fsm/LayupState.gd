@@ -30,16 +30,16 @@ var layup_frame_timings = [
 ]
 
 func exit():
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.set_collision_mask_value(1, true)
 
 func enter(_msg := {}):
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.set_collision_mask_value(1, false)
 	anim_sprite.stop()
 	anim_sprite.animation = "layup-front"
 	anim_sprite.frame = 0
-	var hoop = player.hoop as Hoop
+	var hoop = player.hoop_to_shoot_at as Hoop
 	anim_sprite.z_index = hoop.z_index + 100
 	
 	var on_jump_complete_callable = Callable(self, "on_jump_complete")
@@ -50,7 +50,7 @@ func enter(_msg := {}):
 
 func process_layup_frame_timings(timing_index: int):
 	if timing_index >= layup_frame_timings.size():
-		var player = entity as Player
+		var player = entity as CourtPlayer
 		player.set_gravity_scale(0)
 		return
 	var frame_timing = layup_frame_timings[timing_index]
@@ -58,7 +58,7 @@ func process_layup_frame_timings(timing_index: int):
 	
 	# Shoot the ball if it's the release frame
 	if frame_timing["is_shoot"]:
-		var player = entity as Player
+		var player = entity as CourtPlayer
 		var release_position = Vector2(player.global_position.x, player.global_position.y - 55)
 		player.shoot_ball(ShotMeter.SHOT_RESULT.MAKE, 1.0, release_position)
 	
@@ -74,6 +74,6 @@ func on_jump_apex():
 	pass
 	
 func on_jump_complete():
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.player_control_fsm.transition_to("IdleState", {})
 	

@@ -4,7 +4,7 @@ var screen_size
 
 # Called when the node enters the scene tree for the first time.
 func physics_update(_delta: float) -> void:
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.linear_damp = 0
 	var velocity = Vector2.ZERO
 	if player.side == Game.SIDE.PLAYER:
@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 		if Input.is_action_pressed("move_up"):
 			velocity.y -= 1
 		if velocity.length() > 0:
-			velocity = velocity.normalized() * Player.SPEED
+			velocity = velocity.normalized() * CourtPlayer.SPEED
 			player.update_pass_target(velocity)
 		player.linear_velocity = velocity
 
@@ -40,5 +40,5 @@ func physics_update(_delta: float) -> void:
 
 
 func handle_input(input: InputEvent) -> void:
-	var player = entity as Player
+	var player = entity as CourtPlayer
 	player.handle_input(input)

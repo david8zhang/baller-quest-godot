@@ -51,7 +51,7 @@ func enable_player_detector():
 	player_detector.set_deferred("disabled", false)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if self.linear_velocity.y < 0:
 		disable_ground_collider()
 		disable_rim_collider()
@@ -61,13 +61,14 @@ func _physics_process(delta):
 			enable_rim_collider()
 
 
-func _on_net_detector_area_entered(area):
-	linear_velocity.x = linear_velocity.x * 0.25
-	linear_velocity.y = linear_velocity.y * 0.75
+func _on_net_detector_area_entered(_area):
+	if self.linear_velocity.y > 0:
+		linear_velocity.x = linear_velocity.x * 0.25
+		linear_velocity.y = linear_velocity.y * 0.5
 
 
 func _on_player_detector_body_entered(body):
-	var player = body as Player
+	var player = body as CourtPlayer
 	player.handle_ball_collision(self)
 
 

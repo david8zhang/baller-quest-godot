@@ -2,7 +2,7 @@ class_name TakePossessionOfBall
 extends ActionLeaf
 
 func tick(actor: Node, blackboard: Blackboard):
-	var player = actor as Player
+	var player = actor as CourtPlayer
 	player.linear_damp = 0
 	var game = blackboard.get_value("Game") as Game
 
@@ -12,7 +12,7 @@ func tick(actor: Node, blackboard: Blackboard):
 		return FAILURE
 
 	var dir = (ball.global_position - player.global_position).normalized()
-	player.linear_velocity = dir * Player.SPEED
+	player.linear_velocity = dir * CourtPlayer.SPEED
 
 	# Player running animation
 	var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"

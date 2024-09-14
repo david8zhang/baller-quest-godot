@@ -7,7 +7,7 @@ var is_complete = false
 func tick(actor: Node, _blackboard: Blackboard):
 	if !is_inbounding:
 		is_inbounding = true
-		var player = actor as Player
+		var player = actor as CourtPlayer
 		player.linear_velocity = Vector2.ZERO
 		var manager = player.get_manager()
 		var inbound_receiver = manager.inbound_receiver
@@ -17,7 +17,7 @@ func tick(actor: Node, _blackboard: Blackboard):
 	return SUCCESS if is_complete else RUNNING
 
 
-func play_pass_animation(player: Player, pass_target: Player):
+func play_pass_animation(player: CourtPlayer, pass_target: CourtPlayer):
 	var anim_sprite = player.anim_sprite as AnimatedSprite2D
 	var pass_target_pos = pass_target.global_position
 	var player_pos = player.global_position
@@ -43,7 +43,7 @@ func play_pass_animation(player: Player, pass_target: Player):
 	anim_sprite.frame_changed.connect(on_pass_frame_cb)
 
 
-func _on_pass_anim_frame(player: Player, inbound_receiver: Player):
+func _on_pass_anim_frame(player: CourtPlayer, inbound_receiver: CourtPlayer):
 	var anim_sprite = player.anim_sprite
 	var ball = player.game.ball as Ball
 	if anim_sprite.frame == 3:
@@ -53,7 +53,7 @@ func _on_pass_anim_frame(player: Player, inbound_receiver: Player):
 		player.pass_ball(on_pass_complete_cb)
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)
 
-func on_pass_complete(player: Player):
+func on_pass_complete(player: CourtPlayer):
 	var manager = player.get_manager()
 	manager.on_inbound_complete()
 	is_complete = true

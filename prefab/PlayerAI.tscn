@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=35 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
@@ -35,22 +35,10 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/RunToOffensivePosition.gd" id="26_br16j"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/delayer.gd" id="34_42qhb"]
 
-[sub_resource type="GDScript" id="GDScript_i0qok"]
-script/source = "class_name RunDownCourt
-extends ActionLeaf
-
-func tick(actor: Node, _blackboard: Blackboard):
-	var player = actor as Player
-	var manager = player.get_manager()
-	var offensive_positions = manager.get_offensive_positions()
-	var off_pos_for_player = offensive_positions[player.player_type]
-	player.move_to_position(off_pos_for_player)
-	return SUCCESS"
-
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@55009")
-actor = NodePath("..")
+blackboard = NodePath("@Node@20274")
+actor = NodePath("")
 
 [node name="SequenceComposite" type="Node" parent="."]
 script = ExtResource("3_202us")
@@ -182,7 +170,7 @@ script = ExtResource("3_202us")
 script = ExtResource("25_hswl3")
 
 [node name="RunToPosition" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/RunDownCourtIfNotInPosition/RunDownCourtSequence"]
-script = SubResource("GDScript_i0qok")
+script = ExtResource("26_br16j")
 
 [node name="Idle" type="Node" parent="SequenceComposite/BallLooseOrNotSelector/PlayerOrCPUBehaviorSelector/CPUBehaviorSelector/HasBallBehaviorSequence/InboundBallSelector/RunDownCourtIfNotInPosition"]
 script = ExtResource("7_y3g8y")

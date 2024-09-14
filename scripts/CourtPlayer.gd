@@ -1,27 +1,26 @@
-class_name Player
+class_name CourtPlayer
 extends RigidBody2D
 
 static var SPEED = 300.0
 
 var screen_size
-var pass_target: Player
+var pass_target: CourtPlayer
 var has_ball: bool = false
 var player_name: String = ""
-var side
+var side: Game.SIDE
 var can_gain_possession: bool = true
 var player_type: Game.PLAYER_TYPE
+var hoop_to_shoot_at: Hoop
 
 var last_shot_type
 
 @onready var game: Game = get_node("/root/Main") as Game
 @onready var player_manager: PlayerManager = get_node("/root/Main/PlayerManager")
 @onready var cpu_manager: CPUManager = get_node("/root/Main/CPUManager")
-@onready var hoop: Hoop = get_node("/root/Main/Hoop1") as Hoop
 @onready var court: Court = get_node("/root/Main/Court") as Court
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
-@onready var player_control_fsm: StateMachine = $PlayerControlFSM
 @onready var feet_area = $FeetArea as Area2D
 @onready var collision_shape_2d = $CollisionShape2D
 
@@ -70,20 +69,8 @@ func update_pass_target(velocity: Vector2):
 	
 
 func is_within_layup_range():
-	var dist_to_hoop = global_position.distance_to(hoop.global_position)
+	var dist_to_hoop = global_position.distance_to(hoop_to_shoot_at.global_position)
 	return dist_to_hoop <= 250
-
-
-func handle_input(input: InputEvent):
-	if is_selected() and has_ball and game.ball != null:
-		if Input.is_action_pressed("shoot_ball"):
-			if is_within_layup_range():
-				player_control_fsm.transition_to("LayupState", {})
-			else:
-				player_control_fsm.transition_to("ShootState", {})
-		if Input.is_action_just_pressed("pass"):
-			if pass_target != null:
-				player_control_fsm.transition_to("PassState", {})
 
 
 func pass_ball(custom_cb):
@@ -103,28 +90,18 @@ func pass_ball(custom_cb):
 
 func on_completed_pass(custom_cb):
 	can_gain_possession = true
-	if side == Game.SIDE.PLAYER:
-		player_control_fsm.transition_to("IdleState", {})
 	if custom_cb != null:
 		custom_cb.call()
 
 
 func handle_ball_collision(ball: Ball):
 	if self.can_gain_possession:
-		print(self.name + " gained possession!")
 		self.modulate = Color(1, 1, 1)
 		can_gain_possession = false
 		has_ball = true
 		game.ball.hide()
 		ball.curr_poss_status = Ball.POSS_STATUS.CPU if side == Game.SIDE.CPU else Ball.POSS_STATUS.PLAYER
 		ball.disable_player_detector()
-
-		if side == Game.SIDE.PLAYER:
-			player_manager.switch_to_player(self)
-			player_control_fsm.transition_to("IdleState", {})
-		else:
-			if player_manager.defensive_assignments.size() == 0:
-				player_manager.assign_defenders()
 
 
 func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, start_position: Vector2 = Vector2(self.position.x, self.position.y - 100)):
@@ -138,20 +115,19 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, s
 	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_UP
 	
 	# Detect if this is a 2 point or 3 point shot
-	var hoop_to_shoot_at = game.hoop_2 if side == Game.SIDE.CPU else game.hoop_1 as Hoop
 	var point_detector = hoop_to_shoot_at.point_detector as Area2D
 	var areas = point_detector.get_overlapping_areas()
 	var is_within_three_point_line = areas.any(func(a): return a == feet_area)
 	last_shot_type = Game.SHOT_TYPE.TWO_POINTER if is_within_three_point_line else Game.SHOT_TYPE.THREE_POINTER
 	
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
-		var y_diff = hoop.net.global_position.y - ball.global_position.y
-		create_arc(ball, Vector2(hoop.position.x, hoop.net.global_position.y), arc_duration)
+		var y_diff = hoop_to_shoot_at.net.global_position.y - ball.global_position.y
+		create_arc(ball, hoop_to_shoot_at.net.global_position, arc_duration)
 	else:
-		var x_target_miss_left = randi_range(hoop.position.x - 15, hoop.position.x - 10)
-		var x_target_miss_right = randi_range(hoop.position.x + 10, hoop.position.x + 15)
+		var x_target_miss_left = randi_range(hoop_to_shoot_at.position.x - 15, hoop_to_shoot_at.position.x - 10)
+		var x_target_miss_right = randi_range(hoop_to_shoot_at.position.x + 10, hoop_to_shoot_at.position.x + 15)
 		var x_target = x_target_miss_left if randi_range(0, 1) == 0 else x_target_miss_right
-		create_arc(ball, Vector2(x_target, hoop.global_position.y - 10), arc_duration)
+		create_arc(ball, Vector2(x_target, hoop_to_shoot_at.global_position.y - 10), arc_duration)
 		
 	# Create timer to reset shot meter
 	var timer := Timer.new()
@@ -170,7 +146,7 @@ func reset_shot_meter(timer: Timer):
 
 
 func create_arc(ball: RigidBody2D, dest_position: Vector2, duration_sec: float):
-	ball.z_index = hoop.net.z_index + 1
+	ball.z_index = hoop_to_shoot_at.net.z_index + 1
 	var velocity_x = (dest_position.x - ball.global_position.x) / duration_sec
 	var velocity_y = (dest_position.y - ball.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	ball.linear_velocity = Vector2(velocity_x, velocity_y)
@@ -248,21 +224,13 @@ func on_shot_complete(ball: Ball, timer: Timer):
 	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
 		var points_scored = 2 if last_shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
 		game.scoreboard.add_score(side, points_scored)
-		var new_poss_status
-		if side == Game.SIDE.PLAYER:
-			new_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED
-			cpu_manager.assign_inbounder_and_receiver()
-		else:
-			new_poss_status = Ball.POSS_STATUS.CPU_JUST_SCORED
-			player_manager.assign_inbounder_and_receiver()
-		ball.curr_poss_status = new_poss_status
 	ball.enable_player_detector()
 	can_gain_possession = true
 	timer.queue_free()
 	
 
 func on_ball_reached_apex(ball: Ball):
-	ball.z_index = hoop.net.z_index - 1
+	ball.z_index = hoop_to_shoot_at.net.z_index - 1
 	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_DOWN
 
 
@@ -290,7 +258,7 @@ func get_player_to_defend():
 
 func move_to_position(dest_position: Vector2):
 	var dir = (dest_position - global_position).normalized()
-	linear_velocity = dir * Player.SPEED
+	linear_velocity = dir * CourtPlayer.SPEED
 	linear_damp = 0
 	
 	# Player running animation

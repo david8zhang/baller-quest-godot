@@ -3,13 +3,13 @@ extends ActionLeaf
 
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var curr_player = actor as Player	
+	var curr_player = actor as CourtPlayer	
 	curr_player.linear_damp = 0
 	var ball = curr_player.game.ball as Ball
 	if ball != null:
 		var ball_position = ball.global_position
 		var dir = (ball_position - curr_player.global_position).normalized() as Vector2
-		curr_player.linear_velocity = dir * Player.SPEED
+		curr_player.linear_velocity = dir * CourtPlayer.SPEED
 
 		var anim_name = "run-front" if abs(dir.x) < 0.5 else "run-side"
 		var anim_sprite = curr_player.anim_sprite as AnimatedSprite2D

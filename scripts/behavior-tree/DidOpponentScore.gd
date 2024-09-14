@@ -2,7 +2,7 @@ class_name DidOpponentScore
 extends ConditionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var player = actor as Player
+	var player = actor as CourtPlayer
 	var game = player.game as Game
 	var ball = game.ball as Ball
 	if ball == null:

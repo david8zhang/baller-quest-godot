@@ -2,7 +2,7 @@ class_name IsInboundReceiverInPosition
 extends ConditionLeaf
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var player = actor as Player
+	var player = actor as CourtPlayer
 	var manager = player.get_manager()
 	var inbound_receiver = manager.inbound_receiver
 	return SUCCESS if within_bounds(inbound_receiver.global_position, manager.get_inbound_receiver_position(), 5) else FAILURE

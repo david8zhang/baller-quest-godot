@@ -5,10 +5,10 @@ const MAX_DISTANCE = 65
 var last_moved_time = 0
 
 func tick(actor: Node, _blackboard: Blackboard):
-	var curr_player = actor as Player
+	var curr_player = actor as CourtPlayer
 	var anim_sprite = curr_player.anim_sprite as AnimatedSprite2D
 
-	var player_to_defend = curr_player.get_player_to_defend() as Player
+	var player_to_defend = curr_player.get_player_to_defend() as CourtPlayer
 	curr_player.linear_damp = 0
 	var player_to_defend_pos = player_to_defend.global_position
 	var game = curr_player.game as Game
@@ -20,7 +20,7 @@ func tick(actor: Node, _blackboard: Blackboard):
 
 	# move toward defense point
 	var dir = (quarter_to_hoop - curr_player.global_position).normalized()
-	curr_player.linear_velocity = dir * Player.SPEED
+	curr_player.linear_velocity = dir * CourtPlayer.SPEED
 	var anim_name = "onball-defensive-slide"
 	if curr_player.side == Game.SIDE.CPU:
 		anim_name = "cpu-" + anim_name

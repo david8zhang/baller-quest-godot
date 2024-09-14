@@ -9,7 +9,7 @@ func enter(msg:={}):
 
 func _physics_process(delta):
 	pass
-#	var player = entity as Player
+#	var player = entity as CourtPlayer
 #	if dest_point != null:
 #		var angle_between = player.global_position.angle_to(dest_point)
 #		var x_dir = cos(angle_between)

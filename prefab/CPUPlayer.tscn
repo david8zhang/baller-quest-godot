@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmlisraqwnlvt"]
+
+[ext_resource type="Script" path="res://scripts/CPUCourtPlayer.gd" id="1_67vw2"]
+[ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="2_d10uy"]
+[ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="3_5eo0k"]
+[ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="4_ubt5h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppf1a"]
+size = Vector2(8, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3x2pa"]
+size = Vector2(8, 4)
+
+[node name="CPUPlayer" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 2.66454e-15
+max_contacts_reported = 1
+contact_monitor = true
+lock_rotation = true
+linear_damp = 100.0
+script = ExtResource("1_67vw2")
+
+[node name="ShotMeter" parent="." instance=ExtResource("2_d10uy")]
+visible = false
+position = Vector2(49, -54)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_ppf1a")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Highlight" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(0.125006, 14)
+scale = Vector2(0.033125, 0.0133333)
+texture = ExtResource("3_5eo0k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = ExtResource("4_ubt5h")
+animation = &"cpu-onball-defensive-slide"
+offset = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="FeetArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea"]
+position = Vector2(-1, 16)
+shape = SubResource("RectangleShape2D_3x2pa")
+debug_color = Color(0.980392, 0, 0.384314, 0.419608)

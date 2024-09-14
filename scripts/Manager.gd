@@ -5,7 +5,7 @@ extends Node
 @onready var game = get_node("/root/Main") as Game
 
 var defensive_assigments = {}
-var players: Array[Player] = []
+var players: Array[CourtPlayer] = []
 var inbounder
 var inbound_receiver
 
@@ -14,11 +14,12 @@ func setup_defense():
 	
 func init_players(player_configs: Array, side: Game.SIDE):
 	for player_config in player_configs:
-		var new_player = player_scene.instantiate() as Player
+		var new_player = player_scene.instantiate() as CourtPlayer
 		new_player.side = side
 		new_player.player_name = player_config.name
 		new_player.player_type = player_config.player_type
 		new_player.global_position = player_config.default_position
+		new_player.hoop_to_shoot_at = game.hoop_1 if side == Game.SIDE.PLAYER else game.hoop_2
 		players.append(new_player)
 		add_child(new_player)
 
