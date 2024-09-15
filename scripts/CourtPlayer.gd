@@ -218,6 +218,16 @@ func on_shot_complete(ball: Ball, timer: Timer):
 	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
 		var points_scored = 2 if last_shot_type == Game.SHOT_TYPE.TWO_POINTER else 3
 		game.scoreboard.add_score(side, points_scored)
+		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED
+		var didPlayerScore = side == Game.SIDE.PLAYER
+		if didPlayerScore:
+			cpu_manager.assign_inbounder_and_receiver()
+			cpu_manager.curr_team_phase = Manager.TEAM_PHASE.INBOUNDING
+			player_manager.curr_team_phase = Manager.TEAM_PHASE.SETTING_UP_DEFENSE
+		else:
+			player_manager.assign_inbounder_and_receiver()
+			player_manager.curr_team_phase = Manager.TEAM_PHASE.INBOUNDING
+			cpu_manager.curr_team_phase = Manager.TEAM_PHASE.SETTING_UP_DEFENSE
 	ball.enable_player_detector()
 	can_gain_possession = true
 	timer.queue_free()

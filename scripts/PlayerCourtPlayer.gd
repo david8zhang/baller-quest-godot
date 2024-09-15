@@ -51,11 +51,9 @@ func on_jump_complete(custom_jump_complete_cb: Callable):
 	custom_jump_complete_cb.call()
 	
 
-func on_shot_complete(ball: Ball, timer: Timer):
-	if ball.shot_status == ShotMeter.SHOT_RESULT.MAKE:
-		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER_JUST_SCORED
-		cpu_manager.assign_inbounder_and_receiver()
-	super.on_shot_complete(ball, timer)
+# func on_shot_complete(ball: Ball, timer: Timer):
+
+	# super.on_shot_complete(ball, timer)
 
 
 func select():

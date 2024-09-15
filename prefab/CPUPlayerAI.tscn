@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bk38bcibwfu4d"]
+[gd_scene load_steps=29 format=3 uid="uid://bk38bcibwfu4d"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_tnh4m"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_1tbjo"]
@@ -18,14 +18,21 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInInboundPosition.gd" id="15_gn7uv"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/GoToInboundPosition.gd" id="16_uydj0"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundRecieverInPosition.gd" id="17_ed5wq"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInOffensePhase.gd" id="17_uinn6"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInbounderOrInboundReceiver.gd" id="18_7sfn7"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundPhase.gd" id="18_c726m"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/InboundBall.gd" id="18_qa53m"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInSetupOffensePhase.gd" id="19_883g1"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundReceiver.gd" id="19_fb524"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/GoToReceiveInboundPosition.gd" id="20_4a8h4"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsNotInOffensivePosition.gd" id="20_16f8x"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/RunToOffensivePosition.gd" id="21_km6yb"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInDefensePhase.gd" id="23_rh043"]
 
 [node name="CPUPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_tnh4m")
-blackboard = NodePath("@Node@47614")
-actor = NodePath("")
+blackboard = NodePath("@Node@20358")
+actor = NodePath("..")
 
 [node name="InitSequence" type="Node" parent="."]
 script = ExtResource("2_1tbjo")
@@ -114,8 +121,47 @@ script = ExtResource("20_4a8h4")
 [node name="Idle" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos"]
 script = ExtResource("5_qaiya")
 
+[node name="SetUpOffense" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="NotInbounderOrSettingUp" type="Node" parent="InitSequence/RootSelector/SetUpOffense"]
+script = ExtResource("4_ab6bh")
+
+[node name="InboundingCondition" type="Node" parent="InitSequence/RootSelector/SetUpOffense/NotInbounderOrSettingUp"]
+script = ExtResource("2_1tbjo")
+
+[node name="NotInbounderOrRecvr" type="Node" parent="InitSequence/RootSelector/SetUpOffense/NotInbounderOrSettingUp/InboundingCondition"]
+script = ExtResource("5_dwrbi")
+
+[node name="IsInbounderOrInboundReceiver" type="Node" parent="InitSequence/RootSelector/SetUpOffense/NotInbounderOrSettingUp/InboundingCondition/NotInbounderOrRecvr"]
+script = ExtResource("18_7sfn7")
+
+[node name="IsInboundPhase" type="Node" parent="InitSequence/RootSelector/SetUpOffense/NotInbounderOrSettingUp/InboundingCondition"]
+script = ExtResource("18_c726m")
+
+[node name="IsInSetupOffensePhase" type="Node" parent="InitSequence/RootSelector/SetUpOffense/NotInbounderOrSettingUp"]
+script = ExtResource("19_883g1")
+
+[node name="RunToPosition" type="Node" parent="InitSequence/RootSelector/SetUpOffense"]
+script = ExtResource("4_ab6bh")
+
+[node name="RunToPositionSeq" type="Node" parent="InitSequence/RootSelector/SetUpOffense/RunToPosition"]
+script = ExtResource("2_1tbjo")
+
+[node name="NotInOffensivePosition" type="Node" parent="InitSequence/RootSelector/SetUpOffense/RunToPosition/RunToPositionSeq"]
+script = ExtResource("20_16f8x")
+
+[node name="RunToOffensivePosition" type="Node" parent="InitSequence/RootSelector/SetUpOffense/RunToPosition/RunToPositionSeq"]
+script = ExtResource("21_km6yb")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/SetUpOffense/RunToPosition"]
+script = ExtResource("5_qaiya")
+
 [node name="DefenseSequence" type="Node" parent="InitSequence/RootSelector"]
 script = ExtResource("2_1tbjo")
+
+[node name="IsInDefensePhase" type="Node" parent="InitSequence/RootSelector/DefenseSequence"]
+script = ExtResource("23_rh043")
 
 [node name="TeamDoesNotHavePoss" type="Node" parent="InitSequence/RootSelector/DefenseSequence"]
 script = ExtResource("5_dwrbi")
@@ -146,6 +192,9 @@ script = ExtResource("9_vmqun")
 
 [node name="OffenseSequence" type="Node" parent="InitSequence/RootSelector"]
 script = ExtResource("2_1tbjo")
+
+[node name="IsInOffensePhase" type="Node" parent="InitSequence/RootSelector/OffenseSequence"]
+script = ExtResource("17_uinn6")
 
 [node name="TeamHasPossession" type="Node" parent="InitSequence/RootSelector/OffenseSequence"]
 script = ExtResource("6_3n7vt")

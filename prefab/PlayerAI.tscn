@@ -18,8 +18,8 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@20274")
-actor = NodePath("..")
+blackboard = NodePath("@Node@20277")
+actor = NodePath("")
 
 [node name="SequenceComposite" type="Node" parent="."]
 script = ExtResource("3_202us")

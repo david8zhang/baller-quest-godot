@@ -68,7 +68,6 @@ func _on_net_detector_area_entered(_area):
 
 
 func _on_player_detector_body_entered(body):
-	print("Collided with player")
 	var player = body as CourtPlayer
 	player.handle_ball_collision(self)
 

@@ -1,6 +1,14 @@
 class_name Manager
 extends Node
 
+enum TEAM_PHASE {
+	IN_OFFENSE,
+	IN_DEFENSE,
+	SETTING_UP_OFFENSE,
+	SETTING_UP_DEFENSE,
+	INBOUNDING
+}
+
 @export var player_scene: PackedScene
 @onready var game = get_node("/root/Main") as Game
 
@@ -8,6 +16,7 @@ var defensive_assigments = {}
 var players: Array[CourtPlayer] = []
 var inbounder
 var inbound_receiver
+var curr_team_phase: TEAM_PHASE
 
 func setup_defense():
 	pass
@@ -69,3 +78,4 @@ func get_offensive_positions():
 func on_inbound_complete():
 	inbounder = null
 	inbound_receiver = null
+	curr_team_phase = TEAM_PHASE.SETTING_UP_OFFENSE

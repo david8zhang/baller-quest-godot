@@ -35,6 +35,9 @@ func _ready():
 	if player_manager.selected_player != null:
 		camera.reparent(player_manager.selected_player)
 
+	player_manager.curr_team_phase = Manager.TEAM_PHASE.IN_OFFENSE
+	cpu_manager.curr_team_phase = Manager.TEAM_PHASE.IN_DEFENSE
+
 	ball = ball_scene.instantiate() as Ball
 	ball.set_gravity_scale(0)
 	ball.hide()
