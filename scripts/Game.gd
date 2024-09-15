@@ -40,6 +40,7 @@ func _ready():
 	ball.hide()
 	ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 	add_child(ball)
+	ball.disable_player_detector()
 	on_game_ready.emit()
 
 func get_ball_handler():
@@ -50,3 +51,9 @@ func get_ball_handler():
 		if player.has_ball:
 			return player
 	return null
+
+static func get_anim_for_side(curr_player: CourtPlayer, base_anim_name: String):
+	if curr_player.side == Game.SIDE.CPU:
+		return "cpu-" + base_anim_name
+	else:
+		return base_anim_name

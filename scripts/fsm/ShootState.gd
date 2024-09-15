@@ -25,6 +25,13 @@ func enter(_msg:={}):
 	var player = entity as CourtPlayer
 	player.linear_velocity = Vector2.ZERO
 	player.linear_damp = 0
+
+	# Detect if this is a 2 point or 3 point shot
+	var point_detector = player.hoop_to_shoot_at.point_detector as Area2D
+	var areas = point_detector.get_overlapping_areas()
+	var is_within_three_point_line = areas.any(func(a): return a == player.feet_area)
+	player.last_shot_type = Game.SHOT_TYPE.TWO_POINTER if is_within_three_point_line else Game.SHOT_TYPE.THREE_POINTER
+
 	var anim_name = "shoot-%s-windup" % _get_shoot_anim_angle()
 	if anim_name == "shoot-side-windup":
 		var x_diff = player.global_position.x - player.hoop_to_shoot_at.position.x

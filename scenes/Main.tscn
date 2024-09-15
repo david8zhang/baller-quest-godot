@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsr0v11ggewrq"]
+[gd_scene load_steps=13 format=3 uid="uid://dsr0v11ggewrq"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="4_yn740"]
 [ext_resource type="Script" path="res://scripts/CPUManager.gd" id="7_ijyjr"]
 [ext_resource type="Script" path="res://scripts/Scoreboard.gd" id="8_phybn"]
+[ext_resource type="PackedScene" uid="uid://bmlisraqwnlvt" path="res://prefab/CPUPlayer.tscn" id="9_od4st"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iu75f"]
 radius = 386.0
@@ -64,7 +65,7 @@ player_scene = ExtResource("4_yn740")
 y_sort_enabled = true
 position = Vector2(0, 1)
 script = ExtResource("7_ijyjr")
-player_scene = ExtResource("4_yn740")
+player_scene = ExtResource("9_od4st")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

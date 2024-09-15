@@ -1,0 +1,169 @@
+[gd_scene load_steps=22 format=3 uid="uid://bk38bcibwfu4d"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_tnh4m"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_1tbjo"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/PopulateBlackboard.gd" id="3_temvp"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="4_ab6bh"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_dwrbi"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="5_qaiya"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/TeamHasPossession.gd" id="6_3n7vt"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsDefendingBallHandler.gd" id="7_thg1t"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsBallLoose.gd" id="7_x0mgw"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/DefendBallHandler.gd" id="8_jhq88"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/DefendOffball.gd" id="9_vmqun"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/HasBall.gd" id="10_1nu3k"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInbounder.gd" id="12_dpglv"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/DidOpponentScore.gd" id="13_au8ek"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/TakePossessionOfBall.gd" id="14_jg5dd"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInInboundPosition.gd" id="15_gn7uv"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/GoToInboundPosition.gd" id="16_uydj0"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundRecieverInPosition.gd" id="17_ed5wq"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/InboundBall.gd" id="18_qa53m"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsInboundReceiver.gd" id="19_fb524"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/GoToReceiveInboundPosition.gd" id="20_4a8h4"]
+
+[node name="CPUPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("1_tnh4m")
+blackboard = NodePath("@Node@47614")
+actor = NodePath("")
+
+[node name="InitSequence" type="Node" parent="."]
+script = ExtResource("2_1tbjo")
+
+[node name="PopulateBlackboard" type="Node" parent="InitSequence"]
+script = ExtResource("3_temvp")
+
+[node name="RootSelector" type="Node" parent="InitSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="InboundSequence" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsInbounder" type="Node" parent="InitSequence/RootSelector/InboundSequence"]
+script = ExtResource("12_dpglv")
+
+[node name="StartInboundSequence" type="Node" parent="InitSequence/RootSelector/InboundSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="TakePossessionIfNotInPoss" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence"]
+script = ExtResource("2_1tbjo")
+
+[node name="DidOpponentScore" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/TakePossessionIfNotInPoss"]
+script = ExtResource("13_au8ek")
+
+[node name="DoesNotHaveBall" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/TakePossessionIfNotInPoss"]
+script = ExtResource("5_dwrbi")
+
+[node name="HasBall" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/TakePossessionIfNotInPoss/DoesNotHaveBall"]
+script = ExtResource("10_1nu3k")
+
+[node name="TakePossessionOfBall" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/TakePossessionIfNotInPoss"]
+script = ExtResource("14_jg5dd")
+
+[node name="SelectorComposite" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="GoToInboundPosIfNotInPos" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite"]
+script = ExtResource("2_1tbjo")
+
+[node name="NotInPosition" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/GoToInboundPosIfNotInPos"]
+script = ExtResource("5_dwrbi")
+
+[node name="IsInInboundPosition" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/GoToInboundPosIfNotInPos/NotInPosition"]
+script = ExtResource("15_gn7uv")
+
+[node name="GoToInboundPosition" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/GoToInboundPosIfNotInPos"]
+script = ExtResource("16_uydj0")
+
+[node name="SelectorComposite" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite"]
+script = ExtResource("4_ab6bh")
+
+[node name="MakeInboundPassSeq" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/SelectorComposite"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsInboundReceiverInPosition" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/SelectorComposite/MakeInboundPassSeq"]
+script = ExtResource("17_ed5wq")
+
+[node name="InboundBall" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/SelectorComposite/MakeInboundPassSeq"]
+script = ExtResource("18_qa53m")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/InboundSequence/StartInboundSequence/SelectorComposite/SelectorComposite"]
+script = ExtResource("5_qaiya")
+
+[node name="ReceiveInboundSequence" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsInboundReceiver" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence"]
+script = ExtResource("19_fb524")
+
+[node name="GoToInboundRecvrPos" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="GoToRecvInboundPos" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos"]
+script = ExtResource("2_1tbjo")
+
+[node name="NotInPosition" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos/GoToRecvInboundPos"]
+script = ExtResource("5_dwrbi")
+
+[node name="IsInboundReceiverInPosition" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos/GoToRecvInboundPos/NotInPosition"]
+script = ExtResource("17_ed5wq")
+
+[node name="GoToReceiveInboundPosition" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos/GoToRecvInboundPos"]
+script = ExtResource("20_4a8h4")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence/GoToInboundRecvrPos"]
+script = ExtResource("5_qaiya")
+
+[node name="DefenseSequence" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="TeamDoesNotHavePoss" type="Node" parent="InitSequence/RootSelector/DefenseSequence"]
+script = ExtResource("5_dwrbi")
+
+[node name="TeamHasPossession" type="Node" parent="InitSequence/RootSelector/DefenseSequence/TeamDoesNotHavePoss"]
+script = ExtResource("6_3n7vt")
+
+[node name="NotBallLoose" type="Node" parent="InitSequence/RootSelector/DefenseSequence"]
+script = ExtResource("5_dwrbi")
+
+[node name="IsBallLoose" type="Node" parent="InitSequence/RootSelector/DefenseSequence/NotBallLoose"]
+script = ExtResource("7_x0mgw")
+
+[node name="OnOrOffballDefense" type="Node" parent="InitSequence/RootSelector/DefenseSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="OnballDefense" type="Node" parent="InitSequence/RootSelector/DefenseSequence/OnOrOffballDefense"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsDefendingBallHandler" type="Node" parent="InitSequence/RootSelector/DefenseSequence/OnOrOffballDefense/OnballDefense"]
+script = ExtResource("7_thg1t")
+
+[node name="DefendBallHandler" type="Node" parent="InitSequence/RootSelector/DefenseSequence/OnOrOffballDefense/OnballDefense"]
+script = ExtResource("8_jhq88")
+
+[node name="DefendOffball" type="Node" parent="InitSequence/RootSelector/DefenseSequence/OnOrOffballDefense"]
+script = ExtResource("9_vmqun")
+
+[node name="OffenseSequence" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="TeamHasPossession" type="Node" parent="InitSequence/RootSelector/OffenseSequence"]
+script = ExtResource("6_3n7vt")
+
+[node name="OnOrOffballOffense" type="Node" parent="InitSequence/RootSelector/OffenseSequence"]
+script = ExtResource("4_ab6bh")
+
+[node name="OnballOffense" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense"]
+script = ExtResource("2_1tbjo")
+
+[node name="HasBall" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense"]
+script = ExtResource("10_1nu3k")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense"]
+script = ExtResource("5_qaiya")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense"]
+script = ExtResource("5_qaiya")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("5_qaiya")

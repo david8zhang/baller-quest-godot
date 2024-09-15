@@ -114,12 +114,6 @@ func shoot_ball(shot_result: ShotMeter.SHOT_RESULT, arc_duration: float = 1.5, s
 	ball.shot_status = shot_result
 	ball.curr_poss_status = Ball.POSS_STATUS.SHOOT_UP
 	
-	# Detect if this is a 2 point or 3 point shot
-	var point_detector = hoop_to_shoot_at.point_detector as Area2D
-	var areas = point_detector.get_overlapping_areas()
-	var is_within_three_point_line = areas.any(func(a): return a == feet_area)
-	last_shot_type = Game.SHOT_TYPE.TWO_POINTER if is_within_three_point_line else Game.SHOT_TYPE.THREE_POINTER
-	
 	if shot_result == ShotMeter.SHOT_RESULT.MAKE:
 		var y_diff = hoop_to_shoot_at.net.global_position.y - ball.global_position.y
 		create_arc(ball, hoop_to_shoot_at.net.global_position, arc_duration)

@@ -46,7 +46,7 @@ texture = ExtResource("4_4ftjt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = ExtResource("5_ps6oe")
-animation = &"cpu-onball-defensive-slide"
+animation = &"cpu-pass-side"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="PlayerControlFSM" type="Node2D" parent="."]
@@ -81,5 +81,5 @@ shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
 [node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@19764")
+blackboard = NodePath("@Node@66757")
 actor = NodePath("..")

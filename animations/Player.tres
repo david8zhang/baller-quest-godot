@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=170 format=3 uid="uid://bxfaqat2mu62u"]
+[gd_resource type="SpriteFrames" load_steps=183 format=3 uid="uid://bxfaqat2mu62u"]
 
 [ext_resource type="Texture2D" uid="uid://cxhtiy35qpo1" path="res://sprites/cpu/cpu-movement.png" id="1_ftow1"]
 [ext_resource type="Texture2D" uid="uid://cw5v42n18ngjb" path="res://sprites/cpu/cpu-dribble-idle.png" id="2_7fe5y"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c2icti5d6hb7e" path="res://sprites/cpu/cpu-onball-defend-front.png" id="5_b03o7"]
 [ext_resource type="Texture2D" uid="uid://s80ud4sgq23r" path="res://sprites/cpu/cpu-onball-defend-side.png" id="6_5iinw"]
 [ext_resource type="Texture2D" uid="uid://blur1jilhi01a" path="res://sprites/player/dribble-front.png" id="7_7yirn"]
+[ext_resource type="Texture2D" uid="uid://c8njkay51bway" path="res://sprites/cpu/cpu-pass.png" id="8_cnaer"]
 [ext_resource type="Texture2D" uid="uid://dynyqqprgrap8" path="res://sprites/player/dribble-idle.png" id="8_cpkky"]
 [ext_resource type="Texture2D" uid="uid://c7m7g7unlvgqh" path="res://sprites/player/dribble-side.png" id="9_sq5rg"]
 [ext_resource type="Texture2D" uid="uid://dv0w7uww5ne8c" path="res://sprites/player/idle-front.png" id="10_323lp"]
@@ -193,6 +194,54 @@ region = Rect2(0, 45, 32, 45)
 [sub_resource type="AtlasTexture" id="AtlasTexture_cblr4"]
 atlas = ExtResource("14_wudsa")
 region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qqdh"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(96, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koa5h"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(128, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j176"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(0, 90, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ar8p"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(32, 90, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0n23"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(128, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3l0w"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(0, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hn3b"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(32, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xedh"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(64, 45, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t683w"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(0, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1i3xi"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(32, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3oqk"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(64, 0, 32, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3t7rj"]
+atlas = ExtResource("8_cnaer")
+region = Rect2(96, 0, 32, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jus7t"]
 atlas = ExtResource("1_ftow1")
@@ -783,6 +832,57 @@ animations = [{
 }],
 "loop": true,
 "name": &"cpu-onball-defensive-slide",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qqdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_koa5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j176")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ar8p")
+}],
+"loop": false,
+"name": &"cpu-pass-back",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0n23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3l0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hn3b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xedh")
+}],
+"loop": false,
+"name": &"cpu-pass-front",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t683w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1i3xi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3oqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3t7rj")
+}],
+"loop": false,
+"name": &"cpu-pass-side",
 "speed": 10.0
 }, {
 "frames": [{

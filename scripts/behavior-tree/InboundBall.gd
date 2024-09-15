@@ -30,15 +30,15 @@ func play_pass_animation(player: CourtPlayer, pass_target: CourtPlayer):
 	
 	if pass_axis == "vertical":
 		if pass_target_pos.y > player_pos.y:
-			anim_sprite.play("pass-front")
+			anim_sprite.play(Game.get_anim_for_side(player, "pass-front"))
 		else:
-			anim_sprite.play("pass-back")
+			anim_sprite.play(Game.get_anim_for_side(player, "pass-back"))
 	elif pass_axis == "horizontal":
 		if pass_target_pos.x > player_pos.x:
 			anim_sprite.flip_h = false
 		else:
 			anim_sprite.flip_h = true
-		anim_sprite.play("pass-side")
+		anim_sprite.play(Game.get_anim_for_side(player, "pass-side"))
 	var on_pass_frame_cb = Callable(self, "_on_pass_anim_frame").bind(player, pass_target)
 	anim_sprite.frame_changed.connect(on_pass_frame_cb)
 

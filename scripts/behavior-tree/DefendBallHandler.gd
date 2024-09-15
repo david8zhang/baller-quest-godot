@@ -20,10 +20,14 @@ func tick(actor: Node, _blackboard: Blackboard):
 
 	# move toward defense point
 	var dir = (quarter_to_hoop - curr_player.global_position).normalized()
-	curr_player.linear_velocity = dir * CourtPlayer.SPEED
-	var anim_name = "onball-defensive-slide"
-	if curr_player.side == Game.SIDE.CPU:
-		anim_name = "cpu-" + anim_name
-	anim_sprite.play(anim_name)
-	anim_sprite.flip_h = dir.x < 0
+	if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
+		curr_player.linear_velocity = dir * CourtPlayer.SPEED
+		anim_sprite.play(Game.get_anim_for_side(curr_player, "onball-defensive-slide"))
+		anim_sprite.flip_h = dir.x > 0
+		last_moved_time = Time.get_unix_time_from_system() * 1000
+	else:
+		var curr_time = Time.get_unix_time_from_system() * 1000
+		if curr_time - last_moved_time > 250:
+			curr_player.linear_velocity = Vector2.ZERO
+			anim_sprite.play(Game.get_anim_for_side(curr_player, "onball-defend-front"))
 	return SUCCESS

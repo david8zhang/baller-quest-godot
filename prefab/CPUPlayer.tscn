@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmlisraqwnlvt"]
+[gd_scene load_steps=8 format=3 uid="uid://bmlisraqwnlvt"]
 
 [ext_resource type="Script" path="res://scripts/CPUCourtPlayer.gd" id="1_67vw2"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="2_d10uy"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="3_5eo0k"]
 [ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="4_ubt5h"]
+[ext_resource type="PackedScene" uid="uid://bk38bcibwfu4d" path="res://prefab/CPUPlayerAI.tscn" id="5_hvioe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppf1a"]
 size = Vector2(8, 14)
@@ -49,3 +50,6 @@ collision_mask = 128
 position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
+
+[node name="CPUPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("5_hvioe")]
+blackboard = NodePath("@Node@63020")
