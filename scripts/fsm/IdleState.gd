@@ -17,6 +17,7 @@ func handle_input(input: InputEvent) -> void:
 
 func enter(msg := {}):
 	var player = entity as CourtPlayer
+	player.linear_velocity = Vector2.ZERO
 	var anim_name = "dribble-idle" if player.has_ball else "idle-front"
 	if msg.has("direction"):
 		var dir = msg["direction"]
