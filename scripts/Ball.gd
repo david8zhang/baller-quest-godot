@@ -60,6 +60,10 @@ func _physics_process(_delta):
 		if shot_status == ShotMeter.SHOT_RESULT.MISS:
 			enable_rim_collider()
 
+	var player_with_ball = game.get_ball_handler()
+	if player_with_ball != null:
+		self.global_position = player_with_ball.global_position
+
 
 func _on_net_detector_area_entered(_area):
 	if self.linear_velocity.y > 0:

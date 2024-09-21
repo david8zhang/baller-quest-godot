@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_ja5kq"]
 [ext_resource type="Script" path="res://scripts/PlayerManager.gd" id="1_xoi36"]
-[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ckvlo"]
 [ext_resource type="PackedScene" uid="uid://dkmpdmo4w8tpt" path="res://prefab/Ball.tscn" id="2_qbsg0"]
 [ext_resource type="PackedScene" uid="uid://bp4p74n22uoph" path="res://prefab/Hoop.tscn" id="3_4jcto"]
+[ext_resource type="Script" path="res://scenes/CameraController.gd" id="3_4obra"]
 [ext_resource type="PackedScene" uid="uid://bmvfbq5jqf42l" path="res://prefab/Court.tscn" id="4_mhnap"]
 [ext_resource type="PackedScene" uid="uid://din6tp3j6rrfm" path="res://prefab/Player.tscn" id="4_yn740"]
 [ext_resource type="Script" path="res://scripts/CPUManager.gd" id="7_ijyjr"]
@@ -24,11 +24,14 @@ y_sort_enabled = true
 script = ExtResource("1_ja5kq")
 ball_scene = ExtResource("2_qbsg0")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="CameraController" type="Node" parent="."]
+script = ExtResource("3_4obra")
+
+[node name="Camera2D" type="Camera2D" parent="CameraController"]
 zoom = Vector2(0.9, 0.9)
 limit_smoothed = true
+position_smoothing_enabled = true
 editor_draw_limits = true
-script = ExtResource("2_ckvlo")
 
 [node name="Hoop1" parent="." instance=ExtResource("3_4jcto")]
 position = Vector2(2.08165e-12, -160)
@@ -92,3 +95,4 @@ text = "CPU: 0"
 [connection signal="on_game_ready" from="." to="PlayerManager" method="_on_main_on_game_ready"]
 [connection signal="area_entered" from="Hoop1/PointDetector" to="Hoop1" method="_on_point_detector_area_entered"]
 [connection signal="area_exited" from="Hoop1/PointDetector" to="Hoop1" method="_on_point_detector_area_exited"]
+[connection signal="on_cpu_possession" from="CPUManager" to="PlayerManager" method="_on_cpu_manager_on_cpu_possession"]

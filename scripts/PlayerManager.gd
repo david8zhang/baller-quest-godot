@@ -1,7 +1,7 @@
 class_name PlayerManager
 extends Manager
 
-@onready var camera: GameCamera = $"../Camera2D"
+@onready var camera_controller = $"../CameraController" as CameraController
 @onready var cpu_manager = $"../CPUManager"
 
 var selected_player: PlayerCourtPlayer = null
@@ -102,3 +102,8 @@ func get_defensive_positions():
 func _on_main_on_game_ready():
 	for player in players:
 		player._on_main_on_game_ready()
+
+
+func _on_cpu_manager_on_cpu_possession():
+	camera_controller.set_target(selected_player)
+	pass

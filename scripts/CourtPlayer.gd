@@ -253,7 +253,6 @@ func on_ball_reached_apex(ball: Ball):
 
 
 func select():
-	player_manager.camera.reparent(self)
 	highlight.visible = true
 
 

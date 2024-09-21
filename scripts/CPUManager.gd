@@ -3,6 +3,8 @@ extends Manager
 
 @onready var player_manager = $"../PlayerManager"
 
+signal on_cpu_possession
+
 const INBOUNDER_POSITION = Vector2(125, -165)
 const INBOUND_RECEIVER_POSITION = Vector2(125, -25)
 

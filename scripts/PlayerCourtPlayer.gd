@@ -49,15 +49,9 @@ func on_jump_complete(custom_jump_complete_cb: Callable):
 	self.set_gravity_scale(0)
 	self.linear_velocity = Vector2(0, 0)
 	custom_jump_complete_cb.call()
-	
-
-# func on_shot_complete(ball: Ball, timer: Timer):
-
-	# super.on_shot_complete(ball, timer)
 
 
 func select():
-	player_manager.camera.reparent(self)
 	highlight.visible = true
 
 

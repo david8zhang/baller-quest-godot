@@ -16,7 +16,7 @@ enum PLAYER_TYPE {
 @onready var court = $Court
 @onready var hoop_1 = $Hoop1 as Hoop
 @onready var hoop_2 = $Hoop2 as Hoop
-@onready var camera = $Camera2D
+@onready var camera_controller = $CameraController as CameraController
 @onready var scoreboard = $CanvasLayer/Scoreboard as Scoreboard
 @onready var player_manager = $PlayerManager as PlayerManager
 @onready var cpu_manager = $CPUManager as CPUManager
@@ -32,9 +32,6 @@ func _ready():
 	hoop_1.display_front()
 	hoop_2.display_back()
 
-	if player_manager.selected_player != null:
-		camera.reparent(player_manager.selected_player)
-
 	player_manager.curr_team_phase = Manager.TEAM_PHASE.IN_OFFENSE
 	cpu_manager.curr_team_phase = Manager.TEAM_PHASE.IN_DEFENSE
 
@@ -44,6 +41,7 @@ func _ready():
 	ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 	add_child(ball)
 	ball.disable_player_detector()
+	camera_controller.set_target(ball)
 	on_game_ready.emit()
 
 func get_ball_handler():
