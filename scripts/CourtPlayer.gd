@@ -11,6 +11,7 @@ var side: Game.SIDE
 var can_gain_possession: bool = true
 var player_type: Game.PLAYER_TYPE
 var hoop_to_shoot_at: Hoop
+var is_jumping: bool = false
 
 var last_shot_type
 
@@ -48,7 +49,8 @@ func is_selected():
 func _physics_process(_delta):
 	# Ensure player does not exceed court bounds, unless player is inbounder
 	var curr_manager = (cpu_manager as Manager) if side == Game.SIDE.CPU else (player_manager as Manager)
-	if curr_manager.inbounder != self:
+	var is_inbounder = curr_manager.inbounder == self
+	if !is_inbounder and !is_jumping:
 		var court_y_bounds = court.get_y_bounds()
 		var court_x_bounds = court.get_x_bounds()
 		global_position.y = clamp(global_position.y, court_y_bounds["upper"], court_y_bounds["lower"])
@@ -100,7 +102,17 @@ func handle_ball_collision(ball: Ball):
 		can_gain_possession = false
 		has_ball = true
 		game.ball.hide()
+		var prev_ball_poss_status = ball.curr_poss_status
+		var prev_ball_poss_side = Game.SIDE.CPU if prev_ball_poss_status == Ball.POSS_STATUS.CPU else Ball.POSS_STATUS.PLAYER
 		ball.curr_poss_status = Ball.POSS_STATUS.CPU if side == Game.SIDE.CPU else Ball.POSS_STATUS.PLAYER
+
+		# If possession switched sides
+		var curr_manager = player_manager as Manager if side == Game.SIDE.PLAYER else cpu_manager
+		var other_manager = cpu_manager as Manager if side == Game.SIDE.PLAYER else player_manager
+		if prev_ball_poss_side != side and get_manager().curr_team_phase != Manager.TEAM_PHASE.INBOUNDING:
+			curr_manager.curr_team_phase = Manager.TEAM_PHASE.SETTING_UP_OFFENSE
+			other_manager.curr_team_phase = Manager.TEAM_PHASE.SETTING_UP_DEFENSE
+
 		ball.disable_player_detector()
 
 
@@ -170,6 +182,7 @@ func jump(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, duration_se
 	var velocity_y = ((self.position.y - 50) - self.position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	self.linear_velocity = Vector2(velocity_x, velocity_y)
 	var jump_peak_timer = Timer.new()
+	is_jumping = true
 
 	jump_peak_timer.wait_time = duration_sec / 2
 	jump_peak_timer.one_shot = true
@@ -209,6 +222,7 @@ func jump_toward(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, dura
 	
 	
 func on_jump_complete(custom_jump_complete_cb: Callable):
+	is_jumping = false
 	self.set_gravity_scale(0)
 	self.linear_velocity = Vector2(0, 0)
 	custom_jump_complete_cb.call()

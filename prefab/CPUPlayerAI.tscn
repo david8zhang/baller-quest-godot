@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bk38bcibwfu4d"]
+[gd_scene load_steps=32 format=3 uid="uid://bk38bcibwfu4d"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_tnh4m"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_1tbjo"]
@@ -6,10 +6,13 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="4_ab6bh"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_dwrbi"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/Idle.gd" id="5_qaiya"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsWithinReboundRange.gd" id="6_1wtkp"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/TeamHasPossession.gd" id="6_3n7vt"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsDefendingBallHandler.gd" id="7_thg1t"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsBallLoose.gd" id="7_x0mgw"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/DefendBallHandler.gd" id="8_jhq88"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsPlayerControlled.gd" id="8_vkfbr"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/ChaseRebound.gd" id="9_vee50"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/DefendOffball.gd" id="9_vmqun"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/HasBall.gd" id="10_1nu3k"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInbounder.gd" id="12_dpglv"]
@@ -31,7 +34,7 @@
 
 [node name="CPUPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_tnh4m")
-blackboard = NodePath("@Node@24562")
+blackboard = NodePath("@Node@34763")
 actor = NodePath("")
 
 [node name="InitSequence" type="Node" parent="."]
@@ -43,8 +46,29 @@ script = ExtResource("3_temvp")
 [node name="RootSelector" type="Node" parent="InitSequence"]
 script = ExtResource("4_ab6bh")
 
+[node name="ReboundSequence" type="Node" parent="InitSequence/RootSelector"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsBallLoose" type="Node" parent="InitSequence/RootSelector/ReboundSequence"]
+script = ExtResource("7_x0mgw")
+
+[node name="IsWithinReboundRange" type="Node" parent="InitSequence/RootSelector/ReboundSequence"]
+script = ExtResource("6_1wtkp")
+
+[node name="InverterDecorator" type="Node" parent="InitSequence/RootSelector/ReboundSequence"]
+script = ExtResource("5_dwrbi")
+
+[node name="IsPlayerControlled" type="Node" parent="InitSequence/RootSelector/ReboundSequence/InverterDecorator"]
+script = ExtResource("8_vkfbr")
+
+[node name="ChaseRebound" type="Node" parent="InitSequence/RootSelector/ReboundSequence"]
+script = ExtResource("9_vee50")
+
 [node name="InboundSequence" type="Node" parent="InitSequence/RootSelector"]
 script = ExtResource("2_1tbjo")
+
+[node name="IsInboundPhase" type="Node" parent="InitSequence/RootSelector/InboundSequence"]
+script = ExtResource("18_c726m")
 
 [node name="IsInbounder" type="Node" parent="InitSequence/RootSelector/InboundSequence"]
 script = ExtResource("12_dpglv")
@@ -99,6 +123,9 @@ script = ExtResource("5_qaiya")
 
 [node name="ReceiveInboundSequence" type="Node" parent="InitSequence/RootSelector"]
 script = ExtResource("2_1tbjo")
+
+[node name="IsInboundPhase" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence"]
+script = ExtResource("18_c726m")
 
 [node name="IsInboundReceiver" type="Node" parent="InitSequence/RootSelector/ReceiveInboundSequence"]
 script = ExtResource("19_fb524")

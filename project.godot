@@ -26,6 +26,7 @@ window/size/viewport_width=1000
 window/size/viewport_height=600
 window/size/initial_position_type=0
 window/stretch/mode="viewport"
+window/dpi/allow_hidpi=false
 
 [editor_plugins]
 
