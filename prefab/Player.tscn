@@ -81,4 +81,4 @@ shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
 [node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@34172")
+blackboard = NodePath("@Node@56289")
