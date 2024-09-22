@@ -21,8 +21,8 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@34682")
-actor = NodePath("")
+blackboard = NodePath("@Node@20277")
+actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="."]
 script = ExtResource("3_202us")
@@ -32,6 +32,15 @@ script = ExtResource("3_m6axc")
 
 [node name="RootSelector" type="Node" parent="SequenceComposite"]
 script = ExtResource("2_826j1")
+
+[node name="PlayerControlledBehaviorSequence" type="Node" parent="SequenceComposite/RootSelector"]
+script = ExtResource("3_202us")
+
+[node name="IsPlayerControlled" type="Node" parent="SequenceComposite/RootSelector/PlayerControlledBehaviorSequence"]
+script = ExtResource("5_cpb62")
+
+[node name="PlayerControl" type="Node" parent="SequenceComposite/RootSelector/PlayerControlledBehaviorSequence"]
+script = ExtResource("6_uxnl6")
 
 [node name="ReboundSequence" type="Node" parent="SequenceComposite/RootSelector"]
 script = ExtResource("3_202us")
@@ -50,15 +59,6 @@ script = ExtResource("5_cpb62")
 
 [node name="ChaseRebound" type="Node" parent="SequenceComposite/RootSelector/ReboundSequence"]
 script = ExtResource("6_k8uj5")
-
-[node name="PlayerControlledBehaviorSequence" type="Node" parent="SequenceComposite/RootSelector"]
-script = ExtResource("3_202us")
-
-[node name="IsPlayerControlled" type="Node" parent="SequenceComposite/RootSelector/PlayerControlledBehaviorSequence"]
-script = ExtResource("5_cpb62")
-
-[node name="PlayerControl" type="Node" parent="SequenceComposite/RootSelector/PlayerControlledBehaviorSequence"]
-script = ExtResource("6_uxnl6")
 
 [node name="SetupDefense" type="Node" parent="SequenceComposite/RootSelector"]
 script = ExtResource("3_202us")

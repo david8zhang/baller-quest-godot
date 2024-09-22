@@ -18,7 +18,7 @@ func physics_update(_delta: float) -> void:
 			velocity.y -= 1
 		if velocity.length() > 0:
 			velocity = velocity.normalized() * CourtPlayer.SPEED
-			player.update_pass_target(velocity)
+			player.update_pass_or_switch_target(velocity)
 		player.linear_velocity = velocity
 
 	if velocity.x != 0:
@@ -39,6 +39,6 @@ func physics_update(_delta: float) -> void:
 		})
 
 
-func handle_input(input: InputEvent) -> void:
-	var player = entity as CourtPlayer
-	player.handle_input(input)
+# func handle_input(input: InputEvent) -> void:
+# 	var player = entity as CourtPlayer
+# 	player.handle_input(input)

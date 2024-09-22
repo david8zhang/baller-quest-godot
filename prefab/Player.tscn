@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://din6tp3j6rrfm"]
+[gd_scene load_steps=16 format=3 uid="uid://din6tp3j6rrfm"]
 
 [ext_resource type="Script" path="res://scripts/PlayerCourtPlayer.gd" id="1_38bbe"]
+[ext_resource type="Texture2D" uid="uid://dgcr7bt16k5dy" path="res://sprites/ui/highlight.png" id="3_5urpm"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="3_enltj"]
-[ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="4_4ftjt"]
+[ext_resource type="Texture2D" uid="uid://cp6x43rb5oc2a" path="res://sprites/ui/target-highlight.png" id="4_gar6o"]
 [ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="5_ps6oe"]
 [ext_resource type="Script" path="res://scripts/fsm/IdleState.gd" id="6_1wvpm"]
 [ext_resource type="Script" path="res://scripts/fsm/StateMachine.gd" id="6_32c0f"]
@@ -39,14 +40,19 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Highlight" type="Sprite2D" parent="."]
 z_as_relative = false
-position = Vector2(0.125006, 14)
-scale = Vector2(0.033125, 0.0133333)
-texture = ExtResource("4_4ftjt")
+position = Vector2(2.08165e-12, 16)
+texture = ExtResource("3_5urpm")
+
+[node name="TargetHighlight" type="Sprite2D" parent="."]
+visible = false
+z_as_relative = false
+position = Vector2(2.08165e-12, 16)
+texture = ExtResource("4_gar6o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = ExtResource("5_ps6oe")
-animation = &"cpu-pass-side"
+animation = &"idle-front"
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="PlayerControlFSM" type="Node2D" parent="."]
@@ -81,4 +87,4 @@ shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
 [node name="PlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("15_cfbit")]
-blackboard = NodePath("@Node@56289")
+blackboard = NodePath("@Node@19767")

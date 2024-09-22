@@ -20,7 +20,8 @@ var last_shot_type
 @onready var cpu_manager: CPUManager = get_node("/root/Main/CPUManager")
 @onready var court: Court = get_node("/root/Main/Court") as Court
 @onready var shot_meter = $ShotMeter as ShotMeter
-@onready var highlight = $Highlight
+@onready var highlight = $Highlight as Sprite2D
+@onready var target_highlight = $TargetHighlight as Sprite2D
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 @onready var feet_area = $FeetArea as Area2D
 @onready var collision_shape_2d = $CollisionShape2D
@@ -29,14 +30,23 @@ var last_shot_type
 func _ready():
 	screen_size = get_viewport_rect().size
 	highlight.visible = false
+	target_highlight.visible = false
 	anim_sprite.scale = Vector2(3, 3)
 	highlight.scale = Vector2(
-		2 * highlight.scale.x,
-		2 * highlight.scale.y
+		3 * highlight.scale.x,
+		3 * highlight.scale.y
 	)
 	highlight.position = Vector2(
 		anim_sprite.position.x,
 		anim_sprite.position.y + 40,
+	)
+	target_highlight.scale = Vector2(
+		3 * target_highlight.scale.x,
+		3 * target_highlight.scale.y
+	)
+	target_highlight.position = Vector2(
+		anim_sprite.position.x,
+		anim_sprite.position.y + 50,
 	)
 	feet_area.scale = Vector2(3, 3)
 	collision_shape_2d.scale = Vector2(3, 3)
@@ -57,7 +67,7 @@ func _physics_process(_delta):
 		global_position.x = clamp(global_position.x, court_x_bounds["left"], court_x_bounds["right"])
 
 
-func update_pass_target(velocity: Vector2):
+func update_pass_or_switch_target(velocity: Vector2):
 	var src_position = global_position + velocity
 	var closest_player
 	var min_dist = INF
@@ -67,7 +77,10 @@ func update_pass_target(velocity: Vector2):
 			if dist < min_dist:
 				min_dist = dist
 				closest_player = player
+	if pass_target != null:
+		pass_target.target_highlight.visible = false
 	pass_target = closest_player
+	pass_target.target_highlight.visible = true
 	
 
 func is_within_layup_range():
@@ -98,7 +111,7 @@ func on_completed_pass(custom_cb):
 
 func handle_ball_collision(ball: Ball):
 	if self.can_gain_possession:
-		self.modulate = Color(1, 1, 1)
+		target_highlight.visible = false
 		can_gain_possession = false
 		has_ball = true
 		game.ball.hide()

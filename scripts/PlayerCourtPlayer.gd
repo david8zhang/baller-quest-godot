@@ -2,35 +2,44 @@ class_name PlayerCourtPlayer
 extends CourtPlayer
 
 @onready var player_control_fsm: StateMachine = $PlayerControlFSM
+var is_switching
 
 func is_selected():
 	return player_manager.selected_player == self
-
-
-func update_pass_target(velocity: Vector2):
-	var src_position = global_position + velocity
-	var closest_player
-	var min_dist = INF
-	for player in player_manager.players:
-		if player != self:
-			var dist = src_position.distance_to(player.global_position)
-			if dist < min_dist:
-				min_dist = dist
-				closest_player = player
-	pass_target = closest_player
 	
 
 func handle_input(_input: InputEvent):
-	if is_selected() and has_ball and game.ball != null:
-		if Input.is_action_pressed("shoot_ball"):
-			if is_within_layup_range():
-				player_control_fsm.transition_to("LayupState", {})
-			else:
-				player_control_fsm.transition_to("ShootState", {})
-		if Input.is_action_just_pressed("pass"):
-			if pass_target != null:
-				player_control_fsm.transition_to("PassState", {})
+	if is_selected():
+		# Offensive controls
+		if has_ball and game.ball != null:
+			if Input.is_action_pressed("shoot_ball"):
+				if is_within_layup_range():
+					player_control_fsm.transition_to("LayupState", {})
+				else:
+					player_control_fsm.transition_to("ShootState", {})
+			if Input.is_action_just_pressed("pass"):
+				if pass_target != null:
+					player_control_fsm.transition_to("PassState", {})
+		# Defensive controls
+		elif Input.is_action_just_pressed("pass"):
+			if pass_target != null and !is_switching:
+				pass_target.is_switching = true
+				deselect()
+				pass_target.select()
+				player_manager.selected_player = pass_target
 
+				# Add delay on switching
+				var timer = Timer.new()
+				timer.autostart = true
+				timer.wait_time = 0.25
+				timer.one_shot = true
+				var callable = Callable(self, "on_switch_complete").bind(pass_target, timer)
+				add_child(timer)
+				timer.connect("timeout", callable)
+
+func on_switch_complete(target, timer):
+	target.is_switching = false
+	timer.queue_free()
 
 
 func on_completed_pass(custom_cb):
@@ -39,6 +48,7 @@ func on_completed_pass(custom_cb):
 
 
 func handle_ball_collision(ball: Ball):
+	print("Handle ball collision")
 	if self.can_gain_possession:
 		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 		player_manager.switch_to_player(self)
@@ -52,6 +62,7 @@ func on_jump_complete(custom_jump_complete_cb: Callable):
 
 
 func select():
+	target_highlight.visible = false
 	highlight.visible = true
 
 

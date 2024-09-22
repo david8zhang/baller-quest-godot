@@ -28,6 +28,7 @@ ball_scene = ExtResource("2_qbsg0")
 script = ExtResource("3_4obra")
 
 [node name="Camera2D" type="Camera2D" parent="CameraController"]
+position = Vector2(-1, 0)
 zoom = Vector2(0.9, 0.9)
 limit_smoothed = true
 position_smoothing_enabled = true

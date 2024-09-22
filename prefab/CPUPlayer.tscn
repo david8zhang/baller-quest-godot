@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmlisraqwnlvt"]
+[gd_scene load_steps=9 format=3 uid="uid://bmlisraqwnlvt"]
 
 [ext_resource type="Script" path="res://scripts/CPUCourtPlayer.gd" id="1_67vw2"]
 [ext_resource type="PackedScene" uid="uid://n7coqxnadm1g" path="res://prefab/ShotMeter.tscn" id="2_d10uy"]
 [ext_resource type="Texture2D" uid="uid://bc1nvo2dt4ao6" path="res://sprites/placeholder/highlight.png" id="3_5eo0k"]
+[ext_resource type="Texture2D" uid="uid://cp6x43rb5oc2a" path="res://sprites/ui/target-highlight.png" id="4_8pauf"]
 [ext_resource type="SpriteFrames" uid="uid://bxfaqat2mu62u" path="res://animations/Player.tres" id="4_ubt5h"]
 [ext_resource type="PackedScene" uid="uid://bk38bcibwfu4d" path="res://prefab/CPUPlayerAI.tscn" id="5_hvioe"]
 
@@ -36,6 +37,12 @@ position = Vector2(0.125006, 14)
 scale = Vector2(0.033125, 0.0133333)
 texture = ExtResource("3_5eo0k")
 
+[node name="TargetHighlight" type="Sprite2D" parent="."]
+visible = false
+z_as_relative = false
+position = Vector2(2.08165e-12, 16)
+texture = ExtResource("4_8pauf")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = ExtResource("4_ubt5h")
@@ -51,5 +58,6 @@ position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
-[node name="CPUPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("5_hvioe")]
-blackboard = NodePath("@Node@38728")
+[node name="CPUPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("5_hvioe")]
+blackboard = NodePath("@Node@19256")
+actor = NodePath("..")
