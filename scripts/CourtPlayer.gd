@@ -38,7 +38,7 @@ func _ready():
 	)
 	highlight.position = Vector2(
 		anim_sprite.position.x,
-		anim_sprite.position.y + 40,
+		anim_sprite.position.y + 50,
 	)
 	target_highlight.scale = Vector2(
 		3 * target_highlight.scale.x,
@@ -67,7 +67,7 @@ func _physics_process(_delta):
 		global_position.x = clamp(global_position.x, court_x_bounds["left"], court_x_bounds["right"])
 
 
-func update_pass_or_switch_target(velocity: Vector2):
+func update_pass_target(velocity: Vector2):
 	var src_position = global_position + velocity
 	var closest_player
 	var min_dist = INF
@@ -80,7 +80,8 @@ func update_pass_or_switch_target(velocity: Vector2):
 	if pass_target != null:
 		pass_target.target_highlight.visible = false
 	pass_target = closest_player
-	pass_target.target_highlight.visible = true
+	if has_ball:
+		pass_target.target_highlight.visible = true
 	
 
 func is_within_layup_range():

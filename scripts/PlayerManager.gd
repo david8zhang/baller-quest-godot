@@ -5,6 +5,7 @@ extends Manager
 @onready var cpu_manager = $"../CPUManager"
 
 var selected_player: PlayerCourtPlayer = null
+var switch_target: PlayerCourtPlayer = null
 
 const INBOUNDER_POSITION = Vector2(-125, 1150)
 const INBOUND_RECEIVER_POSITION = Vector2(-125, 1025)

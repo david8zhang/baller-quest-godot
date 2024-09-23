@@ -22,18 +22,19 @@ func handle_input(_input: InputEvent):
 					player_control_fsm.transition_to("PassState", {})
 		# Defensive controls
 		elif Input.is_action_just_pressed("pass"):
-			if pass_target != null and !is_switching:
-				pass_target.is_switching = true
+			var switch_target = player_manager.switch_target
+			if switch_target != null and !is_switching:
+				switch_target.is_switching = true
 				deselect()
-				pass_target.select()
-				player_manager.selected_player = pass_target
+				switch_target.select()
+				player_manager.selected_player = switch_target
 
 				# Add delay on switching
 				var timer = Timer.new()
 				timer.autostart = true
-				timer.wait_time = 0.25
+				timer.wait_time = 0.1
 				timer.one_shot = true
-				var callable = Callable(self, "on_switch_complete").bind(pass_target, timer)
+				var callable = Callable(self, "on_switch_complete").bind(switch_target, timer)
 				add_child(timer)
 				timer.connect("timeout", callable)
 
@@ -42,13 +43,19 @@ func on_switch_complete(target, timer):
 	timer.queue_free()
 
 
+func update_switch_target(switch_target: CourtPlayer):
+	if player_manager.switch_target != null:
+		player_manager.switch_target.target_highlight.visible = false
+	player_manager.switch_target = switch_target
+	player_manager.switch_target.target_highlight.visible = true	
+
+
 func on_completed_pass(custom_cb):
 	super.on_completed_pass(custom_cb)
 	player_control_fsm.transition_to("IdleState", {})
 
 
 func handle_ball_collision(ball: Ball):
-	print("Handle ball collision")
 	if self.can_gain_possession:
 		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 		player_manager.switch_to_player(self)
@@ -67,6 +74,7 @@ func select():
 
 
 func deselect():
+	target_highlight.visible = false
 	highlight.visible = false
 	
 	
