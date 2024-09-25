@@ -56,7 +56,7 @@ func on_completed_pass(custom_cb):
 
 
 func handle_ball_collision(ball: Ball):
-	if self.can_gain_possession:
+	if super.check_can_gain_possession():
 		ball.curr_poss_status = Ball.POSS_STATUS.PLAYER
 		player_manager.switch_to_player(self)
 		player_control_fsm.transition_to("IdleState", {})

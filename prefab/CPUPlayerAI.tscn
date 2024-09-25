@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bk38bcibwfu4d"]
+[gd_scene load_steps=34 format=3 uid="uid://bk38bcibwfu4d"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_tnh4m"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_1tbjo"]
@@ -31,11 +31,13 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsNotInOffensivePosition.gd" id="20_16f8x"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/RunToOffensivePosition.gd" id="21_km6yb"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInDefensePhase.gd" id="23_rh043"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsOpen.gd" id="32_qn0lx"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/Shoot.gd" id="33_r6et8"]
 
 [node name="CPUPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_tnh4m")
 blackboard = NodePath("@Node@20358")
-actor = NodePath("")
+actor = NodePath("..")
 
 [node name="InitSequence" type="Node" parent="."]
 script = ExtResource("2_1tbjo")
@@ -235,7 +237,19 @@ script = ExtResource("2_1tbjo")
 [node name="HasBall" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense"]
 script = ExtResource("10_1nu3k")
 
-[node name="Idle" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense"]
+[node name="ShootIfOpen" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense"]
+script = ExtResource("4_ab6bh")
+
+[node name="ShootSequence" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense/ShootIfOpen"]
+script = ExtResource("2_1tbjo")
+
+[node name="IsOpen" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense/ShootIfOpen/ShootSequence"]
+script = ExtResource("32_qn0lx")
+
+[node name="Shoot" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense/ShootIfOpen/ShootSequence"]
+script = ExtResource("33_r6et8")
+
+[node name="Idle" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense/OnballOffense/ShootIfOpen"]
 script = ExtResource("5_qaiya")
 
 [node name="Idle" type="Node" parent="InitSequence/RootSelector/OffenseSequence/OnOrOffballOffense"]

@@ -110,8 +110,18 @@ func on_completed_pass(custom_cb):
 		custom_cb.call()
 
 
+func check_can_gain_possession():
+	var ball = game.ball
+	var is_other_team_inbounding = false
+	if side == Game.SIDE.CPU:
+		is_other_team_inbounding = ball.curr_poss_status == Ball.POSS_STATUS.INBOUND_PASS_PLAYER
+	else:
+		is_other_team_inbounding = ball.curr_poss_status == Ball.POSS_STATUS.INBOUND_PASS_CPU
+	return can_gain_possession and !is_other_team_inbounding
+
+
 func handle_ball_collision(ball: Ball):
-	if self.can_gain_possession:
+	if check_can_gain_possession():
 		target_highlight.visible = false
 		can_gain_possession = false
 		has_ball = true

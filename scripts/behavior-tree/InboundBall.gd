@@ -48,7 +48,7 @@ func _on_pass_anim_frame(player: CourtPlayer, inbound_receiver: CourtPlayer):
 	var ball = player.game.ball as Ball
 	if anim_sprite.frame == 3:
 		player.pass_target = inbound_receiver
-		ball.curr_poss_status = Ball.POSS_STATUS.INBOUND_PASS
+		ball.curr_poss_status = Ball.POSS_STATUS.INBOUND_PASS_CPU if player.side == Game.SIDE.CPU else Ball.POSS_STATUS.INBOUND_PASS_PLAYER
 		var on_pass_complete_cb = Callable(self, "on_pass_complete").bind(player)
 		player.pass_ball(on_pass_complete_cb)
 		anim_sprite.frame_changed.disconnect(_on_pass_anim_frame)
