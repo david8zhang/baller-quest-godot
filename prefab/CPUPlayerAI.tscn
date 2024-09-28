@@ -37,7 +37,7 @@
 [node name="CPUPlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_tnh4m")
 blackboard = NodePath("@Node@20358")
-actor = NodePath("..")
+actor = NodePath("")
 
 [node name="InitSequence" type="Node" parent="."]
 script = ExtResource("2_1tbjo")
