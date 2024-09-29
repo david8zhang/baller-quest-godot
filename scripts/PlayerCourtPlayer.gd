@@ -17,9 +17,13 @@ func handle_input(_input: InputEvent):
 					player_control_fsm.transition_to("LayupState", {})
 				else:
 					player_control_fsm.transition_to("ShootState", {})
-			if Input.is_action_just_pressed("pass"):
+			elif Input.is_action_just_pressed("pass"):
 				if pass_target != null:
 					player_control_fsm.transition_to("PassState", {})
+			elif Input.is_action_just_pressed("call_for_screen"):
+				if super.can_call_for_screen():
+					var screen_setter = player_manager.get_screener_for_player(self)
+					screen_setter.setup_screening_state()
 		# Defensive controls
 		elif Input.is_action_just_pressed("pass"):
 			var switch_target = player_manager.switch_target

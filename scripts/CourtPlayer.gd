@@ -13,6 +13,11 @@ var player_type: Game.PLAYER_TYPE
 var hoop_to_shoot_at: Hoop
 var is_jumping: bool = false
 
+# Screen state
+var is_setting_screen: bool = false
+var is_screen_active: bool = false
+var screen_pos
+
 var last_shot_type
 
 @onready var game: Game = get_node("/root/Main") as Game
@@ -315,3 +320,47 @@ func move_to_position(dest_position: Vector2):
 
 func get_manager() -> Manager:
 	return (cpu_manager as Manager) if side == Game.SIDE.CPU else (player_manager as Manager)
+
+func get_opp_manager() -> Manager:
+	return (cpu_manager as Manager) if side == Game.SIDE.PLAYER else (player_manager as Manager)
+
+func get_defender() -> CourtPlayer:
+	var opp_manager = get_opp_manager()
+	var def_assignments = opp_manager.defensive_assignments as Dictionary
+	for opp_player_name in def_assignments.keys():
+		var def_assignment_name = def_assignments[opp_player_name] as String
+		if def_assignment_name == player_name:
+			return opp_manager.get_player_by_name(opp_player_name)
+	return null
+
+func setup_screening_state():
+	# 1. Set the screen position
+	# 2. Set a timer on the screen
+	var ball_handler = game.get_ball_handler()
+	var defender = ball_handler.get_defender()
+	var defender_pos = defender.global_position
+
+	# TODO: Won't work if defender is in the corner, also always screens right
+	screen_pos = Vector2(defender_pos.x + 75, defender_pos.y)
+	is_setting_screen = true
+
+	var screen_timer = Timer.new()
+	screen_timer.wait_time = 8
+	screen_timer.one_shot = true
+	screen_timer.autostart = true
+	var callable = Callable(self, "on_screen_finished").bind(screen_timer)
+	screen_timer.connect("timeout", callable)
+	add_child(screen_timer)
+
+func on_screen_finished(timer: Timer):
+	set_collision_mask_value(1, false)
+	is_setting_screen = false
+	is_screen_active = false
+	screen_pos = null
+	timer.queue_free()
+
+func can_call_for_screen() -> bool:
+	# Check that the current screener isn't already screening
+	var manager = get_manager() as Manager
+	var screener = manager.get_screener_for_player(self)
+	return !screener.is_setting_screen

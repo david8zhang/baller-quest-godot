@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://pbhdbwtfile2"]
+[gd_scene load_steps=24 format=3 uid="uid://pbhdbwtfile2"]
 
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_dm2qq"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_826j1"]
@@ -9,7 +9,12 @@
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsWithinReboundRange.gd" id="5_wc6a0"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/ChaseRebound.gd" id="6_k8uj5"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/PlayerControl.gd" id="6_uxnl6"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/SetScreen.gd" id="7_4eqg7"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="7_jnoec"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsSettingScreen.gd" id="7_nsio2"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsNotAtScreenPos.gd" id="8_l2jgh"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/GoToScreenPos.gd" id="9_s4vk5"]
+[ext_resource type="Script" path="res://scripts/behavior-tree/IsScreenActive.gd" id="10_quqe7"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/IsInSetupDefensePhase.gd" id="11_euk56"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/NotInDefensivePosition.gd" id="12_dr6hi"]
 [ext_resource type="Script" path="res://scripts/behavior-tree/TeamHasPossession.gd" id="12_fk8yq"]
@@ -21,8 +26,8 @@
 
 [node name="PlayerAI" type="Node" node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_dm2qq")
-blackboard = NodePath("@Node@20277")
-actor = NodePath("")
+blackboard = NodePath("@Node@26038")
+actor = NodePath("..")
 
 [node name="SequenceComposite" type="Node" parent="."]
 script = ExtResource("3_202us")
@@ -41,6 +46,33 @@ script = ExtResource("5_cpb62")
 
 [node name="PlayerControl" type="Node" parent="SequenceComposite/RootSelector/PlayerControlledBehaviorSequence"]
 script = ExtResource("6_uxnl6")
+
+[node name="SetScreenSequence" type="Node" parent="SequenceComposite/RootSelector"]
+script = ExtResource("3_202us")
+
+[node name="IsSettingScreen" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence"]
+script = ExtResource("7_nsio2")
+
+[node name="GoToScreenPosOrSetScreen" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence"]
+script = ExtResource("2_826j1")
+
+[node name="GoToScreenPosSequence" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen"]
+script = ExtResource("3_202us")
+
+[node name="IsNotAtScreenPos" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen/GoToScreenPosSequence"]
+script = ExtResource("8_l2jgh")
+
+[node name="InverterDecorator" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen/GoToScreenPosSequence"]
+script = ExtResource("7_jnoec")
+
+[node name="IsScreenActive" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen/GoToScreenPosSequence/InverterDecorator"]
+script = ExtResource("10_quqe7")
+
+[node name="GoToScreenPos" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen/GoToScreenPosSequence"]
+script = ExtResource("9_s4vk5")
+
+[node name="SetScreen" type="Node" parent="SequenceComposite/RootSelector/SetScreenSequence/GoToScreenPosOrSetScreen"]
+script = ExtResource("7_4eqg7")
 
 [node name="ReboundSequence" type="Node" parent="SequenceComposite/RootSelector"]
 script = ExtResource("3_202us")

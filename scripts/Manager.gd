@@ -68,6 +68,21 @@ func get_player_by_position(player_type: Game.PLAYER_TYPE):
 			return player
 	return name
 
+# Get the screen-setter (always the center, but if center IS the ball handler, it's the closest player)
+func get_screener_for_player(curr_player: CourtPlayer) -> CourtPlayer:
+	if curr_player.player_type == Game.PLAYER_TYPE.CENTER:
+		var closest_player = null
+		var min_distance = INF
+		for p in players:
+			if p != curr_player:
+				var dist_to_player = curr_player.global_position.distance_to(p.global_position)
+				if dist_to_player < min_distance:
+					closest_player = p
+					min_distance = dist_to_player
+		return closest_player
+	else:
+		return get_player_by_position(Game.PLAYER_TYPE.CENTER)
+
 func get_defensive_positions():
 	return {}
 

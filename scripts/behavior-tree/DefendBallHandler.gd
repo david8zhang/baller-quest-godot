@@ -19,11 +19,8 @@ func tick(actor: Node, _blackboard: Blackboard):
 	var quarter_to_hoop = Vector2((player_to_defend_pos.x + mid_to_hoop.x) / 2, (player_to_defend_pos.y + mid_to_hoop.y) / 2)
 
 	# move toward defense point
-	var dir = (quarter_to_hoop - curr_player.global_position).normalized()
 	if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
-		curr_player.linear_velocity = dir * CourtPlayer.SPEED
-		anim_sprite.play(Game.get_anim_for_side(curr_player, "onball-defensive-slide"))
-		anim_sprite.flip_h = dir.x > 0
+		curr_player.move_to_position(quarter_to_hoop)
 		last_moved_time = Time.get_unix_time_from_system() * 1000
 	else:
 		var curr_time = Time.get_unix_time_from_system() * 1000

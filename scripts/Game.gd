@@ -44,7 +44,7 @@ func _ready():
 	camera_controller.set_target(ball)
 	on_game_ready.emit()
 
-func get_ball_handler():
+func get_ball_handler() -> CourtPlayer:
 	for player in player_manager.players:
 		if player.has_ball:
 			return player
