@@ -14,7 +14,6 @@ size = Vector2(8, 14)
 size = Vector2(8, 4)
 
 [node name="CPUPlayer" type="RigidBody2D"]
-collision_mask = 0
 gravity_scale = 2.66454e-15
 max_contacts_reported = 1
 contact_monitor = true
@@ -58,6 +57,11 @@ position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_3x2pa")
 debug_color = Color(0.980392, 0, 0.384314, 0.419608)
 
-[node name="CPUPlayerAI" parent="." node_paths=PackedStringArray("blackboard", "actor") instance=ExtResource("5_hvioe")]
-blackboard = NodePath("@Node@19256")
-actor = NodePath("..")
+[node name="CPUPlayerAI" parent="." node_paths=PackedStringArray("blackboard") instance=ExtResource("5_hvioe")]
+blackboard = NodePath("@Node@23813")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_mask = 3
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+debug_path_custom_line_width = 2.0

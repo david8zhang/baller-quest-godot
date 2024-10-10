@@ -27,9 +27,10 @@ var last_shot_type
 @onready var shot_meter = $ShotMeter as ShotMeter
 @onready var highlight = $Highlight as Sprite2D
 @onready var target_highlight = $TargetHighlight as Sprite2D
-@onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
+@onready var anim_sprite = $AnimatedSprite2D as AnimatedSprite2D
 @onready var feet_area = $FeetArea as Area2D
-@onready var collision_shape_2d = $CollisionShape2D
+@onready var collision_shape_2d = $CollisionShape2D as CollisionShape2D
+@onready var navigation_agent_2d = $NavigationAgent2D as NavigationAgent2D
 
 
 func _ready():
@@ -234,6 +235,7 @@ func jump_toward(custom_jump_complete_cb: Callable, jump_apex_cb: Callable, dura
 	var velocity_y = (dest_position.y - self.global_position.y - 490 * pow(duration_sec, 2)) / duration_sec
 	self.linear_velocity = Vector2(velocity_x, velocity_y)
 	var jump_peak_timer = Timer.new()
+	is_jumping = true
 
 	jump_peak_timer.wait_time = duration_sec / 2
 	jump_peak_timer.one_shot = true
@@ -345,7 +347,7 @@ func setup_screening_state():
 	is_setting_screen = true
 
 	var screen_timer = Timer.new()
-	screen_timer.wait_time = 8
+	screen_timer.wait_time = 5
 	screen_timer.one_shot = true
 	screen_timer.autostart = true
 	var callable = Callable(self, "on_screen_finished").bind(screen_timer)

@@ -17,6 +17,7 @@ func tick(actor: Node, _blackboard: Blackboard):
 	# Get to quarter point between player to defend and hoop
 	var mid_to_hoop = Vector2((player_to_defend_pos.x + hoop.global_position.x) / 2, (player_to_defend_pos.y + hoop.global_position.y) / 2)
 	var quarter_to_hoop = Vector2((player_to_defend_pos.x + mid_to_hoop.x) / 2, (player_to_defend_pos.y + mid_to_hoop.y) / 2)
+	curr_player.navigation_agent_2d.target_position = quarter_to_hoop
 
 	# move toward defense point
 	if (curr_player.global_position - quarter_to_hoop).length() > MAX_DISTANCE:
